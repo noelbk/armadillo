@@ -88,7 +88,7 @@ development and maintenance of the library.
   
   Conrad Sanderson and Ryan Curtin.
   A User-Friendly Hybrid Sparse Matrix Class in C++.
-  International Congress on Mathematical Software, 2018.
+  Lecture Notes in Computer Science (LNCS), Vol. 10931, pp. 422-430, 2018.
 
 
 
