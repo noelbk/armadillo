@@ -53,6 +53,8 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   const bool equilibrate = bool(flags & solve_opts::flag_equilibrate);
   const bool no_approx   = bool(flags & solve_opts::flag_no_approx  );
   const bool no_band     = bool(flags & solve_opts::flag_no_band    );
+  const bool no_sym      = bool(flags & solve_opts::flag_no_sym     );
+  const bool refine      = bool(flags & solve_opts::flag_refine     );
   
   arma_extra_debug_print("glue_solve_gen::apply(): enabled flags:");
   
@@ -60,6 +62,11 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   if(equilibrate)  { arma_extra_debug_print("equilibrate"); }
   if(no_approx  )  { arma_extra_debug_print("no_approx");   }
   if(no_band    )  { arma_extra_debug_print("no_band");     }
+  if(no_sym     )  { arma_extra_debug_print("no_sym");      }
+  if(refine     )  { arma_extra_debug_print("refine");      }
+  
+  arma_debug_check( (fast && equilibrate), "solve(): options 'fast' and 'equilibrate' are mutually exclusive" );
+  arma_debug_check( (fast && refine),      "solve(): options 'fast' and 'refine' are mutually exclusive"      );
   
   T    rcond  = T(0);
   bool status = false;
@@ -149,6 +156,7 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
     arma_extra_debug_print("glue_solve_gen::apply(): detected non-square system");
     
     if(equilibrate)  { arma_debug_warn( "solve(): option 'equilibrate' ignored for non-square matrix" ); }
+    if(refine)       { arma_debug_warn( "solve(): option 'refine' ignored for non-square matrix"      ); }
     
     if(fast)
       {
@@ -208,6 +216,7 @@ glue_solve_tri::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   const bool no_approx   = bool(flags & solve_opts::flag_no_approx  );
   const bool triu        = bool(flags & solve_opts::flag_triu       );
   const bool tril        = bool(flags & solve_opts::flag_tril       );
+  const bool refine      = bool(flags & solve_opts::flag_refine     );
   
   arma_extra_debug_print("glue_solve_tri::apply(): enabled flags:");
   
@@ -216,10 +225,12 @@ glue_solve_tri::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   if(no_approx  )  { arma_extra_debug_print("no_approx");   }
   if(triu       )  { arma_extra_debug_print("triu");        }
   if(tril       )  { arma_extra_debug_print("tril");        }
+  if(refine     )  { arma_extra_debug_print("refine");      }
   
   bool status = false;
   
   if(equilibrate)  { arma_debug_warn("solve(): option 'equilibrate' ignored for triangular matrices"); }
+  if(refine)       { arma_debug_warn("solve(): option 'refine' ignored for triangular matrices");      }
   
   const unwrap_check<T1> U(A_expr.get_ref(), out);
   const Mat<eT>& A     = U.M;
