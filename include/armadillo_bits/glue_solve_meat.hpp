@@ -84,8 +84,6 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
     
     if(fast)
       {
-      if(equilibrate)  { arma_debug_warn("solve(): option 'equilibrate' ignored, as option 'fast' is enabled"); }
-      
       if(is_band == false)
         {
         arma_extra_debug_print("glue_solve_gen::apply(): fast + dense");
