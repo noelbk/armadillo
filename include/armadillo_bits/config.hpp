@@ -114,7 +114,7 @@
 
 #if !defined(ARMA_OPTIMISE_SOLVE_BAND)
   #define ARMA_OPTIMISE_SOLVE_BAND
-  //// Comment out the above line if you don't want use optimised code for solving band matrices
+  //// Comment out the above line if you don't want optimised handling of band matrices by solve()
 #endif
 
 // #define ARMA_USE_HDF5_ALT
