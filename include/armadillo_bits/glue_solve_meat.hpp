@@ -63,8 +63,6 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   if(no_band    )  { arma_extra_debug_print("no_band");     }
   if(no_sympd   )  { arma_extra_debug_print("no_sympd");    }
   
-  arma_debug_check( (fast && equilibrate), "solve(): options 'fast' and 'equilibrate' are mutually exclusive" );
-  
   T    rcond  = T(0);
   bool status = false;
   
@@ -85,6 +83,8 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
     
     if(fast)
       {
+      if(equilibrate)  { arma_debug_warn("solve(): option 'equilibrate' ignored, as option 'fast' is enabled"); }
+      
       if(is_band == false)
         {
         arma_extra_debug_print("glue_solve_gen::apply(): fast + dense");
