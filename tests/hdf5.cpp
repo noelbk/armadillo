@@ -22,6 +22,15 @@ using namespace arma;
 
 #if defined(ARMA_USE_HDF5)
 
+TEST_CASE("hdf5_scalar")
+{
+  arma::Mat<double> a;
+  a.load("pi.hdf5");
+  REQUIRE( size(a, 0) == 1 );
+  REQUIRE( size(a, 1) == 1 );
+}
+
+
 TEST_CASE("hdf5_u8_test")
   {
   arma::Mat<u8> a;
