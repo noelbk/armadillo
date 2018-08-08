@@ -2028,21 +2028,27 @@ diskio::load_hdf5_binary(Mat<eT>& x, const hdf5_name& spec, std::string& err_msg
         const int ndims = arma_H5Sget_simple_extent_ndims(filespace);
         
         hsize_t dims[2];
-        const herr_t query_status = arma_H5Sget_simple_extent_dims(filespace, dims, NULL);
+        if( ndims == 0 ) {
+            dims[0] = 1;
+            dims[1] = 1;
+        }
+        else {
+            const herr_t query_status = arma_H5Sget_simple_extent_dims(filespace, dims, NULL);
         
-        // arma_check(query_status < 0, "Mat::load(): cannot get size of HDF5 dataset");
-        if(query_status < 0)
-          {
-          err_msg = "cannot get size of HDF5 dataset in ";
+            // arma_check(query_status < 0, "Mat::load(): cannot get size of HDF5 dataset");
+            if(query_status < 0)
+                {
+                    err_msg = "cannot get size of HDF5 dataset in ";
           
-          arma_H5Sclose(filespace);
-          arma_H5Dclose(dataset);
-          arma_H5Fclose(fid);
+                    arma_H5Sclose(filespace);
+                    arma_H5Dclose(dataset);
+                    arma_H5Fclose(fid);
           
-          return false;
-          }
+                    return false;
+                }
         
-        if(ndims == 1) { dims[1] = 1; }  // Vector case; fake second dimension (one column).
+            if(ndims == 1) { dims[1] = 1; }  // Vector case; fake second dimension (one column).
+        }
         
         x.set_size(dims[1], dims[0]);
         
