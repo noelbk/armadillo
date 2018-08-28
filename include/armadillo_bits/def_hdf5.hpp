@@ -57,7 +57,7 @@
   #define arma_H5Ldelete    H5Ldelete
   
   #define arma_H5T_NATIVE_UCHAR   H5T_NATIVE_UCHAR
-  #define arma_H5T_NATIVE_CHAR    H5T_NATIVE_CHAR
+  #define arma_H5T_NATIVE_SCHAR   H5T_NATIVE_SCHAR
   #define arma_H5T_NATIVE_SHORT   H5T_NATIVE_SHORT
   #define arma_H5T_NATIVE_USHORT  H5T_NATIVE_USHORT
   #define arma_H5T_NATIVE_INT     H5T_NATIVE_INT
@@ -117,7 +117,7 @@ extern "C"
   // forty other macros, and we definitely don't want to hijack those,
   // so this is the best way to go about wrapping these...
   extern hid_t arma_H5T_NATIVE_UCHAR;
-  extern hid_t arma_H5T_NATIVE_CHAR;
+  extern hid_t arma_H5T_NATIVE_SCHAR;
   extern hid_t arma_H5T_NATIVE_SHORT;
   extern hid_t arma_H5T_NATIVE_USHORT;
   extern hid_t arma_H5T_NATIVE_INT;
