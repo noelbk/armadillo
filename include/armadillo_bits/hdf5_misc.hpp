@@ -52,7 +52,7 @@ inline
 hid_t
 get_hdf5_type< char >()
   {
-  return arma_H5Tcopy(arma_H5T_NATIVE_CHAR);
+  return arma_H5Tcopy(arma_H5T_NATIVE_SCHAR);
   }
 
 template<>

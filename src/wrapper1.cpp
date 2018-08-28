@@ -1755,7 +1755,7 @@ extern "C"
     
     // H5T_NATIVE_* types.  The rhs here expands to some macros.
     hid_t arma_H5T_NATIVE_UCHAR  = H5T_NATIVE_UCHAR;
-    hid_t arma_H5T_NATIVE_CHAR   = H5T_NATIVE_CHAR;
+    hid_t arma_H5T_NATIVE_SCHAR   = H5T_NATIVE_SCHAR;
     hid_t arma_H5T_NATIVE_SHORT  = H5T_NATIVE_SHORT;
     hid_t arma_H5T_NATIVE_USHORT = H5T_NATIVE_USHORT;
     hid_t arma_H5T_NATIVE_INT    = H5T_NATIVE_INT;
