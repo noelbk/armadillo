@@ -4778,9 +4778,9 @@ SpMat<eT>::init_simple(const SpMat<eT>& x)
   access::rw(values)      = memory::acquire_chunked<eT>   (x.n_nonzero + 1);
   access::rw(row_indices) = memory::acquire_chunked<uword>(x.n_nonzero + 1);
   
-  arrayops::copy(access::rwp(values),      x.values,      x.n_nonzero + 1);
-  arrayops::copy(access::rwp(row_indices), x.row_indices, x.n_nonzero + 1);
-  arrayops::copy(access::rwp(col_ptrs),    x.col_ptrs,    x.n_cols + 1);
+  if(x.values     )  { arrayops::copy(access::rwp(values),      x.values,      x.n_nonzero + 1); }
+  if(x.row_indices)  { arrayops::copy(access::rwp(row_indices), x.row_indices, x.n_nonzero + 1); }
+  if(x.col_ptrs   )  { arrayops::copy(access::rwp(col_ptrs),    x.col_ptrs,    x.n_cols    + 1); }
   
   access::rw(n_nonzero) = x.n_nonzero;
   }
