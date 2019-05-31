@@ -554,13 +554,13 @@ extern "C"
   void arma_fortran(arma_cgelsd)(const blas_int* m, const blas_int* n, const blas_int* nrhs, void* a, const blas_int* lda, void* b, const blas_int* ldb,  float* S,  const float* rcond, blas_int* rank, void* work, const blas_int* lwork,  float* rwork, blas_int* iwork, blas_int* info);
   void arma_fortran(arma_zgelsd)(const blas_int* m, const blas_int* n, const blas_int* nrhs, void* a, const blas_int* lda, void* b, const blas_int* ldb, double* S, const double* rcond, blas_int* rank, void* work, const blas_int* lwork, double* rwork, blas_int* iwork, blas_int* info);
   
-  // ### TODO FROM HERE ON ###
-  
   // solve system of linear equations (triangular matrix)
-  void arma_fortran(arma_strtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const float*  a, const blas_int* lda, float*  b, const blas_int* ldb, blas_int* info);
-  void arma_fortran(arma_dtrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* info);
-  void arma_fortran(arma_ctrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const void*   a, const blas_int* lda, void*   b, const blas_int* ldb, blas_int* info);
-  void arma_fortran(arma_ztrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const void*   a, const blas_int* lda, void*   b, const blas_int* ldb, blas_int* info);
+  void arma_fortran(arma_strtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const float*  a, const blas_int* lda, float*  b, const blas_int* ldb, blas_int* info, blas_len uplo_len, blas_len trans_len, blas_len diag_len);
+  void arma_fortran(arma_dtrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* info, blas_len uplo_len, blas_len trans_len, blas_len diag_len);
+  void arma_fortran(arma_ctrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const void*   a, const blas_int* lda, void*   b, const blas_int* ldb, blas_int* info, blas_len uplo_len, blas_len trans_len, blas_len diag_len);
+  void arma_fortran(arma_ztrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const void*   a, const blas_int* lda, void*   b, const blas_int* ldb, blas_int* info, blas_len uplo_len, blas_len trans_len, blas_len diag_len);
+  
+  // ### TODO FROM HERE ON ###
   
   // solve system of linear equations (general band matrix)
   void arma_fortran(arma_sgbsv)(const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs,  float* ab, const blas_int* ldab, blas_int* ipiv,  float* b, const blas_int* ldb, blas_int* info);
