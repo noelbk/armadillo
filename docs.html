@@ -1810,11 +1810,12 @@ examples of omitted functions: <a href="#fill">.fill()</a>, <a href="#ones_membe
 <b>NOTE:</b>
 <ul>
 <li>
-Armadillo 8.x is much faster than Armadillo 7.x for incrementally populating <i>SpMat</i> via <a href="#element_access">element access operators</a>
+Armadillo version 9.100 is the minimum recommended version; it has considerably improved support for sparse matrices compared to earlier versions
 </li>
 <li>
-In Armadillo 7.x and earlier, incrementally populating <i>SpMat</i> via <a href="#element_access">element access operators</a> is inefficient;
-use <a href="#batch_constructors_sp_mat">batch insertion constructors</a> instead</li>
+In Armadillo versions 7.x and earlier, incrementally populating <i>SpMat</i> via <a href="#element_access">element access operators</a> is inefficient;
+use <a href="#batch_constructors_sp_mat">batch insertion constructors</a> instead
+</li>
 </ul>
 </li>
 <br>
@@ -2026,7 +2027,7 @@ sp_mat C = 2*B;
 sp_mat D = A*C;
 
 sp_mat E(1000,1000);
-E(1,2) = 123;  // element access (Armadillo 8.x)
+E(1,2) = 123;  // element access (Armadillo 8.x and later)
 
 
 // batch insertion of two values at (5, 6) and (9, 9)
@@ -16157,7 +16158,7 @@ cout &lt;&lt; "number of seconds: " &lt;&lt; n &lt;&lt; endl;
 <br>
 <ul>
 <li>
-In Armadillo 8.x, warnings and errors are printed by default to the <i>std::cerr</i> stream;
+In Armadillo 8.x and later versions, warnings and errors are printed by default to the <i>std::cerr</i> stream;
 in Armadillo 7.x and earlier, the <i>std::cout</i> stream is used
 <ul>
 <li>the printing can be disabled by placing <i>#define <a href="#config_hpp">ARMA_DONT_PRINT_ERRORS</a></i> before <i>#include&nbsp;&lt;armadillo&gt;</i></li>
@@ -17313,7 +17314,7 @@ Disable use of BLAS; overrides <i>ARMA_USE_BLAS</i>
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-Enable use of the built-in reimplementation of ARPACK (Armadillo 7.x and 8.x).
+Enable use of the built-in reimplementation of ARPACK (Armadillo 7.x and later versions).
 This is used for the eigen decomposition of real (non-complex) sparse matrices, ie. <a href="#eigs_gen">eigs_gen()</a>, <a href="#eigs_sym">eigs_sym()</a> and <a href="#svds">svds().</a>
 Requires ARMA_USE_LAPACK to be enabled.
     </td>
@@ -17406,7 +17407,7 @@ Disable use of ARPACK; overrides <i>ARMA_USE_ARPACK</i>
     <td style="vertical-align: top;">
 Enable use of SuperLU, which is used by <a href="#spsolve">spsolve()</a> for finding the solutions of sparse systems;
 you will need to link with the superlu library, for example <code><i>-lsuperlu</i></code>
-<br><b>Caveat:</b> Armadillo&nbsp;6.x requires SuperLU&nbsp;4.3, while Armadillo&nbsp;7.x and 8.x require SuperLU&nbsp;5.2
+<br><b>Caveat:</b> Armadillo&nbsp;7.x and later versions require SuperLU&nbsp;5.2, while Armadillo&nbsp;6.x and earlier versions require SuperLU&nbsp;4.3
     </td>
   </tr>
   <tr>
@@ -18183,7 +18184,7 @@ List of additions and changes for each version:
 <ul>
 <li>expanded <a href="#solve">solve()</a> with <code>solve_opts::likely_sympd</code> to indicate that the given matrix is likely positive definite</li>
 <li>more robust automatic detection of positive definite matrices by <a href="#solve">solve()</a> and <a href="#inv">inv()</a></li>
-<li>faster insertion into sparse submatrices</li>
+<li>faster handling of sparse submatrices</li>
 <li>
 extended LAPACK function prototypes to follow Fortran <a href="https://gcc.gnu.org/onlinedocs/gfortran/Argument-passing-conventions.html">passing conventions</a> for so-called "hidden arguments",
 in order to address <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90329">GCC Bug 90329</a>;
