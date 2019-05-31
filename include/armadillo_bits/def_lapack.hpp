@@ -560,8 +560,6 @@ extern "C"
   void arma_fortran(arma_ctrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const void*   a, const blas_int* lda, void*   b, const blas_int* ldb, blas_int* info, blas_len uplo_len, blas_len trans_len, blas_len diag_len);
   void arma_fortran(arma_ztrtrs)(const char* uplo, const char* trans, const char* diag, const blas_int* n, const blas_int* nrhs, const void*   a, const blas_int* lda, void*   b, const blas_int* ldb, blas_int* info, blas_len uplo_len, blas_len trans_len, blas_len diag_len);
   
-  // ### TODO FROM HERE ON ###
-  
   // solve system of linear equations (general band matrix)
   void arma_fortran(arma_sgbsv)(const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs,  float* ab, const blas_int* ldab, blas_int* ipiv,  float* b, const blas_int* ldb, blas_int* info);
   void arma_fortran(arma_dgbsv)(const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, double* ab, const blas_int* ldab, blas_int* ipiv, double* b, const blas_int* ldb, blas_int* info);
@@ -569,18 +567,20 @@ extern "C"
   void arma_fortran(arma_zgbsv)(const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs,   void* ab, const blas_int* ldab, blas_int* ipiv,   void* b, const blas_int* ldb, blas_int* info);
   
   // solve system of linear equations (general band matrix, advanced form, real matrices)
-  void arma_fortran(arma_sgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs,  float* ab, const blas_int* ldab,  float* afb, const blas_int* ldafb, blas_int* ipiv, char* equed,  float* r,  float* c,  float* b, const blas_int* ldb,  float* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr,  float* work, blas_int* iwork, blas_int* info);
-  void arma_fortran(arma_dgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, double* ab, const blas_int* ldab, double* afb, const blas_int* ldafb, blas_int* ipiv, char* equed, double* r, double* c, double* b, const blas_int* ldb, double* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, double* work, blas_int* iwork, blas_int* info);
+  void arma_fortran(arma_sgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs,  float* ab, const blas_int* ldab,  float* afb, const blas_int* ldafb, blas_int* ipiv, char* equed,  float* r,  float* c,  float* b, const blas_int* ldb,  float* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr,  float* work, blas_int* iwork, blas_int* info, blas_len fact_len, blas_len trans_len, blas_len equed_len);
+  void arma_fortran(arma_dgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, double* ab, const blas_int* ldab, double* afb, const blas_int* ldafb, blas_int* ipiv, char* equed, double* r, double* c, double* b, const blas_int* ldb, double* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, double* work, blas_int* iwork, blas_int* info, blas_len fact_len, blas_len trans_len, blas_len equed_len);
   
   // solve system of linear equations (general band matrix, advanced form, complex matrices)
-  void arma_fortran(arma_cgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, void* ab, const blas_int* ldab, void* afb, const blas_int* ldafb, blas_int* ipiv, char* equed,  float* r,  float* c, void* b, const blas_int* ldb, void* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr, void* work,  float* rwork, blas_int* info);
-  void arma_fortran(arma_zgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, void* ab, const blas_int* ldab, void* afb, const blas_int* ldafb, blas_int* ipiv, char* equed, double* r, double* c, void* b, const blas_int* ldb, void* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, void* work, double* rwork, blas_int* info);
+  void arma_fortran(arma_cgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, void* ab, const blas_int* ldab, void* afb, const blas_int* ldafb, blas_int* ipiv, char* equed,  float* r,  float* c, void* b, const blas_int* ldb, void* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr, void* work,  float* rwork, blas_int* info, blas_len fact_len, blas_len trans_len, blas_len equed_len);
+  void arma_fortran(arma_zgbsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, void* ab, const blas_int* ldab, void* afb, const blas_int* ldafb, blas_int* ipiv, char* equed, double* r, double* c, void* b, const blas_int* ldb, void* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, void* work, double* rwork, blas_int* info, blas_len fact_len, blas_len trans_len, blas_len equed_len);
   
   // solve system of linear equations (tridiagonal band matrix)
   void arma_fortran(arma_sgtsv)(const blas_int* n, const blas_int* nrhs,  float* dl,  float* d,  float* du,  float* b, const blas_int* ldb, blas_int* info);
   void arma_fortran(arma_dgtsv)(const blas_int* n, const blas_int* nrhs, double* dl, double* d, double* du, double* b, const blas_int* ldb, blas_int* info);
   void arma_fortran(arma_cgtsv)(const blas_int* n, const blas_int* nrhs,   void* dl,   void* d,   void* du,   void* b, const blas_int* ldb, blas_int* info);
   void arma_fortran(arma_zgtsv)(const blas_int* n, const blas_int* nrhs,   void* dl,   void* d,   void* du,   void* b, const blas_int* ldb, blas_int* info);
+  
+  // ### TODO FROM HERE ON ###
   
   // solve system of linear equations (tridiagonal band matrix, advaned form, real matrices)
   void arma_fortran(arma_sgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs,  const float* dl,  const float* d,  const float* du,  float* dlf,  float* df,  float* duf,  float* du2, blas_int* ipiv,  const float* b, const blas_int* ldb,  float* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr,  float* work, blas_int* iwork, blas_int* info);
