@@ -580,15 +580,15 @@ extern "C"
   void arma_fortran(arma_cgtsv)(const blas_int* n, const blas_int* nrhs,   void* dl,   void* d,   void* du,   void* b, const blas_int* ldb, blas_int* info);
   void arma_fortran(arma_zgtsv)(const blas_int* n, const blas_int* nrhs,   void* dl,   void* d,   void* du,   void* b, const blas_int* ldb, blas_int* info);
   
-  // ### TODO FROM HERE ON ###
-  
   // solve system of linear equations (tridiagonal band matrix, advaned form, real matrices)
-  void arma_fortran(arma_sgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs,  const float* dl,  const float* d,  const float* du,  float* dlf,  float* df,  float* duf,  float* du2, blas_int* ipiv,  const float* b, const blas_int* ldb,  float* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr,  float* work, blas_int* iwork, blas_int* info);
-  void arma_fortran(arma_dgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const double* dl, const double* d, const double* du, double* dlf, double* df, double* duf, double* du2, blas_int* ipiv, const double* b, const blas_int* ldb, double* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, double* work, blas_int* iwork, blas_int* info);
+  void arma_fortran(arma_sgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs,  const float* dl,  const float* d,  const float* du,  float* dlf,  float* df,  float* duf,  float* du2, blas_int* ipiv,  const float* b, const blas_int* ldb,  float* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr,  float* work, blas_int* iwork, blas_int* info, blas_len fact_len, blas_len trans_len);
+  void arma_fortran(arma_dgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const double* dl, const double* d, const double* du, double* dlf, double* df, double* duf, double* du2, blas_int* ipiv, const double* b, const blas_int* ldb, double* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, double* work, blas_int* iwork, blas_int* info, blas_len fact_len, blas_len trans_len);
   
   // solve system of linear equations (tridiagonal band matrix, advaned form, complex matrices)
-  void arma_fortran(arma_cgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const void* dl, const void* d, const void* du, void* dlf, void* df, void* duf, void* du2, blas_int* ipiv, const void* b, const blas_int* ldb, void* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr, void* work,  float* rwork, blas_int* info);
-  void arma_fortran(arma_zgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const void* dl, const void* d, const void* du, void* dlf, void* df, void* duf, void* du2, blas_int* ipiv, const void* b, const blas_int* ldb, void* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, void* work, double* rwork, blas_int* info);
+  void arma_fortran(arma_cgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const void* dl, const void* d, const void* du, void* dlf, void* df, void* duf, void* du2, blas_int* ipiv, const void* b, const blas_int* ldb, void* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr, void* work,  float* rwork, blas_int* info, blas_len fact_len, blas_len trans_len);
+  void arma_fortran(arma_zgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const void* dl, const void* d, const void* du, void* dlf, void* df, void* duf, void* du2, blas_int* ipiv, const void* b, const blas_int* ldb, void* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, void* work, double* rwork, blas_int* info, blas_len fact_len, blas_len trans_len);
+  
+  // ### TODO FROM HERE ON ###
   
   // Schur decomposition (real matrices)
   void arma_fortran(arma_sgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, float*  a, const blas_int* lda, blas_int* sdim, float*  wr, float*  wi, float*  vs, const blas_int* ldvs, float*  work, const blas_int* lwork, blas_int* bwork, blas_int* info);

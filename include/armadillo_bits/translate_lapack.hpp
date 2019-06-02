@@ -733,8 +733,6 @@ namespace lapack
   
   
   
-  // ### TODO FROM HERE ON ###
-  
   template<typename eT>
   inline
   void
@@ -742,17 +740,13 @@ namespace lapack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_sgtsvx)(fact, trans, n, nrhs, (T*)dl, (T*)d, (T*)du, (T*)dlf, (T*)df, (T*)duf, (T*)du2, ipiv, (T*)b, ldb, (T*)x, ldx, (T*)rcond, (T*)ferr, (T*)berr, (T*)work, iwork, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dgtsvx)(fact, trans, n, nrhs, (T*)dl, (T*)d, (T*)du, (T*)dlf, (T*)df, (T*)duf, (T*)du2, ipiv, (T*)b, ldb, (T*)x, ldx, (T*)rcond, (T*)ferr, (T*)berr, (T*)work, iwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sgtsvx)(fact, trans, n, nrhs, (T*)dl, (T*)d, (T*)du, (T*)dlf, (T*)df, (T*)duf, (T*)du2, ipiv, (T*)b, ldb, (T*)x, ldx, (T*)rcond, (T*)ferr, (T*)berr, (T*)work, iwork, info, 1, 1); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dgtsvx)(fact, trans, n, nrhs, (T*)dl, (T*)d, (T*)du, (T*)dlf, (T*)df, (T*)duf, (T*)du2, ipiv, (T*)b, ldb, (T*)x, ldx, (T*)rcond, (T*)ferr, (T*)berr, (T*)work, iwork, info, 1, 1); }
+    #else
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sgtsvx)(fact, trans, n, nrhs, (T*)dl, (T*)d, (T*)du, (T*)dlf, (T*)df, (T*)duf, (T*)du2, ipiv, (T*)b, ldb, (T*)x, ldx, (T*)rcond, (T*)ferr, (T*)berr, (T*)work, iwork, info); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dgtsvx)(fact, trans, n, nrhs, (T*)dl, (T*)d, (T*)du, (T*)dlf, (T*)df, (T*)duf, (T*)du2, ipiv, (T*)b, ldb, (T*)x, ldx, (T*)rcond, (T*)ferr, (T*)berr, (T*)work, iwork, info); }
+    #endif
     }
   
   
@@ -764,22 +758,18 @@ namespace lapack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_cx_float<eT>::value)
-      {
-      typedef float               pod_T;
-      typedef std::complex<float>  cx_T;
-      arma_fortran(arma_cgtsvx)(fact, trans, n, nrhs, (cx_T*)dl, (cx_T*)d, (cx_T*)du, (cx_T*)dlf, (cx_T*)df, (cx_T*)duf, (cx_T*)du2, ipiv, (cx_T*)b, ldb, (cx_T*)x, ldx, (pod_T*)rcond, (pod_T*)ferr, (pod_T*)berr, (cx_T*)work, (pod_T*)rwork, info);
-      }
-    else
-    if(is_cx_double<eT>::value)
-      {
-      typedef double               pod_T;
-      typedef std::complex<double>  cx_T;
-      arma_fortran(arma_zgtsvx)(fact, trans, n, nrhs, (cx_T*)dl, (cx_T*)d, (cx_T*)du, (cx_T*)dlf, (cx_T*)df, (cx_T*)duf, (cx_T*)du2, ipiv, (cx_T*)b, ldb, (cx_T*)x, ldx, (pod_T*)rcond, (pod_T*)ferr, (pod_T*)berr, (cx_T*)work, (pod_T*)rwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  cx_T; arma_fortran(arma_cgtsvx)(fact, trans, n, nrhs, (cx_T*)dl, (cx_T*)d, (cx_T*)du, (cx_T*)dlf, (cx_T*)df, (cx_T*)duf, (cx_T*)du2, ipiv, (cx_T*)b, ldb, (cx_T*)x, ldx, (pod_T*)rcond, (pod_T*)ferr, (pod_T*)berr, (cx_T*)work, (pod_T*)rwork, info, 1, 1); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double cx_T; arma_fortran(arma_zgtsvx)(fact, trans, n, nrhs, (cx_T*)dl, (cx_T*)d, (cx_T*)du, (cx_T*)dlf, (cx_T*)df, (cx_T*)duf, (cx_T*)du2, ipiv, (cx_T*)b, ldb, (cx_T*)x, ldx, (pod_T*)rcond, (pod_T*)ferr, (pod_T*)berr, (cx_T*)work, (pod_T*)rwork, info, 1, 1); }
+    #else
+           if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  cx_T; arma_fortran(arma_cgtsvx)(fact, trans, n, nrhs, (cx_T*)dl, (cx_T*)d, (cx_T*)du, (cx_T*)dlf, (cx_T*)df, (cx_T*)duf, (cx_T*)du2, ipiv, (cx_T*)b, ldb, (cx_T*)x, ldx, (pod_T*)rcond, (pod_T*)ferr, (pod_T*)berr, (cx_T*)work, (pod_T*)rwork, info); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double cx_T; arma_fortran(arma_zgtsvx)(fact, trans, n, nrhs, (cx_T*)dl, (cx_T*)d, (cx_T*)du, (cx_T*)dlf, (cx_T*)df, (cx_T*)duf, (cx_T*)du2, ipiv, (cx_T*)b, ldb, (cx_T*)x, ldx, (pod_T*)rcond, (pod_T*)ferr, (pod_T*)berr, (cx_T*)work, (pod_T*)rwork, info); }
+    #endif
     }
   
   
+  
+  // ### TODO FROM HERE ON ###
   
   template<typename eT>
   inline
