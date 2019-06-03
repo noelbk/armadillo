@@ -596,13 +596,13 @@ extern "C"
   void arma_fortran(arma_cgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, void* a, const blas_int* lda, blas_int* sdim, void* w, void* vs, const blas_int* ldvs, void* work, const blas_int* lwork, float*  rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
   void arma_fortran(arma_zgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, void* a, const blas_int* lda, blas_int* sdim, void* w, void* vs, const blas_int* ldvs, void* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
   
-  // ### TODO FROM HERE ON ###
-  
   // solve a Sylvester equation ax + xb = c, with a and b assumed to be in Schur form
-  void arma_fortran(arma_strsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const float*  a, const blas_int* lda, const float*  b, const blas_int* ldb, float*  c, const blas_int* ldc, float*  scale, blas_int* info);
-  void arma_fortran(arma_dtrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const double* a, const blas_int* lda, const double* b, const blas_int* ldb, double* c, const blas_int* ldc, double* scale, blas_int* info);
-  void arma_fortran(arma_ctrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const void*   a, const blas_int* lda, const void*   b, const blas_int* ldb, void*   c, const blas_int* ldc, float*  scale, blas_int* info);
-  void arma_fortran(arma_ztrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const void*   a, const blas_int* lda, const void*   b, const blas_int* ldb, void*   c, const blas_int* ldc, double* scale, blas_int* info);
+  void arma_fortran(arma_strsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const float*  a, const blas_int* lda, const float*  b, const blas_int* ldb, float*  c, const blas_int* ldc, float*  scale, blas_int* info, blas_len transa_len, blas_len transb_len);
+  void arma_fortran(arma_dtrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const double* a, const blas_int* lda, const double* b, const blas_int* ldb, double* c, const blas_int* ldc, double* scale, blas_int* info, blas_len transa_len, blas_len transb_len);
+  void arma_fortran(arma_ctrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const void*   a, const blas_int* lda, const void*   b, const blas_int* ldb, void*   c, const blas_int* ldc, float*  scale, blas_int* info, blas_len transa_len, blas_len transb_len);
+  void arma_fortran(arma_ztrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const void*   a, const blas_int* lda, const void*   b, const blas_int* ldb, void*   c, const blas_int* ldc, double* scale, blas_int* info, blas_len transa_len, blas_len transb_len);
+  
+  // ### TODO FROM HERE ON ###
   
   // QZ decomposition (real matrices)
   void arma_fortran(arma_sgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n,  float* a, const blas_int* lda,  float* b, const blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, const blas_int* ldvsl,  float* vsr, const blas_int* ldvsr,  float* work, const blas_int* lwork,  float* bwork, blas_int* info);

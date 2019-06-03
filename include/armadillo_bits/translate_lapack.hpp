@@ -806,8 +806,6 @@ namespace lapack
   
   
   
-  // ### TODO FROM HERE ON ###
-  
   template<typename eT>
   inline
   void
@@ -815,32 +813,22 @@ namespace lapack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_strsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (T*)scale, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dtrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (T*)scale, info);
-      }
-    else
-    if(is_cx_float<eT>::value)
-      {
-      typedef cx_float T;
-      arma_fortran(arma_ctrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (float*)scale, info);
-      }
-    else
-    if(is_cx_double<eT>::value)
-      {
-      typedef cx_double T;
-      arma_fortran(arma_ztrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (double*)scale, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if(    is_float<eT>::value)  { typedef float     T; arma_fortran(arma_strsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (T*)scale,      info, 1, 1); }
+      else if(   is_double<eT>::value)  { typedef double    T; arma_fortran(arma_dtrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (T*)scale,      info, 1, 1); }
+      else if( is_cx_float<eT>::value)  { typedef cx_float  T; arma_fortran(arma_ctrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (float*)scale,  info, 1, 1); }
+      else if(is_cx_double<eT>::value)  { typedef cx_double T; arma_fortran(arma_ztrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (double*)scale, info, 1, 1); }
+    #else
+           if(    is_float<eT>::value)  { typedef float     T; arma_fortran(arma_strsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (T*)scale,      info); }
+      else if(   is_double<eT>::value)  { typedef double    T; arma_fortran(arma_dtrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (T*)scale,      info); }
+      else if( is_cx_float<eT>::value)  { typedef cx_float  T; arma_fortran(arma_ctrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (float*)scale,  info); }
+      else if(is_cx_double<eT>::value)  { typedef cx_double T; arma_fortran(arma_ztrsyl)(transa, transb, isgn, m, n, (T*)a, lda, (T*)b, ldb, (T*)c, ldc, (double*)scale, info); }
+    #endif
     }
   
   
+  
+  // ### TODO FROM HERE ON ###
   
   template<typename eT>
   inline
