@@ -420,6 +420,8 @@ auxlib::det_tinymat(const Mat<eT>& X, const uword N)
   {
   arma_extra_debug_sigprint();
   
+  const eT* Xm = X.memptr();
+  
   switch(N)
     {
     case 0:
@@ -427,13 +429,11 @@ auxlib::det_tinymat(const Mat<eT>& X, const uword N)
       break;
     
     case 1:
-      return X[0];
+      return Xm[0];
       break;
     
     case 2:
       {
-      const eT* Xm = X.memptr();
-      
       return ( Xm[pos<0,0>::n2]*Xm[pos<1,1>::n2] - Xm[pos<0,1>::n2]*Xm[pos<1,0>::n2] );
       }
       break;
@@ -448,8 +448,6 @@ auxlib::det_tinymat(const Mat<eT>& X, const uword N)
       // const double tmp6 = X.at(2,2) * X.at(1,0) * X.at(0,1);
       // return (tmp1+tmp2+tmp3) - (tmp4+tmp5+tmp6);
       
-      const eT* Xm = X.memptr();
-      
       const eT val1 = Xm[pos<0,0>::n3]*(Xm[pos<2,2>::n3]*Xm[pos<1,1>::n3] - Xm[pos<2,1>::n3]*Xm[pos<1,2>::n3]);
       const eT val2 = Xm[pos<1,0>::n3]*(Xm[pos<2,2>::n3]*Xm[pos<0,1>::n3] - Xm[pos<2,1>::n3]*Xm[pos<0,2>::n3]);
       const eT val3 = Xm[pos<2,0>::n3]*(Xm[pos<1,2>::n3]*Xm[pos<0,1>::n3] - Xm[pos<1,1>::n3]*Xm[pos<0,2>::n3]);
@@ -460,8 +458,6 @@ auxlib::det_tinymat(const Mat<eT>& X, const uword N)
     
     case 4:
       {
-      const eT* Xm = X.memptr();
-      
       const eT val = \
           Xm[pos<0,3>::n4] * Xm[pos<1,2>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,0>::n4] \
         - Xm[pos<0,2>::n4] * Xm[pos<1,3>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,0>::n4] \
