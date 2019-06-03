@@ -769,8 +769,6 @@ namespace lapack
   
   
   
-  // ### TODO FROM HERE ON ###
-  
   template<typename eT>
   inline
   void
@@ -778,17 +776,13 @@ namespace lapack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_sgees)(jobvs, sort, select, n, (T*)a, lda, sdim, (T*)wr, (T*)wi, (T*)vs, ldvs, (T*)work, lwork, bwork, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dgees)(jobvs, sort, select, n, (T*)a, lda, sdim, (T*)wr, (T*)wi, (T*)vs, ldvs, (T*)work, lwork, bwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sgees)(jobvs, sort, select, n, (T*)a, lda, sdim, (T*)wr, (T*)wi, (T*)vs, ldvs, (T*)work, lwork, bwork, info, 1, 1); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dgees)(jobvs, sort, select, n, (T*)a, lda, sdim, (T*)wr, (T*)wi, (T*)vs, ldvs, (T*)work, lwork, bwork, info, 1, 1); }
+    #else
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sgees)(jobvs, sort, select, n, (T*)a, lda, sdim, (T*)wr, (T*)wi, (T*)vs, ldvs, (T*)work, lwork, bwork, info); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dgees)(jobvs, sort, select, n, (T*)a, lda, sdim, (T*)wr, (T*)wi, (T*)vs, ldvs, (T*)work, lwork, bwork, info); }
+    #endif
     }
   
   
@@ -801,22 +795,18 @@ namespace lapack
     arma_type_check(( is_supported_blas_type<T>::value == false ));
     arma_type_check(( is_supported_blas_type< std::complex<T> >::value == false ));
     
-    if(is_float<T>::value)
-      {
-      typedef float bT;
-      typedef std::complex<bT> cT;
-      arma_fortran(arma_cgees)(jobvs, sort, select, n, (cT*)a, lda, sdim, (cT*)w, (cT*)vs, ldvs, (cT*)work, lwork, (bT*)rwork, bwork, info);
-      }
-    else
-    if(is_double<T>::value)
-      {
-      typedef double bT;
-      typedef std::complex<bT> cT;
-      arma_fortran(arma_zgees)(jobvs, sort, select, n, (cT*)a, lda, sdim, (cT*)w, (cT*)vs, ldvs, (cT*)work, lwork, (bT*)rwork, bwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_float<T>::value)  { typedef float  bT; typedef cx_float  cT; arma_fortran(arma_cgees)(jobvs, sort, select, n, (cT*)a, lda, sdim, (cT*)w, (cT*)vs, ldvs, (cT*)work, lwork, (bT*)rwork, bwork, info, 1, 1); }
+      else if(is_double<T>::value)  { typedef double bT; typedef cx_double cT; arma_fortran(arma_zgees)(jobvs, sort, select, n, (cT*)a, lda, sdim, (cT*)w, (cT*)vs, ldvs, (cT*)work, lwork, (bT*)rwork, bwork, info, 1, 1); }
+    #else
+           if( is_float<T>::value)  { typedef float  bT; typedef cx_float  cT; arma_fortran(arma_cgees)(jobvs, sort, select, n, (cT*)a, lda, sdim, (cT*)w, (cT*)vs, ldvs, (cT*)work, lwork, (bT*)rwork, bwork, info); }
+      else if(is_double<T>::value)  { typedef double bT; typedef cx_double cT; arma_fortran(arma_zgees)(jobvs, sort, select, n, (cT*)a, lda, sdim, (cT*)w, (cT*)vs, ldvs, (cT*)work, lwork, (bT*)rwork, bwork, info); }
+    #endif
     }
   
   
+  
+  // ### TODO FROM HERE ON ###
   
   template<typename eT>
   inline

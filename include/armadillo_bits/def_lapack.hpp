@@ -588,15 +588,15 @@ extern "C"
   void arma_fortran(arma_cgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const void* dl, const void* d, const void* du, void* dlf, void* df, void* duf, void* du2, blas_int* ipiv, const void* b, const blas_int* ldb, void* x, const blas_int* ldx,  float* rcond,  float* ferr,  float* berr, void* work,  float* rwork, blas_int* info, blas_len fact_len, blas_len trans_len);
   void arma_fortran(arma_zgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const void* dl, const void* d, const void* du, void* dlf, void* df, void* duf, void* du2, blas_int* ipiv, const void* b, const blas_int* ldb, void* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, void* work, double* rwork, blas_int* info, blas_len fact_len, blas_len trans_len);
   
-  // ### TODO FROM HERE ON ###
-  
   // Schur decomposition (real matrices)
-  void arma_fortran(arma_sgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, float*  a, const blas_int* lda, blas_int* sdim, float*  wr, float*  wi, float*  vs, const blas_int* ldvs, float*  work, const blas_int* lwork, blas_int* bwork, blas_int* info);
-  void arma_fortran(arma_dgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, double* a, const blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, const blas_int* ldvs, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_sgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, float*  a, const blas_int* lda, blas_int* sdim, float*  wr, float*  wi, float*  vs, const blas_int* ldvs, float*  work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
+  void arma_fortran(arma_dgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, double* a, const blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, const blas_int* ldvs, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
   
   // Schur decomposition (complex matrices)
-  void arma_fortran(arma_cgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, void* a, const blas_int* lda, blas_int* sdim, void* w, void* vs, const blas_int* ldvs, void* work, const blas_int* lwork, float*  rwork, blas_int* bwork, blas_int* info);
-  void arma_fortran(arma_zgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, void* a, const blas_int* lda, blas_int* sdim, void* w, void* vs, const blas_int* ldvs, void* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_cgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, void* a, const blas_int* lda, blas_int* sdim, void* w, void* vs, const blas_int* ldvs, void* work, const blas_int* lwork, float*  rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
+  void arma_fortran(arma_zgees)(const char* jobvs, const char* sort, const void* select, const blas_int* n, void* a, const blas_int* lda, blas_int* sdim, void* w, void* vs, const blas_int* ldvs, void* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
+  
+  // ### TODO FROM HERE ON ###
   
   // solve a Sylvester equation ax + xb = c, with a and b assumed to be in Schur form
   void arma_fortran(arma_strsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const float*  a, const blas_int* lda, const float*  b, const blas_int* ldb, float*  c, const blas_int* ldc, float*  scale, blas_int* info);
