@@ -140,6 +140,10 @@ guess_sympd(const Mat<eT>& A)
     A_col += N;
     }
   
+  const T square_max_diag = max_diag * max_diag;
+  
+  if(std::isfinite(square_max_diag) == false)  { return false; }
+  
   A_col = A_mem;
   
   const uword Nm1 = N-1;
@@ -159,11 +163,19 @@ guess_sympd(const Mat<eT>& A)
       const  T  A_ij_real = std::real(A_ij);
       const  T  A_ij_imag = std::imag(A_ij);
       
+      // avoid using std::abs(), as that is time consuming due to division and std::sqrt()
+      const T square_A_ij_abs = (A_ij_real * A_ij_real) + (A_ij_imag * A_ij_imag);
+      
+      if(std::isfinite(square_A_ij_abs) == false)  { return false; }
+      
+      if(square_A_ij_abs >= square_max_diag)  { return false; }
+      
       const T A_ij_real_abs = (std::abs)(A_ij_real);
       const T A_ij_imag_abs = (std::abs)(A_ij_imag);
       
-      // rough approximation
-      if( (A_ij_real_abs >= max_diag) || (A_ij_imag_abs >= max_diag) )  { return false; }
+      // // rough approximation of: if( std::abs(A_ij) >= max_diag )  { return false; }
+      // if( (A_ij_real_abs >= max_diag) || (A_ij_imag_abs >= max_diag) )  { return false; }
+      
       
       const eT& A_ji      = (*A_ji_ptr);
       const  T  A_ji_real = std::real(A_ji);
