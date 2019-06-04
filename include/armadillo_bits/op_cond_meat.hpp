@@ -60,6 +60,22 @@ op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
   
   if(A.is_empty()) { return Datum<T>::inf; }
   
+  const bool try_sympd = ( (is_cx<eT>::no) && (auxlib::crippled_lapack(A) == false) ) ? sympd_helper::guess_sympd(A) : false;
+  
+  if(try_sympd)
+    {
+    bool calc_ok = false;
+    
+    const T out_val = auxlib::rcond_sympd(A, calc_ok);
+    
+    if(calc_ok)  { return out_val; }
+    
+    // auxlib::rcond_sympd() may have failed because A isn't really sympd
+    // restore A, as auxlib::rcond_sympd() may have destroyed it
+    A = X.get_ref();
+    // fallthrough to the next return statement
+    }
+  
   return auxlib::rcond(A);
   }
 
