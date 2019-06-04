@@ -765,7 +765,7 @@ extern "C"
   void arma_fortran(arma_sgesdd)(const char* jobz, const blas_int* m, const blas_int* n, float*  a, const blas_int* lda, float*  s, float*  u, const blas_int* ldu, float*  vt, const blas_int* ldvt, float*  work, const blas_int* lwork, blas_int* iwork, blas_int* info);
   void arma_fortran(arma_dgesdd)(const char* jobz, const blas_int* m, const blas_int* n, double* a, const blas_int* lda, double* s, double* u, const blas_int* ldu, double* vt, const blas_int* ldvt, double* work, const blas_int* lwork, blas_int* iwork, blas_int* info);
   
-  // SVD (complex matrices) by diconst vide and conconst quer
+  // SVD (complex matrices) by divide and conquer
   void arma_fortran(arma_cgesdd)(const char* jobz, const blas_int* m, const blas_int* n, void* a, const blas_int* lda, float*  s, void* u, const blas_int* ldu, void* vt, const blas_int* ldvt, void* work, const blas_int* lwork, float*  rwork, blas_int* iwork, blas_int* info);
   void arma_fortran(arma_zgesdd)(const char* jobz, const blas_int* m, const blas_int* n, void* a, const blas_int* lda, double* s, void* u, const blas_int* ldu, void* vt, const blas_int* ldvt, void* work, const blas_int* lwork, double* rwork, blas_int* iwork, blas_int* info);
   
