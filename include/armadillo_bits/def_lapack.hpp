@@ -602,15 +602,15 @@ extern "C"
   void arma_fortran(arma_ctrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const void*   a, const blas_int* lda, const void*   b, const blas_int* ldb, void*   c, const blas_int* ldc, float*  scale, blas_int* info, blas_len transa_len, blas_len transb_len);
   void arma_fortran(arma_ztrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const void*   a, const blas_int* lda, const void*   b, const blas_int* ldb, void*   c, const blas_int* ldc, double* scale, blas_int* info, blas_len transa_len, blas_len transb_len);
   
-  // ### TODO FROM HERE ON ###
-  
   // QZ decomposition (real matrices)
-  void arma_fortran(arma_sgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n,  float* a, const blas_int* lda,  float* b, const blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, const blas_int* ldvsl,  float* vsr, const blas_int* ldvsr,  float* work, const blas_int* lwork,  float* bwork, blas_int* info);
-  void arma_fortran(arma_dgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, const blas_int* ldvsl, double* vsr, const blas_int* ldvsr, double* work, const blas_int* lwork, double* bwork, blas_int* info);
+  void arma_fortran(arma_sgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n,  float* a, const blas_int* lda,  float* b, const blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, const blas_int* ldvsl,  float* vsr, const blas_int* ldvsr,  float* work, const blas_int* lwork,  float* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
+  void arma_fortran(arma_dgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, const blas_int* ldvsl, double* vsr, const blas_int* ldvsr, double* work, const blas_int* lwork, double* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
   
   // QZ decomposition (complex matrices)
-  void arma_fortran(arma_cgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, void* a, const blas_int* lda, void* b, const blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, const blas_int* ldvsl, void* vsr, const blas_int* ldvsr, void* work, const blas_int* lwork,  float* rwork,  float* bwork, blas_int* info);
-  void arma_fortran(arma_zgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, void* a, const blas_int* lda, void* b, const blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, const blas_int* ldvsl, void* vsr, const blas_int* ldvsr, void* work, const blas_int* lwork, double* rwork, double* bwork, blas_int* info);
+  void arma_fortran(arma_cgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, void* a, const blas_int* lda, void* b, const blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, const blas_int* ldvsl, void* vsr, const blas_int* ldvsr, void* work, const blas_int* lwork,  float* rwork,  float* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
+  void arma_fortran(arma_zgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, void* a, const blas_int* lda, void* b, const blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, const blas_int* ldvsl, void* vsr, const blas_int* ldvsr, void* work, const blas_int* lwork, double* rwork, double* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
+  
+  // ### TODO FROM HERE ON ###
   
   // 1-norm
   float  arma_fortran(arma_slange)(const char* norm, const blas_int* m, const blas_int* n,  const float* a, const blas_int* lda,  float* work);
