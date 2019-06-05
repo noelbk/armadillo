@@ -826,71 +826,69 @@ extern "C"
     
     
     
-    // ### TODO FROM HERE ON ###
-    
-    float  arma_fortran_with_prefix(arma_slange)(char* norm, blas_int* m, blas_int* n,  float* a, blas_int* lda,  float* work)
+    float  arma_fortran_with_prefix(arma_slange)(char* norm, blas_int* m, blas_int* n,  float* a, blas_int* lda,  float* work, blas_len norm_len)
       {
-      return arma_fortran_sans_prefix(arma_slange)(norm, m, n, a, lda, work);
+      return arma_fortran_sans_prefix(arma_slange)(norm, m, n, a, lda, work, norm_len);
       }
     
-    double arma_fortran_with_prefix(arma_dlange)(char* norm, blas_int* m, blas_int* n, double* a, blas_int* lda, double* work)
+    double arma_fortran_with_prefix(arma_dlange)(char* norm, blas_int* m, blas_int* n, double* a, blas_int* lda, double* work, blas_len norm_len)
       {
-      return arma_fortran_sans_prefix(arma_dlange)(norm, m, n, a, lda, work);
+      return arma_fortran_sans_prefix(arma_dlange)(norm, m, n, a, lda, work, norm_len);
       }
     
-    float  arma_fortran_with_prefix(arma_clange)(char* norm, blas_int* m, blas_int* n,   void* a, blas_int* lda,  float* work)
+    float  arma_fortran_with_prefix(arma_clange)(char* norm, blas_int* m, blas_int* n,   void* a, blas_int* lda,  float* work, blas_len norm_len)
       {
-      return arma_fortran_sans_prefix(arma_clange)(norm, m, n, a, lda, work);
+      return arma_fortran_sans_prefix(arma_clange)(norm, m, n, a, lda, work, norm_len);
       }
     
-    double arma_fortran_with_prefix(arma_zlange)(char* norm, blas_int* m, blas_int* n,   void* a, blas_int* lda, double* work)
+    double arma_fortran_with_prefix(arma_zlange)(char* norm, blas_int* m, blas_int* n,   void* a, blas_int* lda, double* work, blas_len norm_len)
       {
-      return arma_fortran_sans_prefix(arma_zlange)(norm, m, n, a, lda, work);
-      }
-    
-    
-    
-    
-    void arma_fortran_with_prefix(arma_sgecon)(char* norm, blas_int* n,  float* a, blas_int* lda,  float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info)
-      {
-      arma_fortran_sans_prefix(arma_sgecon)(norm, n, a, lda, anorm, rcond, work, iwork, info);
-      }
-    
-    void arma_fortran_with_prefix(arma_dgecon)(char* norm, blas_int* n, double* a, blas_int* lda, double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info)
-      {
-      arma_fortran_sans_prefix(arma_dgecon)(norm, n, a, lda, anorm, rcond, work, iwork, info);
-      }
-    
-    void arma_fortran_with_prefix(arma_cgecon)(char* norm, blas_int* n, void* a, blas_int* lda,  float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info)
-      {
-      arma_fortran_sans_prefix(arma_cgecon)(norm, n, a, lda, anorm, rcond, work, rwork, info);
-      }
-    
-    void arma_fortran_with_prefix(arma_zgecon)(char* norm, blas_int* n, void* a, blas_int* lda, double* anorm, double* rcond, void* work, double* rwork, blas_int* info)
-      {
-      arma_fortran_sans_prefix(arma_zgecon)(norm, n, a, lda, anorm, rcond, work, rwork, info);
+      return arma_fortran_sans_prefix(arma_zlange)(norm, m, n, a, lda, work, norm_len);
       }
     
     
     
-    void arma_fortran_with_prefix(arma_spocon)(char* uplo, blas_int* n,  float* a, blas_int* lda,  float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info)
+    
+    void arma_fortran_with_prefix(arma_sgecon)(char* norm, blas_int* n,  float* a, blas_int* lda,  float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info, blas_len norm_len)
       {
-      arma_fortran_sans_prefix(arma_spocon)(uplo, n, a, lda, anorm, rcond, work, iwork, info);
+      arma_fortran_sans_prefix(arma_sgecon)(norm, n, a, lda, anorm, rcond, work, iwork, info, norm_len);
       }
     
-    void arma_fortran_with_prefix(arma_dpocon)(char* uplo, blas_int* n, double* a, blas_int* lda, double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info)
+    void arma_fortran_with_prefix(arma_dgecon)(char* norm, blas_int* n, double* a, blas_int* lda, double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info, blas_len norm_len)
       {
-      arma_fortran_sans_prefix(arma_dpocon)(uplo, n, a, lda, anorm, rcond, work, iwork, info);
+      arma_fortran_sans_prefix(arma_dgecon)(norm, n, a, lda, anorm, rcond, work, iwork, info, norm_len);
       }
     
-    void arma_fortran_with_prefix(arma_cpocon)(char* uplo, blas_int* n, void* a, blas_int* lda,  float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info)
+    void arma_fortran_with_prefix(arma_cgecon)(char* norm, blas_int* n, void* a, blas_int* lda,  float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info, blas_len norm_len)
       {
-      arma_fortran_sans_prefix(arma_cpocon)(uplo, n, a, lda, anorm, rcond, work, rwork, info);
+      arma_fortran_sans_prefix(arma_cgecon)(norm, n, a, lda, anorm, rcond, work, rwork, info, norm_len);
       }
     
-    void arma_fortran_with_prefix(arma_zpocon)(char* uplo, blas_int* n, void* a, blas_int* lda, double* anorm, double* rcond, void* work, double* rwork, blas_int* info)
+    void arma_fortran_with_prefix(arma_zgecon)(char* norm, blas_int* n, void* a, blas_int* lda, double* anorm, double* rcond, void* work, double* rwork, blas_int* info, blas_len norm_len)
       {
-      arma_fortran_sans_prefix(arma_zpocon)(uplo, n, a, lda, anorm, rcond, work, rwork, info);
+      arma_fortran_sans_prefix(arma_zgecon)(norm, n, a, lda, anorm, rcond, work, rwork, info, norm_len);
+      }
+    
+    
+    
+    void arma_fortran_with_prefix(arma_spocon)(char* uplo, blas_int* n,  float* a, blas_int* lda,  float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info, blas_len uplo_len)
+      {
+      arma_fortran_sans_prefix(arma_spocon)(uplo, n, a, lda, anorm, rcond, work, iwork, info, uplo_len);
+      }
+    
+    void arma_fortran_with_prefix(arma_dpocon)(char* uplo, blas_int* n, double* a, blas_int* lda, double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info, blas_len uplo_len)
+      {
+      arma_fortran_sans_prefix(arma_dpocon)(uplo, n, a, lda, anorm, rcond, work, iwork, info, uplo_len);
+      }
+    
+    void arma_fortran_with_prefix(arma_cpocon)(char* uplo, blas_int* n, void* a, blas_int* lda,  float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info, blas_len uplo_len)
+      {
+      arma_fortran_sans_prefix(arma_cpocon)(uplo, n, a, lda, anorm, rcond, work, rwork, info, uplo_len);
+      }
+    
+    void arma_fortran_with_prefix(arma_zpocon)(char* uplo, blas_int* n, void* a, blas_int* lda, double* anorm, double* rcond, void* work, double* rwork, blas_int* info, blas_len uplo_len)
+      {
+      arma_fortran_sans_prefix(arma_zpocon)(uplo, n, a, lda, anorm, rcond, work, rwork, info, uplo_len);
       }
     
     
@@ -913,6 +911,8 @@ extern "C"
       }
     
     
+    
+    // ### TODO FROM HERE ON ###
     
     void arma_fortran_with_prefix(arma_sstedc)(char* compz, blas_int* n, float*  d, float*  e, float*  z, blas_int* ldz, float*  work, blas_int* lwork, blas_int* iwork, blas_int* liwork, blas_int* info)
       {

@@ -610,29 +610,27 @@ extern "C"
   void arma_fortran(arma_cgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, void* a, const blas_int* lda, void* b, const blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, const blas_int* ldvsl, void* vsr, const blas_int* ldvsr, void* work, const blas_int* lwork,  float* rwork,  float* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
   void arma_fortran(arma_zgges)(const char* jobvsl, const char* jobvsr, const char* sort, const void* selctg, const blas_int* n, void* a, const blas_int* lda, void* b, const blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, const blas_int* ldvsl, void* vsr, const blas_int* ldvsr, void* work, const blas_int* lwork, double* rwork, double* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
   
-  // ### TODO FROM HERE ON ###
-  
   // 1-norm
-  float  arma_fortran(arma_slange)(const char* norm, const blas_int* m, const blas_int* n,  const float* a, const blas_int* lda,  float* work);
-  double arma_fortran(arma_dlange)(const char* norm, const blas_int* m, const blas_int* n, const double* a, const blas_int* lda, double* work);
-  float  arma_fortran(arma_clange)(const char* norm, const blas_int* m, const blas_int* n,   const void* a, const blas_int* lda,  float* work);
-  double arma_fortran(arma_zlange)(const char* norm, const blas_int* m, const blas_int* n,   const void* a, const blas_int* lda, double* work);
+  float  arma_fortran(arma_slange)(const char* norm, const blas_int* m, const blas_int* n,  const float* a, const blas_int* lda,  float* work, blas_len norm_len);
+  double arma_fortran(arma_dlange)(const char* norm, const blas_int* m, const blas_int* n, const double* a, const blas_int* lda, double* work, blas_len norm_len);
+  float  arma_fortran(arma_clange)(const char* norm, const blas_int* m, const blas_int* n,   const void* a, const blas_int* lda,  float* work, blas_len norm_len);
+  double arma_fortran(arma_zlange)(const char* norm, const blas_int* m, const blas_int* n,   const void* a, const blas_int* lda, double* work, blas_len norm_len);
   
   // reciprocal of condition number (real, generic matrix)
-  void arma_fortran(arma_sgecon)(const char* norm, const blas_int* n,  const float* a, const blas_int* lda,  const float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info);
-  void arma_fortran(arma_dgecon)(const char* norm, const blas_int* n, const double* a, const blas_int* lda, const double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info);
+  void arma_fortran(arma_sgecon)(const char* norm, const blas_int* n,  const float* a, const blas_int* lda,  const float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info, blas_len norm_len);
+  void arma_fortran(arma_dgecon)(const char* norm, const blas_int* n, const double* a, const blas_int* lda, const double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info, blas_len norm_len);
   
   // reciprocal of condition number (complex, generic matrix)
-  void arma_fortran(arma_cgecon)(const char* norm, const blas_int* n, const void* a, const blas_int* lda,  const float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info);
-  void arma_fortran(arma_zgecon)(const char* norm, const blas_int* n, const void* a, const blas_int* lda, const double* anorm, double* rcond, void* work, double* rwork, blas_int* info);
+  void arma_fortran(arma_cgecon)(const char* norm, const blas_int* n, const void* a, const blas_int* lda,  const float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info, blas_len norm_len);
+  void arma_fortran(arma_zgecon)(const char* norm, const blas_int* n, const void* a, const blas_int* lda, const double* anorm, double* rcond, void* work, double* rwork, blas_int* info, blas_len norm_len);
   
   // reciprocal of condition number (real, symmetric positive definite matrix)
-  void arma_fortran(arma_spocon)(const char* uplo, const blas_int* n,  const float* a, const blas_int* lda,  const float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info);
-  void arma_fortran(arma_dpocon)(const char* uplo, const blas_int* n, const double* a, const blas_int* lda, const double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info);
+  void arma_fortran(arma_spocon)(const char* uplo, const blas_int* n,  const float* a, const blas_int* lda,  const float* anorm,  float* rcond,  float* work, blas_int* iwork, blas_int* info, blas_len uplo_len);
+  void arma_fortran(arma_dpocon)(const char* uplo, const blas_int* n, const double* a, const blas_int* lda, const double* anorm, double* rcond, double* work, blas_int* iwork, blas_int* info, blas_len uplo_len);
   
   // reciprocal of condition number (complex, hermitian positive definite matrix)
-  void arma_fortran(arma_cpocon)(const char* uplo, const blas_int* n, const void* a, const blas_int* lda,  const float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info);
-  void arma_fortran(arma_zpocon)(const char* uplo, const blas_int* n, const void* a, const blas_int* lda, const double* anorm, double* rcond, void* work, double* rwork, blas_int* info);
+  void arma_fortran(arma_cpocon)(const char* uplo, const blas_int* n, const void* a, const blas_int* lda,  const float* anorm,  float* rcond, void* work,  float* rwork, blas_int* info, blas_len uplo_len);
+  void arma_fortran(arma_zpocon)(const char* uplo, const blas_int* n, const void* a, const blas_int* lda, const double* anorm, double* rcond, void* work, double* rwork, blas_int* info, blas_len uplo_len);
   
   // obtain parameters according to the local configuration of lapack
   blas_int arma_fortran(arma_ilaenv)(const blas_int* ispec, const char* name, const char* opts, const blas_int* n1, const blas_int* n2, const blas_int* n3, const blas_int* n4, blas_len name_len, blas_len opts_len);
@@ -640,6 +638,8 @@ extern "C"
   // calculate eigenvalues of an upper Hessenberg matrix
   void arma_fortran(arma_slahqr)(const blas_int* wantt, const blas_int* wantz, const blas_int* n, const blas_int* ilo, const blas_int* ihi, float*  h, const blas_int* ldh, float*  wr, float*  wi, const blas_int* iloz, const blas_int* ihiz, float*  z, const blas_int* ldz, blas_int* info);
   void arma_fortran(arma_dlahqr)(const blas_int* wantt, const blas_int* wantz, const blas_int* n, const blas_int* ilo, const blas_int* ihi, double* h, const blas_int* ldh, double* wr, double* wi, const blas_int* iloz, const blas_int* ihiz, double* z, const blas_int* ldz, blas_int* info);
+  
+  // ### TODO FROM HERE ON ###
   
   // calculate eigenvalues of a symmetric tridiagonal matrix
   void arma_fortran(arma_sstedc)(const char* compz, const blas_int* n, float*  d, float*  e, float*  z, const blas_int* ldz, float*  work, const blas_int* lwork, blas_int* iwork, const blas_int* liwork, blas_int* info);

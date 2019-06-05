@@ -881,8 +881,6 @@ namespace lapack
   
   
   
-  // ### TODO FROM HERE ON ###
-  
   template<typename eT>
   inline
   typename get_pod_type<eT>::result
@@ -892,33 +890,17 @@ namespace lapack
     
     typedef typename get_pod_type<eT>::result out_T;
     
-    if(is_float<eT>::value)
-      {
-      typedef float pod_T;
-      typedef float     T;
-      return out_T( arma_fortran(arma_slange)(norm, m, n, (T*)a, lda, (pod_T*)work) );
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double pod_T;
-      typedef double     T;
-      return out_T( arma_fortran(arma_dlange)(norm, m, n, (T*)a, lda, (pod_T*)work) );
-      }
-    else
-    if(is_cx_float<eT>::value)
-      {
-      typedef float               pod_T;
-      typedef std::complex<float>     T;
-      return out_T( arma_fortran(arma_clange)(norm, m, n, (T*)a, lda, (pod_T*)work) );
-      }
-    else
-    if(is_cx_double<eT>::value)
-      {
-      typedef double               pod_T;
-      typedef std::complex<double>     T;
-      return out_T( arma_fortran(arma_zlange)(norm, m, n, (T*)a, lda, (pod_T*)work) );
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if(    is_float<eT>::value)  { typedef float  pod_T; typedef float     T; return out_T( arma_fortran(arma_slange)(norm, m, n, (T*)a, lda, (pod_T*)work, 1) ); }
+      else if(   is_double<eT>::value)  { typedef double pod_T; typedef double    T; return out_T( arma_fortran(arma_dlange)(norm, m, n, (T*)a, lda, (pod_T*)work, 1) ); }
+      else if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  T; return out_T( arma_fortran(arma_clange)(norm, m, n, (T*)a, lda, (pod_T*)work, 1) ); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double T; return out_T( arma_fortran(arma_zlange)(norm, m, n, (T*)a, lda, (pod_T*)work, 1) ); }
+    #else
+           if(    is_float<eT>::value)  { typedef float  pod_T; typedef float     T; return out_T( arma_fortran(arma_slange)(norm, m, n, (T*)a, lda, (pod_T*)work) ); }
+      else if(   is_double<eT>::value)  { typedef double pod_T; typedef double    T; return out_T( arma_fortran(arma_dlange)(norm, m, n, (T*)a, lda, (pod_T*)work) ); }
+      else if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  T; return out_T( arma_fortran(arma_clange)(norm, m, n, (T*)a, lda, (pod_T*)work) ); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double T; return out_T( arma_fortran(arma_zlange)(norm, m, n, (T*)a, lda, (pod_T*)work) ); }
+    #endif
     }
   
 
@@ -930,17 +912,13 @@ namespace lapack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_sgecon)(norm, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dgecon)(norm, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sgecon)(norm, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info, 1); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dgecon)(norm, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info, 1); }
+    #else
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sgecon)(norm, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dgecon)(norm, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info); }
+    #endif
     }
   
   
@@ -954,19 +932,13 @@ namespace lapack
     
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_cx_float<eT>::value)
-      {
-      typedef float                    pod_T;
-      typedef typename std::complex<T>  cx_T;
-      arma_fortran(arma_cgecon)(norm, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info);
-      }
-    else
-    if(is_cx_double<eT>::value)
-      {
-      typedef double                   pod_T;
-      typedef typename std::complex<T>  cx_T;
-      arma_fortran(arma_zgecon)(norm, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  cx_T; arma_fortran(arma_cgecon)(norm, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info, 1); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double cx_T; arma_fortran(arma_zgecon)(norm, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info, 1); }
+    #else
+           if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  cx_T; arma_fortran(arma_cgecon)(norm, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double cx_T; arma_fortran(arma_zgecon)(norm, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info); }
+    #endif
     }
   
   
@@ -978,17 +950,13 @@ namespace lapack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_spocon)(uplo, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dpocon)(uplo, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_spocon)(uplo, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info, 1); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dpocon)(uplo, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info, 1); }
+    #else
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_spocon)(uplo, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dpocon)(uplo, n, (T*)a, lda, (T*)anorm, (T*)rcond, (T*)work, iwork, info); }
+    #endif
     }
   
   
@@ -1002,19 +970,13 @@ namespace lapack
     
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
-    if(is_cx_float<eT>::value)
-      {
-      typedef float                    pod_T;
-      typedef typename std::complex<T>  cx_T;
-      arma_fortran(arma_cpocon)(uplo, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info);
-      }
-    else
-    if(is_cx_double<eT>::value)
-      {
-      typedef double                   pod_T;
-      typedef typename std::complex<T>  cx_T;
-      arma_fortran(arma_zpocon)(uplo, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  cx_T; arma_fortran(arma_cpocon)(uplo, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info, 1); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double cx_T; arma_fortran(arma_zpocon)(uplo, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info, 1); }
+    #else
+           if( is_cx_float<eT>::value)  { typedef float  pod_T; typedef cx_float  cx_T; arma_fortran(arma_cpocon)(uplo, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info); }
+      else if(is_cx_double<eT>::value)  { typedef double pod_T; typedef cx_double cx_T; arma_fortran(arma_zpocon)(uplo, n, (cx_T*)a, lda, (pod_T*)anorm, (pod_T*)rcond, (cx_T*)work, (pod_T*)rwork, info); }
+    #endif
     }
   
   
@@ -1046,6 +1008,8 @@ namespace lapack
     }
   
   
+  
+  // ### TODO FROM HERE ON ###
   
   template<typename eT>
   inline
