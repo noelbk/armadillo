@@ -30,31 +30,17 @@ namespace arpack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
 
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_snaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dnaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
-    else
-    if(is_cx_float<eT>::value)
-      {
-      typedef std::complex<float> T;
-      typedef float xT;
-      arma_fortran(arma_cnaupd)(ido, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info);
-      }
-    else
-    if(is_cx_double<eT>::value)
-      {
-      typedef std::complex<double> T;
-      typedef double xT;
-      arma_fortran(arma_znaupd)(ido, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if(    is_float<eT>::value)  { typedef float     T; arma_ignore(rwork); arma_fortran(arma_snaupd)(ido, bmat, n, which, nev,  (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl,              info, 1, 1); }
+      else if(   is_double<eT>::value)  { typedef double    T; arma_ignore(rwork); arma_fortran(arma_dnaupd)(ido, bmat, n, which, nev,  (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl,              info, 1, 1); }
+      else if (is_cx_float<eT>::value)  { typedef cx_float  T; typedef float  xT;  arma_fortran(arma_cnaupd)(ido, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info, 1, 1); }
+      else if(is_cx_double<eT>::value)  { typedef cx_double T; typedef double xT;  arma_fortran(arma_znaupd)(ido, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info, 1, 1); }
+    #else
+           if(    is_float<eT>::value)  { typedef float     T; arma_ignore(rwork); arma_fortran(arma_snaupd)(ido, bmat, n, which, nev,  (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl,              info); }
+      else if(   is_double<eT>::value)  { typedef double    T; arma_ignore(rwork); arma_fortran(arma_dnaupd)(ido, bmat, n, which, nev,  (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl,              info); }
+      else if (is_cx_float<eT>::value)  { typedef cx_float  T; typedef float  xT;  arma_fortran(arma_cnaupd)(ido, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info); }
+      else if(is_cx_double<eT>::value)  { typedef cx_double T; typedef double xT;  arma_fortran(arma_znaupd)(ido, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info); }
+    #endif
     }
 
 
@@ -68,17 +54,13 @@ namespace arpack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
 
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_ssaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dsaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_ssaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info, 1, 1); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dsaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info, 1, 1); }
+    #else
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_ssaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dsaupd)(ido, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info); }
+    #endif
     }
 
 
@@ -90,17 +72,13 @@ namespace arpack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
 
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_sseupd)(rvec, howmny, select, (T*) d, (T*) z, ldz, (T*) sigma, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dseupd)(rvec, howmny, select, (T*) d, (T*) z, ldz, (T*) sigma, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sseupd)(rvec, howmny, select, (T*) d, (T*) z, ldz, (T*) sigma, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info, 1, 1, 1); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dseupd)(rvec, howmny, select, (T*) d, (T*) z, ldz, (T*) sigma, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info, 1, 1, 1); }
+    #else
+           if( is_float<eT>::value)  { typedef float  T; arma_fortran(arma_sseupd)(rvec, howmny, select, (T*) d, (T*) z, ldz, (T*) sigma, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info); }
+      else if(is_double<eT>::value)  { typedef double T; arma_fortran(arma_dseupd)(rvec, howmny, select, (T*) d, (T*) z, ldz, (T*) sigma, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info); }
+    #endif
     }
 
 
@@ -114,31 +92,17 @@ namespace arpack
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
 
-    if(is_float<eT>::value)
-      {
-      typedef float T;
-      arma_fortran(arma_sneupd)(rvec, howmny, select, (T*) dr, (T*) di, (T*) z, ldz, (T*) sigmar, (T*) sigmai, (T*) workev, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
-    else
-    if(is_double<eT>::value)
-      {
-      typedef double T;
-      arma_fortran(arma_dneupd)(rvec, howmny, select, (T*) dr, (T*) di, (T*) z, ldz, (T*) sigmar, (T*) sigmai, (T*) workev, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info);
-      }
-    else
-    if(is_cx_float<eT>::value)
-      {
-      typedef float xT; // eT is taken
-      typedef std::complex<float> T;
-      arma_fortran(arma_cneupd)(rvec, howmny, select, (T*) dr, (T*) z, ldz, (T*) sigmar, (T*) workev, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info);
-      }
-    else
-    if(is_cx_double<eT>::value)
-      {
-      typedef double xT; // eT is taken
-      typedef std::complex<double> T;
-      arma_fortran(arma_zneupd)(rvec, howmny, select, (T*) dr, (T*) z, ldz, (T*) sigmar, (T*) workev, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info);
-      }
+    #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
+           if(    is_float<eT>::value)  { typedef float     T; arma_ignore(rwork); arma_fortran(arma_sneupd)(rvec, howmny, select, (T*) dr, (T*) di, (T*) z, ldz, (T*) sigmar, (T*) sigmai, (T*) workev, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info, 1, 1, 1); }
+      else if(   is_double<eT>::value)  { typedef double    T; arma_ignore(rwork); arma_fortran(arma_dneupd)(rvec, howmny, select, (T*) dr, (T*) di, (T*) z, ldz, (T*) sigmar, (T*) sigmai, (T*) workev, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info, 1, 1, 1); }
+      else if( is_cx_float<eT>::value)  { typedef cx_float  T; typedef float  xT;  arma_fortran(arma_cneupd)(rvec, howmny, select, (T*) dr, (T*) z, ldz, (T*) sigmar, (T*) workev, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info, 1, 1, 1); }
+      else if(is_cx_double<eT>::value)  { typedef cx_double T; typedef double xT;  arma_fortran(arma_zneupd)(rvec, howmny, select, (T*) dr, (T*) z, ldz, (T*) sigmar, (T*) workev, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info, 1, 1, 1); }
+    #else
+           if(    is_float<eT>::value)  { typedef float     T; arma_ignore(rwork); arma_fortran(arma_sneupd)(rvec, howmny, select, (T*) dr, (T*) di, (T*) z, ldz, (T*) sigmar, (T*) sigmai, (T*) workev, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info); }
+      else if(   is_double<eT>::value)  { typedef double    T; arma_ignore(rwork); arma_fortran(arma_dneupd)(rvec, howmny, select, (T*) dr, (T*) di, (T*) z, ldz, (T*) sigmar, (T*) sigmai, (T*) workev, bmat, n, which, nev, (T*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, info); }
+      else if( is_cx_float<eT>::value)  { typedef cx_float  T; typedef float  xT;  arma_fortran(arma_cneupd)(rvec, howmny, select, (T*) dr, (T*) z, ldz, (T*) sigmar, (T*) workev, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info); }
+      else if(is_cx_double<eT>::value)  { typedef cx_double T; typedef double xT;  arma_fortran(arma_zneupd)(rvec, howmny, select, (T*) dr, (T*) z, ldz, (T*) sigmar, (T*) workev, bmat, n, which, nev, (xT*) tol, (T*) resid, ncv, (T*) v, ldv, iparam, ipntr, (T*) workd, (T*) workl, lworkl, (xT*) rwork, info); }
+    #endif
     }
 
 
