@@ -639,15 +639,13 @@ extern "C"
   void arma_fortran(arma_slahqr)(const blas_int* wantt, const blas_int* wantz, const blas_int* n, const blas_int* ilo, const blas_int* ihi, float*  h, const blas_int* ldh, float*  wr, float*  wi, const blas_int* iloz, const blas_int* ihiz, float*  z, const blas_int* ldz, blas_int* info);
   void arma_fortran(arma_dlahqr)(const blas_int* wantt, const blas_int* wantz, const blas_int* n, const blas_int* ilo, const blas_int* ihi, double* h, const blas_int* ldh, double* wr, double* wi, const blas_int* iloz, const blas_int* ihiz, double* z, const blas_int* ldz, blas_int* info);
   
-  // ### TODO FROM HERE ON ###
-  
   // calculate eigenvalues of a symmetric tridiagonal matrix
-  void arma_fortran(arma_sstedc)(const char* compz, const blas_int* n, float*  d, float*  e, float*  z, const blas_int* ldz, float*  work, const blas_int* lwork, blas_int* iwork, const blas_int* liwork, blas_int* info);
-  void arma_fortran(arma_dstedc)(const char* compz, const blas_int* n, double* d, double* e, double* z, const blas_int* ldz, double* work, const blas_int* lwork, blas_int* iwork, const blas_int* liwork, blas_int* info);
+  void arma_fortran(arma_sstedc)(const char* compz, const blas_int* n, float*  d, float*  e, float*  z, const blas_int* ldz, float*  work, const blas_int* lwork, blas_int* iwork, const blas_int* liwork, blas_int* info, blas_len compz_len);
+  void arma_fortran(arma_dstedc)(const char* compz, const blas_int* n, double* d, double* e, double* z, const blas_int* ldz, double* work, const blas_int* lwork, blas_int* iwork, const blas_int* liwork, blas_int* info, blas_len compz_len);
   
   // calculate eigenvectors of a Schur form matrix
-  void arma_fortran(arma_strevc)(const char* side, const char* howmny, blas_int* select, const blas_int* n, const float*  t, const blas_int* ldt, float*  vl, const blas_int* ldvl, float*  vr, const blas_int* ldvr, const blas_int* mm, blas_int* m, float*  work, blas_int* info);
-  void arma_fortran(arma_dtrevc)(const char* side, const char* howmny, blas_int* select, const blas_int* n, const double* t, const blas_int* ldt, double* vl, const blas_int* ldvl, double* vr, const blas_int* ldvr, const blas_int* mm, blas_int* m, double* work, blas_int* info);
+  void arma_fortran(arma_strevc)(const char* side, const char* howmny, blas_int* select, const blas_int* n, const float*  t, const blas_int* ldt, float*  vl, const blas_int* ldvl, float*  vr, const blas_int* ldvr, const blas_int* mm, blas_int* m, float*  work, blas_int* info, blas_len side_len, blas_len howmny_len);
+  void arma_fortran(arma_dtrevc)(const char* side, const char* howmny, blas_int* select, const blas_int* n, const double* t, const blas_int* ldt, double* vl, const blas_int* ldvl, double* vr, const blas_int* ldvr, const blas_int* mm, blas_int* m, double* work, blas_int* info, blas_len side_len, blas_len howmny_len);
   
   // generate a vector of random numbers
   void arma_fortran(arma_slarnv)(const blas_int* idist, blas_int* const iseed, blas_int* n, float*  x);
