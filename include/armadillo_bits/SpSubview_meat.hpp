@@ -308,8 +308,10 @@ SpSubview<eT>::operator=(const Base<eT, T1>& in)
   
   if(n_nonzero == 0)
     {
-    // insert into submatrix
-    access::rw(m) = m + B;
+    //// insert into submatrix
+    
+    //access::rw(m) = m + B;
+    spglue_merge::apply(access::rw(m), m, B);
     }
   else
     {
@@ -349,8 +351,10 @@ SpSubview<eT>::operator=(const Base<eT, T1>& in)
       access::rw(A.col_ptrs[i + 1]) += A.col_ptrs[i];
       }
     
-    // insert into submatrix
-    access::rw(m) = A + B;
+    //// insert into submatrix
+    
+    //access::rw(m) = A + B;
+    spglue_merge::apply(access::rw(m), A, B);
     }
   
   access::rw(n_nonzero) = B_n_nonzero;
@@ -503,8 +507,10 @@ SpSubview<eT>::operator_equ_common(const SpBase<eT, T1>& in)
   
   if(n_nonzero == 0)
     {
-    // insert into submatrix
-    access::rw(m) = m + B;
+    //// insert into submatrix
+    
+    //access::rw(m) = m + B;
+    spglue_merge::apply(access::rw(m), m, B);
     }
   else
     {
@@ -544,8 +550,10 @@ SpSubview<eT>::operator_equ_common(const SpBase<eT, T1>& in)
       access::rw(A.col_ptrs[i + 1]) += A.col_ptrs[i];
       }
     
-    // insert into submatrix
-    access::rw(m) = A + B;
+    //// insert into submatrix
+    
+    //access::rw(m) = A + B;
+    spglue_merge::apply(access::rw(m), A, B);
     }
   
   
