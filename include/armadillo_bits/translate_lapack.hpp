@@ -22,8 +22,6 @@
 namespace lapack
   {
   
-  // TODO: where required, take into account ARMA_USE_FORTRAN_HIDDEN_ARGS
-  
   template<typename eT>
   inline
   void

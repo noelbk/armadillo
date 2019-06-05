@@ -43,8 +43,6 @@ namespace arma
 
 extern "C"
   {
-  // TODO: where required, extend functions to have "hidden" args
-  
   #if defined(ARMA_USE_BLAS)
     
     float arma_fortran_with_prefix(arma_sasum)(blas_int* n, const float* x, blas_int* incx)

@@ -404,8 +404,6 @@ extern "C"
 {
 #if defined(ARMA_USE_FORTRAN_HIDDEN_ARGS)
   
-  // TODO: where required, extend functions to have "hidden" args
-  
   // LU factorisation
   void arma_fortran(arma_sgetrf)(const blas_int* m, const blas_int* n,  float* a, const blas_int* lda, blas_int* ipiv, blas_int* info);
   void arma_fortran(arma_dgetrf)(const blas_int* m, const blas_int* n, double* a, const blas_int* lda, blas_int* ipiv, blas_int* info);
