@@ -1380,8 +1380,8 @@ sp_auxlib::run_aupd
           Col<T> in(workd.memptr() + ipntr(0) - 1, n, false /* don't copy */);
           
           out.zeros();
-          typename SpMat<eT>::const_iterator x_it     = X.begin();
-          typename SpMat<eT>::const_iterator x_it_end = X.end();
+          typename SpMat<T>::const_iterator x_it     = X.begin();
+          typename SpMat<T>::const_iterator x_it_end = X.end();
           
           while(x_it != x_it_end)
             {
