@@ -1291,7 +1291,7 @@ inline
 void
 sp_auxlib::run_aupd
   (
-  const uword n_eigvals, char* which, const SpMat<eT>& X, const bool sym,
+  const uword n_eigvals, char* which, const SpMat<T>& X, const bool sym,
   blas_int& n, eT& tol,
   podarray<T>& resid, blas_int& ncv, podarray<T>& v, blas_int& ldv,
   podarray<blas_int>& iparam, podarray<blas_int>& ipntr,
