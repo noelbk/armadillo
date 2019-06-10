@@ -12660,7 +12660,6 @@ The argument <i>tol</i> is optional; it specifies the tolerance for convergence
 it's more difficult to compute the smallest eigenvalues than the largest eigenvalues;
 <br>if the decomposition fails, try increasing <i>k</i> (number of eigenvalues) and/or the tolerance
 </li>
-<li>there is no explicit check whether <i>X</i> is symmetric</li>
 </ul>
 </li>
 <br>
@@ -18196,6 +18195,7 @@ List of additions and changes for each version:
 <li>expanded <a href="#solve">solve()</a> with <code>solve_opts::likely_sympd</code> to indicate that the given matrix is likely positive definite</li>
 <li>more robust automatic detection of positive definite matrices by <a href="#solve">solve()</a> and <a href="#inv">inv()</a></li>
 <li>faster handling of sparse submatrices</li>
+<li>expanded <a href="#eigs_sym">eigs_sym()</a> to print a warning if the given matrix is not symmetric</li>
 <li>
 extended LAPACK function prototypes to follow Fortran <a href="https://gcc.gnu.org/onlinedocs/gfortran/Argument-passing-conventions.html">passing conventions</a> for so-called "hidden arguments",
 in order to address <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=90329">GCC Bug 90329</a>;
