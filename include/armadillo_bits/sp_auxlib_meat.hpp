@@ -614,15 +614,17 @@ sp_auxlib::eigs_gen_arpack(Col< std::complex<T> >& eigval, Mat< std::complex<T> 
 
 
 //! immediate eigendecomposition of non-symmetric complex sparse object
-template<typename T>
+template<typename T, typename T1>
 inline
 bool
-sp_auxlib::eigs_gen(Col< std::complex<T> >& eigval, Mat< std::complex<T> >& eigvec, const SpMat< std::complex<T> >& X, const uword n_eigvals, const char* form_str, const T default_tol)
+sp_auxlib::eigs_gen(Col< std::complex<T> >& eigval, Mat< std::complex<T> >& eigvec, const SpBase< std::complex<T>, T1>& X_expr, const uword n_eigvals, const char* form_str, const T default_tol)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_ARPACK)
     {
+    typedef typename std::complex<T> eT;
+    
     const form_type form_val = sp_auxlib::interpret_form_str(form_str);
     
     arma_debug_check( (form_val == form_none), "eigs_gen(): unknown form specified" );
@@ -648,6 +650,9 @@ sp_auxlib::eigs_gen(Col< std::complex<T> >& eigval, Mat< std::complex<T> >& eigv
       default:       which = which_lm;
       }
     
+    const unwrap_spmat<T1> U(X_expr.get_ref());
+    
+    const SpMat<eT>& X = U.M;
     
     // Make sure it's square.
     arma_debug_check( (X.n_rows != X.n_cols), "eigs_gen(): given matrix must be square sized" );
@@ -711,7 +716,7 @@ sp_auxlib::eigs_gen(Col< std::complex<T> >& eigval, Mat< std::complex<T> >& eigv
     {
     arma_ignore(eigval);
     arma_ignore(eigvec);
-    arma_ignore(X);
+    arma_ignore(X_expr);
     arma_ignore(n_eigvals);
     arma_ignore(form_str);
     arma_ignore(default_tol);
