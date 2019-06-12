@@ -280,8 +280,8 @@ glue_solve_tri::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   
   bool status = false;
   
-  if(equilibrate)   { arma_debug_warn("solve(): option 'equilibrate' ignored for triangular matrices");  }
-  if(likely_sympd)  { arma_debug_warn("solve(): option 'likely_sympd' ignored for triangular matrices"); }
+  if(equilibrate)   { arma_debug_warn("solve(): option 'equilibrate' ignored for triangular matrix");  }
+  if(likely_sympd)  { arma_debug_warn("solve(): option 'likely_sympd' ignored for triangular matrix"); }
   
   const quasi_unwrap<T1> U(A_expr.get_ref());
   const Mat<eT>& A     = U.M;
