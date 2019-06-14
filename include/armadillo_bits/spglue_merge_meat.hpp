@@ -23,48 +23,64 @@ template<typename eT>
 arma_hot
 inline
 void
-spglue_merge::apply(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& B)
-  {
-  arma_extra_debug_sigprint();
-  
-  const bool is_alias = A.is_alias(out) || B.is_alias(out);
-  
-  if(is_alias == false)
-    {
-    spglue_merge::apply_noalias(out, A, B);
-    }
-  else
-    {
-    SpMat<eT> tmp;
-    
-    spglue_merge::apply_noalias(tmp, A, B);
-    
-    out.steal_mem(tmp);
-    }
-  }
-
-
-
-//! merge under the assumption that there is no overlap of non-zero elements between A and B
-//! this is a simplified form of spglue_plus::apply_noalias()
-template<typename eT>
-arma_hot
-inline
-void
-spglue_merge::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& B)
+spglue_merge::apply(SpMat<eT>& A, const uword A_sv_n_nonzero, const uword sv_row_start, const uword sv_row_end, const uword sv_col_start, const uword sv_col_end, const SpMat<eT>& B)
   {
   arma_extra_debug_sigprint();
   
   arma_debug_assert_same_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols, "merge");
   
-  const uword merge_n_nonzero = A.n_nonzero + B.n_nonzero;
+  const uword merge_n_nonzero = A.n_nonzero - A_sv_n_nonzero + B.n_nonzero;
   
-  if(merge_n_nonzero == 0)  { out.zeros(A.n_rows, A.n_cols); return; }
+  if(merge_n_nonzero == 0)  { A.zeros(); return; }
   
-  if(A.n_nonzero == 0)  { out = B; return; }
-  if(B.n_nonzero == 0)  { out = A; return; }
+  if(A_sv_n_nonzero == A.n_nonzero)
+    {
+    // A has all of its elements in the subview
+    // so the merge is equivalent to overwrite of A
+    
+    A = B;
+    return;
+    }
   
-  out.reserve(A.n_rows, A.n_cols, merge_n_nonzero);
+  if(A_sv_n_nonzero > (A.n_nonzero/2))
+    {
+    // A has most of its elements in the subview,
+    // so regenerate matrix A with zeros in the subview region
+    // in order to increase merging efficiency
+    
+    SpMat<eT> tmp(arma_reserve_indicator(), A.n_rows, A.n_cols, A.n_nonzero - A_sv_n_nonzero);
+    
+    typename SpMat<eT>::const_iterator A_it     = A.begin();
+    typename SpMat<eT>::const_iterator A_it_end = A.end();
+    
+    uword tmp_count = 0;
+    
+    for(; A_it != A_it_end; ++A_it)
+      {
+      const uword A_it_row = A_it.row();
+      const uword A_it_col = A_it.col();
+      
+      const bool inside_box = ((A_it_row >= sv_row_start) && (A_it_row <= sv_row_end)) && ((A_it_col >= sv_col_start) && (A_it_col <= sv_col_end));
+      
+      if(inside_box == false)
+        {
+        access::rw(tmp.values[tmp_count])      = (*A_it);
+        access::rw(tmp.row_indices[tmp_count]) = A_it_row;
+        access::rw(tmp.col_ptrs[A_it_col + 1])++;
+        ++tmp_count;
+        }
+      }
+    
+    for(uword i=0; i < tmp.n_cols; ++i)
+      {
+      access::rw(tmp.col_ptrs[i + 1]) += tmp.col_ptrs[i];
+      }
+    
+    A.steal_mem(tmp);
+    }
+  
+  
+  SpMat<eT> out(arma_reserve_indicator(), A.n_rows, A.n_cols, merge_n_nonzero);
   
   typename SpMat<eT>::const_iterator x_it  = A.begin();
   typename SpMat<eT>::const_iterator x_end = A.end();
@@ -86,32 +102,47 @@ spglue_merge::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>&
     
     bool use_y_loc = false;
     
-    if((x_it_col < y_it_col) || ((x_it_col == y_it_col) && (x_it_row < y_it_row))) // if y is closer to the end
-      {
-      out_val = (*x_it);
-      
-      ++x_it;
-      }
-    else
+    if(x_it == y_it)
       {
       out_val = (*y_it);
       
+      ++x_it;
       ++y_it;
-      
-      use_y_loc = true;
+      }
+    else
+      {
+      if((x_it_col < y_it_col) || ((x_it_col == y_it_col) && (x_it_row < y_it_row))) // if y is closer to the end
+        {
+        const bool x_inside_box = ((x_it_row >= sv_row_start) && (x_it_row <= sv_row_end)) && ((x_it_col >= sv_col_start) && (x_it_col <= sv_col_end));
+        
+        out_val = (x_inside_box) ? eT(0) : (*x_it);
+        
+        ++x_it;
+        }
+      else
+        {
+        out_val = (*y_it);
+        
+        ++y_it;
+        
+        use_y_loc = true;
+        }
       }
     
-    access::rw(out.values[count]) = out_val;
-    
-    const uword out_row = (use_y_loc == false) ? x_it_row : y_it_row;
-    const uword out_col = (use_y_loc == false) ? x_it_col : y_it_col;
-    
-    access::rw(out.row_indices[count]) = out_row;
-    access::rw(out.col_ptrs[out_col + 1])++;
-    ++count;
+    if(out_val != eT(0))
+      {
+      access::rw(out.values[count]) = out_val;
+      
+      const uword out_row = (use_y_loc == false) ? x_it_row : y_it_row;
+      const uword out_col = (use_y_loc == false) ? x_it_col : y_it_col;
+      
+      access::rw(out.row_indices[count]) = out_row;
+      access::rw(out.col_ptrs[out_col + 1])++;
+      ++count;
+      }
     }
   
-  arma_check( (count != merge_n_nonzero), "spglue_merge::apply_noalias(): internal error: count != merge_n_nonzero" );
+  arma_check( (count != merge_n_nonzero), "spglue_merge::apply(): internal error: count != merge_n_nonzero" );
   
   const uword out_n_cols = out.n_cols;
   
@@ -121,6 +152,8 @@ spglue_merge::apply_noalias(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>&
     {
     col_ptrs[c] += col_ptrs[c - 1];
     }
+  
+  A.steal_mem(out);
   }
 
 

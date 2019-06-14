@@ -26,10 +26,7 @@ class spglue_merge
   public:
   
   template<typename eT>
-  arma_hot inline static void apply(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& B);
-  
-  template<typename eT>
-  arma_hot inline static void apply_noalias(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& B);
+  arma_hot inline static void apply(SpMat<eT>& A, const uword A_sv_n_nonzero, const uword sv_row_start, const uword sv_row_end, const uword sv_col_start, const uword sv_col_end, const SpMat<eT>& B);
   };
 
 

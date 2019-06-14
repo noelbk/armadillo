@@ -306,56 +306,13 @@ SpSubview<eT>::operator=(const Base<eT, T1>& in)
     }
   
   
-  if(n_nonzero == 0)
-    {
-    //// insert into submatrix
+  const uword sv_row_start = aux_row1;
+  const uword sv_col_start = aux_col1;
+  
+  const uword sv_row_end   = aux_row1 + n_rows - 1;
+  const uword sv_col_end   = aux_col1 + n_cols - 1;
     
-    //access::rw(m) = m + B;
-    spglue_merge::apply(access::rw(m), m, B);
-    }
-  else
-    {
-    // generate matrix A
-    
-    const uword row_start = aux_row1;
-    const uword col_start = aux_col1;
-    
-    const uword row_end   = aux_row1 + n_rows - 1;
-    const uword col_end   = aux_col1 + n_cols - 1;
-    
-    SpMat<eT> A(arma_reserve_indicator(), m.n_rows, m.n_cols, m.n_nonzero - n_nonzero);
-    
-    typename SpMat<eT>::const_iterator m_it     = m.begin();
-    typename SpMat<eT>::const_iterator m_it_end = m.end();
-    
-    uword A_count = 0;
-    
-    for(; m_it != m_it_end; ++m_it)
-      {
-      const uword m_it_row = m_it.row();
-      const uword m_it_col = m_it.col();
-      
-      const bool inside_box = ((m_it_row >= row_start) && (m_it_row <= row_end)) && ((m_it_col >= col_start) && (m_it_col <= col_end));
-      
-      if(inside_box == false)
-        {
-        access::rw(A.values[A_count])      = (*m_it);
-        access::rw(A.row_indices[A_count]) = m_it_row;
-        access::rw(A.col_ptrs[m_it_col + 1])++;
-        ++A_count;
-        }
-      }
-    
-    for(uword i=0; i < A.n_cols; ++i)
-      {
-      access::rw(A.col_ptrs[i + 1]) += A.col_ptrs[i];
-      }
-    
-    //// insert into submatrix
-    
-    //access::rw(m) = A + B;
-    spglue_merge::apply(access::rw(m), A, B);
-    }
+  spglue_merge::apply(access::rw(m), n_nonzero, sv_row_start, sv_row_end, sv_col_start, sv_col_end, B);
   
   access::rw(n_nonzero) = B_n_nonzero;
   
@@ -505,57 +462,13 @@ SpSubview<eT>::operator_equ_common(const SpBase<eT, T1>& in)
   access::rw(B.values) = U.M.values;  // copy pointer instead of the entire array
   
   
-  if(n_nonzero == 0)
-    {
-    //// insert into submatrix
-    
-    //access::rw(m) = m + B;
-    spglue_merge::apply(access::rw(m), m, B);
-    }
-  else
-    {
-    // generate matrix A
-    
-    const uword row_start = aux_row1;
-    const uword col_start = aux_col1;
-    
-    const uword row_end   = aux_row1 + n_rows - 1;
-    const uword col_end   = aux_col1 + n_cols - 1;
-    
-    SpMat<eT> A(arma_reserve_indicator(), m.n_rows, m.n_cols, m.n_nonzero - n_nonzero);
-    
-    typename SpMat<eT>::const_iterator m_it     = m.begin();
-    typename SpMat<eT>::const_iterator m_it_end = m.end();
-    
-    uword A_count = 0;
-    
-    for(; m_it != m_it_end; ++m_it)
-      {
-      const uword m_it_row = m_it.row();
-      const uword m_it_col = m_it.col();
-      
-      const bool inside_box = ((m_it_row >= row_start) && (m_it_row <= row_end)) && ((m_it_col >= col_start) && (m_it_col <= col_end));
-      
-      if(inside_box == false)
-        {
-        access::rw(A.values[A_count])      = (*m_it);
-        access::rw(A.row_indices[A_count]) = m_it_row;
-        access::rw(A.col_ptrs[m_it_col + 1])++;
-        ++A_count;
-        }
-      }
-    
-    for(uword i=0; i < A.n_cols; ++i)
-      {
-      access::rw(A.col_ptrs[i + 1]) += A.col_ptrs[i];
-      }
-    
-    //// insert into submatrix
-    
-    //access::rw(m) = A + B;
-    spglue_merge::apply(access::rw(m), A, B);
-    }
+  const uword sv_row_start = aux_row1;
+  const uword sv_col_start = aux_col1;
   
+  const uword sv_row_end   = aux_row1 + n_rows - 1;
+  const uword sv_col_end   = aux_col1 + n_cols - 1;
+  
+  spglue_merge::apply(access::rw(m), n_nonzero, sv_row_start, sv_row_end, sv_col_start, sv_col_end, B);
   
   access::rw(B.values) = B_values_orig;  // restore original pointer
   
