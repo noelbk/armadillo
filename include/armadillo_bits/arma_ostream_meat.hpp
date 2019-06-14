@@ -742,7 +742,7 @@ arma_ostream::print(std::ostream& o, const SpMat<eT>& m, const bool modify)
     o.precision(0);
     }
   else
-  if(density > (double(0.1)-std::numeric_limits<double>::epsilon()))
+  if(density >= (double(10.0)-std::numeric_limits<double>::epsilon()))
     {
     o.precision(1);
     }
