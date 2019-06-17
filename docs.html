@@ -12827,6 +12827,14 @@ For <code>"lapack"</code>, sparse matrix <i>A</i> is converted to a dense matrix
 </li>
 <br>
 <li>
+<b>Notes</b>:
+<ul>
+<li>The SuperLU solver is mainly useful for very large and/or very sparse matrices</li>
+<li>If you have sufficient amount of memory to store a dense version of matrix <i>A</i>, the LAPACK solver can be faster</li>
+</ul>
+</li>
+<br>
+<li>
 The <i>opts</i> argument is optional and applicable to the SuperLU solver;
 <br><i>opts</i> is an instance of the <i>superlu_opts</i> structure:
 <ul>
@@ -12884,14 +12892,6 @@ struct superlu_opts
 </table>
 </ul>
 </li>
-</ul>
-</li>
-<br>
-<li>
-<b>Notes</b>:
-<ul>
-<li>The SuperLU solver is mainly useful for very large and/or very sparse matrices</li>
-<li>If you have sufficient amount of memory to store a dense version of matrix <i>A</i>, the LAPACK solver can be faster</li>
 </ul>
 </li>
 <br>
