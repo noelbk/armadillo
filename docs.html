@@ -10002,15 +10002,15 @@ mat B = repmat(A, 4, 5);
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="reshape"></a>
-<b>reshape( mat, n_rows, n_cols )</b>
-<br><b>reshape( mat, size(X) )</b>
+<b>reshape( X, n_rows, n_cols )</b> &nbsp;&nbsp; (X is a vector or matrix)
+<br><b>reshape( X, size(Y) )</b>
 <br>
-<br><b>reshape( cube, n_rows, n_cols, n_slices )</b>
-<br><b>reshape( cube, size(X) )</b>
+<br><b>reshape( Q, n_rows, n_cols, n_slices )</b> &nbsp;&nbsp; (Q is a cube)
+<br><b>reshape( Q, size(R) )</b>
 <ul>
 <li>
-Generate a matrix or cube sized according to given size specifications,
-whose elements are taken from the given vector/matrix/cube in a column-wise manner;
+Generate a vector/matrix/cube with given size specifications,
+whose elements are taken from the given object in a column-wise manner;
 the elements in the generated object are placed column-wise (ie. the first column is filled up before filling the second column)
 </li>
 <br>
@@ -10076,15 +10076,15 @@ See also:
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="resize"></a>
-<b>resize( mat, n_rows, n_cols )</b>
-<br><b>resize( mat, size(X) )</b>
+<b>resize( X, n_rows, n_cols )</b> &nbsp;&nbsp; (X is a vector or matrix)
+<br><b>resize( X, size(X) )</b>
 <br>
-<br><b>resize( cube, n_rows, n_cols, n_slices )</b>
-<br><b>resize( cube, size(X) )</b>
+<br><b>resize( Q, n_rows, n_cols, n_slices )</b> &nbsp;&nbsp; (Q is a cube)
+<br><b>resize( Q, size(R) )</b>
 <ul>
 <li>
-Generate a matrix or cube sized according to given size specifications,
-whose elements as well as the layout of the elements are taken from the given matrix/cube
+Generate a vector/matrix/cube with given size specifications,
+whose elements as well as the layout of the elements are taken from the given object
 </li>
 <br>
 <li>
