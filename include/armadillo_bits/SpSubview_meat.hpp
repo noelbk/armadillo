@@ -829,7 +829,47 @@ SpSubview<eT>::zeros()
   {
   arma_extra_debug_sigprint();
   
-  (*this).operator*=(eT(0));
+  if((n_elem == 0) || (n_nonzero == 0))  { return; }
+  
+  if((m.n_nonzero - n_nonzero) == 0)  { access::rw(m).zeros(); return; }
+  
+  SpMat<eT> tmp(arma_reserve_indicator(), m.n_rows, m.n_cols, m.n_nonzero - n_nonzero);
+  
+  const uword sv_row_start = aux_row1;
+  const uword sv_col_start = aux_col1;
+  
+  const uword sv_row_end   = aux_row1 + n_rows - 1;
+  const uword sv_col_end   = aux_col1 + n_cols - 1;
+  
+  typename SpMat<eT>::const_iterator m_it     = m.begin();
+  typename SpMat<eT>::const_iterator m_it_end = m.end();
+  
+  uword tmp_count = 0;
+  
+  for(; m_it != m_it_end; ++m_it)
+    {
+    const uword m_it_row = m_it.row();
+    const uword m_it_col = m_it.col();
+    
+    const bool inside_box = ((m_it_row >= sv_row_start) && (m_it_row <= sv_row_end)) && ((m_it_col >= sv_col_start) && (m_it_col <= sv_col_end));
+    
+    if(inside_box == false)
+      {
+      access::rw(tmp.values[tmp_count])      = (*m_it);
+      access::rw(tmp.row_indices[tmp_count]) = m_it_row;
+      access::rw(tmp.col_ptrs[m_it_col + 1])++;
+      ++tmp_count;
+      }
+    }
+  
+  for(uword i=0; i < tmp.n_cols; ++i)
+    {
+    access::rw(tmp.col_ptrs[i + 1]) += tmp.col_ptrs[i];
+    }
+  
+  access::rw(m).steal_mem(tmp);
+  
+  access::rw(n_nonzero) = 0;
   }
 
 
