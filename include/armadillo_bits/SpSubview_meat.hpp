@@ -144,7 +144,7 @@ SpSubview<eT>::operator*=(const eT val)
   {
   arma_extra_debug_sigprint();
   
-  if( (n_elem == 0) || ((n_nonzero == 0) && arma_isfinite(val)) )  { return *this; }
+  if((n_elem == 0) || (n_nonzero == 0))  { return *this; }
   
   m.sync_csc();
   m.invalidate_cache();
