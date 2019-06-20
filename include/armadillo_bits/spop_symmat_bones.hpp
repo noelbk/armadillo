@@ -26,6 +26,9 @@ class spop_symmat
   
   template<typename T1>
   inline static void apply(SpMat<typename T1::elem_type>& out, const SpOp<T1,spop_symmat>& in);
+  
+  template<typename eT>
+  inline static void merge_noalias(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& B);
   };
 
 
