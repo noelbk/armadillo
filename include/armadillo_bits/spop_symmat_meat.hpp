@@ -26,126 +26,98 @@ spop_symmat::apply(SpMat<typename T1::elem_type>& out, const SpOp<T1,spop_symmat
   {
   arma_extra_debug_sigprint();
   
-  typedef typename   T1::elem_type  eT;
-  typedef typename umat::elem_type ueT;
+  typedef typename T1::elem_type eT;
   
-  const SpProxy<T1> P(in.m);
+  const unwrap_spmat<T1> U(in.m);
+  const SpMat<eT>& X   = U.M;
   
-  arma_debug_check( (P.get_n_rows() != P.get_n_cols()), "symmatu()/symmatl(): given matrix must be square sized" );
+  arma_debug_check( (X.n_rows != X.n_cols), "symmatu()/symmatl(): given matrix must be square sized" );
+  
+  if(X.n_nonzero == uword(0))  { out.zeros(X.n_rows, X.n_cols); return; }
   
   const bool upper = (in.aux_uword_a == 0);
   
-  const uword n_nonzero = P.get_n_nonzero();
+  const SpMat<eT> A = (upper) ? trimatu(X) : trimatl(X);  // in this case trimatu() and trimatl() return the same type
+  const SpMat<eT> B = A.st();
   
-  if(n_nonzero == uword(0))
+  const SpProxy< SpMat<eT> > pa(A);
+  const SpProxy< SpMat<eT> > pb(B);
+  
+  const uword max_n_nonzero = spglue_elem_helper::max_n_nonzero_plus(pa, pb);
+  
+  out.reserve(X.n_rows, X.n_cols, max_n_nonzero);
+  
+  typename SpMat<eT>::const_iterator x_it  = A.begin();
+  typename SpMat<eT>::const_iterator x_end = A.end();
+  
+  typename SpMat<eT>::const_iterator y_it  = B.begin();
+  typename SpMat<eT>::const_iterator y_end = B.end();
+  
+  uword count = 0;
+  
+  while( (x_it != x_end) || (y_it != y_end) )
     {
-    out.zeros(P.get_n_rows(), P.get_n_cols());
-    return;
-    }
-  
-  umat    out_locs(2, 2*n_nonzero);  // worse case scenario
-  Col<eT> out_vals(   2*n_nonzero);
-  
-  ueT*  out_locs_ptr = out_locs.memptr();
-   eT*  out_vals_ptr = out_vals.memptr();
-  
-  uword out_count = 0;
-  
-  typename SpProxy<T1>::const_iterator_type it = P.begin();
-  
-  if(upper)
-    {
-    // upper triangular: copy the diagonal and the elements above the diagonal
+    eT out_val;
     
-    for(uword in_count = 0; in_count < n_nonzero; ++in_count)
+    const uword x_it_col = x_it.col();
+    const uword x_it_row = x_it.row();
+    
+    const uword y_it_col = y_it.col();
+    const uword y_it_row = y_it.row();
+    
+    bool use_y_loc = false;
+    
+    if(x_it == y_it)
       {
-      const uword row = it.row();
-      const uword col = it.col();
+      // this can only happen on the diagonal
       
-      if(row < col)
+      out_val = (*x_it);
+      
+      ++x_it;
+      ++y_it;
+      }
+    else
+      {
+      if((x_it_col < y_it_col) || ((x_it_col == y_it_col) && (x_it_row < y_it_row))) // if y is closer to the end
         {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
+        out_val = (*x_it);
         
-        out_locs_ptr[0] = col;
-        out_locs_ptr[1] = row;
-        out_locs_ptr += 2;
-        
-        const eT val = (*it);
-        
-        out_vals_ptr[0] = val;
-        out_vals_ptr[1] = val;
-        out_vals_ptr += 2;
-        
-        out_count += 2;
+        ++x_it;
         }
       else
-      if(row == col)
         {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
+        out_val = (*y_it);
         
-        out_vals_ptr[0] = (*it);
-        out_vals_ptr += 1;
+        ++y_it;
         
-        out_count++;
+        use_y_loc = true;
         }
-      
-      ++it;
       }
-    }
-  else
-    {
-    // lower triangular: copy the diagonal and the elements below the diagonal
     
-    for(uword in_count = 0; in_count < n_nonzero; ++in_count)
-      {
-      const uword row = it.row();
-      const uword col = it.col();
-      
-      if(row > col)
-        {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
-        
-        out_locs_ptr[0] = col;
-        out_locs_ptr[1] = row;
-        out_locs_ptr += 2;
-        
-        const eT val = (*it);
-        
-        out_vals_ptr[0] = val;
-        out_vals_ptr[1] = val;
-        out_vals_ptr += 2;
-        
-        out_count += 2;
-        }
-      else
-      if(row == col)
-        {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
-        
-        out_vals_ptr[0] = (*it);
-        out_vals_ptr += 1;
-        
-        out_count++;
-        }
-      
-      ++it;
-      }
+    access::rw(out.values[count]) = out_val;
+    
+    const uword out_row = (use_y_loc == false) ? x_it_row : y_it_row;
+    const uword out_col = (use_y_loc == false) ? x_it_col : y_it_col;
+    
+    access::rw(out.row_indices[count]) = out_row;
+    access::rw(out.col_ptrs[out_col + 1])++;
+    ++count;
     }
   
-  const umat    tmp_locs(out_locs.memptr(), 2, out_count, false, false);
-  const Col<eT> tmp_vals(out_vals.memptr(),    out_count, false, false);
+  const uword out_n_cols = out.n_cols;
   
-  SpMat<eT> tmp(tmp_locs, tmp_vals, P.get_n_rows(), P.get_n_cols());
+  uword* col_ptrs = access::rwp(out.col_ptrs);
   
-  out.steal_mem(tmp);
+  // Fix column pointers to be cumulative.
+  for(uword c = 1; c <= out_n_cols; ++c)
+    {
+    col_ptrs[c] += col_ptrs[c - 1];
+    }
+  
+  // quick resize without reallocating memory and copying data
+  access::rw(         out.n_nonzero) = count;
+  access::rw(     out.values[count]) = eT(0);
+  access::rw(out.row_indices[count]) = uword(0);
   }
 
 
@@ -157,127 +129,109 @@ spop_symmat_cx::apply(SpMat<typename T1::elem_type>& out, const SpOp<T1,spop_sym
   {
   arma_extra_debug_sigprint();
   
-  typedef typename   T1::elem_type  eT;
-  typedef typename umat::elem_type ueT;
+  typedef typename T1::elem_type eT;
   
-  const SpProxy<T1> P(in.m);
+  const unwrap_spmat<T1> U(in.m);
+  const SpMat<eT>& X   = U.M;
   
-  arma_debug_check( (P.get_n_rows() != P.get_n_cols()), "symmatu()/symmatl(): given matrix must be square sized" );
+  arma_debug_check( (X.n_rows != X.n_cols), "symmatu()/symmatl(): given matrix must be square sized" );
+  
+  if(X.n_nonzero == uword(0))  { out.zeros(X.n_rows, X.n_cols); return; }
   
   const bool upper   = (in.aux_uword_a == 0);
   const bool do_conj = (in.aux_uword_b == 1);
   
-  const uword n_nonzero = P.get_n_nonzero();
+  const SpMat<eT> A = (upper) ? trimatu(X) : trimatl(X);  // in this case trimatu() and trimatl() return the same type
   
-  if(n_nonzero == uword(0))
+  SpMat<eT> B;
+  
+  if(do_conj)
     {
-    out.zeros(P.get_n_rows(), P.get_n_cols());
-    return;
-    }
-  
-  umat    out_locs(2, 2*n_nonzero);  // worse case scenario
-  Col<eT> out_vals(   2*n_nonzero);
-  
-  ueT*  out_locs_ptr = out_locs.memptr();
-   eT*  out_vals_ptr = out_vals.memptr();
-  
-  uword out_count = 0;
-  
-  typename SpProxy<T1>::const_iterator_type it = P.begin();
-  
-  if(upper)
-    {
-    // upper triangular: copy the diagonal and the elements above the diagonal
-    
-    for(uword in_count = 0; in_count < n_nonzero; ++in_count)
-      {
-      const uword row = it.row();
-      const uword col = it.col();
-      
-      if(row < col)
-        {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
-        
-        out_locs_ptr[0] = col;
-        out_locs_ptr[1] = row;
-        out_locs_ptr += 2;
-        
-        const eT val = (*it);
-        
-        out_vals_ptr[0] = val;
-        out_vals_ptr[1] = (do_conj) ? std::conj(val) : val;
-        out_vals_ptr += 2;
-        
-        out_count += 2;
-        }
-      else
-      if(row == col)
-        {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
-        
-        out_vals_ptr[0] = (*it);
-        out_vals_ptr += 1;
-        
-        out_count++;
-        }
-      
-      ++it;
-      }
+    B = A.t();
     }
   else
     {
-    // lower triangular: copy the diagonal and the elements below the diagonal
-    
-    for(uword in_count = 0; in_count < n_nonzero; ++in_count)
-      {
-      const uword row = it.row();
-      const uword col = it.col();
-      
-      if(row > col)
-        {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
-        
-        out_locs_ptr[0] = col;
-        out_locs_ptr[1] = row;
-        out_locs_ptr += 2;
-        
-        const eT val = (*it);
-        
-        out_vals_ptr[0] = val;
-        out_vals_ptr[1] = (do_conj) ? std::conj(val) : val;
-        out_vals_ptr += 2;
-        
-        out_count += 2;
-        }
-      else
-      if(row == col)
-        {
-        out_locs_ptr[0] = row;
-        out_locs_ptr[1] = col;
-        out_locs_ptr += 2;
-        
-        out_vals_ptr[0] = (*it);
-        out_vals_ptr += 1;
-        
-        out_count++;
-        }
-      
-      ++it;
-      }
+    B = A.st();
     }
   
-  const umat    tmp_locs(out_locs.memptr(), 2, out_count, false, false);
-  const Col<eT> tmp_vals(out_vals.memptr(),    out_count, false, false);
+  const SpProxy< SpMat<eT> > pa(A);
+  const SpProxy< SpMat<eT> > pb(B);
   
-  SpMat<eT> tmp(tmp_locs, tmp_vals, P.get_n_rows(), P.get_n_cols());
+  const uword max_n_nonzero = spglue_elem_helper::max_n_nonzero_plus(pa, pb);
   
-  out.steal_mem(tmp);
+  out.reserve(X.n_rows, X.n_cols, max_n_nonzero);
+  
+  typename SpMat<eT>::const_iterator x_it  = A.begin();
+  typename SpMat<eT>::const_iterator x_end = A.end();
+  
+  typename SpMat<eT>::const_iterator y_it  = B.begin();
+  typename SpMat<eT>::const_iterator y_end = B.end();
+  
+  uword count = 0;
+  
+  while( (x_it != x_end) || (y_it != y_end) )
+    {
+    eT out_val;
+    
+    const uword x_it_col = x_it.col();
+    const uword x_it_row = x_it.row();
+    
+    const uword y_it_col = y_it.col();
+    const uword y_it_row = y_it.row();
+    
+    bool use_y_loc = false;
+    
+    if(x_it == y_it)
+      {
+      // this can only happen on the diagonal
+      
+      out_val = (*x_it);
+      
+      ++x_it;
+      ++y_it;
+      }
+    else
+      {
+      if((x_it_col < y_it_col) || ((x_it_col == y_it_col) && (x_it_row < y_it_row))) // if y is closer to the end
+        {
+        out_val = (*x_it);
+        
+        ++x_it;
+        }
+      else
+        {
+        out_val = (*y_it);
+        
+        ++y_it;
+        
+        use_y_loc = true;
+        }
+      }
+    
+    access::rw(out.values[count]) = out_val;
+    
+    const uword out_row = (use_y_loc == false) ? x_it_row : y_it_row;
+    const uword out_col = (use_y_loc == false) ? x_it_col : y_it_col;
+    
+    access::rw(out.row_indices[count]) = out_row;
+    access::rw(out.col_ptrs[out_col + 1])++;
+    ++count;
+    }
+  
+  const uword out_n_cols = out.n_cols;
+  
+  uword* col_ptrs = access::rwp(out.col_ptrs);
+  
+  // Fix column pointers to be cumulative.
+  for(uword c = 1; c <= out_n_cols; ++c)
+    {
+    col_ptrs[c] += col_ptrs[c - 1];
+    }
+  
+  // quick resize without reallocating memory and copying data
+  access::rw(         out.n_nonzero) = count;
+  access::rw(     out.values[count]) = eT(0);
+  access::rw(out.row_indices[count]) = uword(0);
   }
 
 
