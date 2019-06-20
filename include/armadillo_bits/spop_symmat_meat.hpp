@@ -150,18 +150,18 @@ spop_symmat_cx::apply(SpMat<typename T1::elem_type>& out, const SpOp<T1,spop_sym
   
   const SpMat<eT> A = (upper) ? trimatu(X) : trimatl(X);  // in this case trimatu() and trimatl() return the same type
   
-  SpMat<eT> B;
-  
   if(do_conj)
     {
-    B = A.t();
+    const SpMat<eT> B = A.t();
+    
+    spop_symmat::merge_noalias(out, A, B);
     }
   else
     {
-    B = A.st();
+    const SpMat<eT> B = A.st();
+    
+    spop_symmat::merge_noalias(out, A, B);
     }
-  
-  spop_symmat::merge_noalias(out, A, B);
   }
 
 
