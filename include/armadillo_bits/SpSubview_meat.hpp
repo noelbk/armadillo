@@ -314,7 +314,7 @@ SpSubview<eT>::operator=(const Base<eT, T1>& in)
   const uword sv_row_end   = aux_row1 + n_rows - 1;
   const uword sv_col_end   = aux_col1 + n_cols - 1;
     
-  spglue_merge::apply(access::rw(m), n_nonzero, sv_row_start, sv_row_end, sv_col_start, sv_col_end, B);
+  spglue_merge::subview_merge(access::rw(m), n_nonzero, sv_row_start, sv_row_end, sv_col_start, sv_col_end, B);
   
   access::rw(n_nonzero) = B_n_nonzero;
   
@@ -470,7 +470,7 @@ SpSubview<eT>::operator_equ_common(const SpBase<eT, T1>& in)
   const uword sv_row_end   = aux_row1 + n_rows - 1;
   const uword sv_col_end   = aux_col1 + n_cols - 1;
   
-  spglue_merge::apply(access::rw(m), n_nonzero, sv_row_start, sv_row_end, sv_col_start, sv_col_end, B);
+  spglue_merge::subview_merge(access::rw(m), n_nonzero, sv_row_start, sv_row_end, sv_col_start, sv_col_end, B);
   
   access::rw(B.values) = B_values_orig;  // restore original pointer
   
