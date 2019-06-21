@@ -1783,11 +1783,7 @@ F.save("mat_field");
 <br><b>sp_cx_mat</b>
 <ul>
 <li>
-Classes for sparse matrices, with elements stored in <a href="http://en.wikipedia.org/wiki/Sparse_matrix">compressed sparse column (CSC) format</a>
-</li>
-<br>
-<li>
-Specifically intended for very large matrices where only a small minority of the elements is non-zero
+Classes for sparse matrices; intended for storing very large matrices, where the vast majority of elements are zero
 </li>
 <br>
 <li>
@@ -1804,6 +1800,10 @@ The root sparse matrix class is <b>SpMat&lt;</b><i>type</i><b>&gt;</b>, where <i
 This class behaves in a similar manner to the <a href="#Mat">Mat</a> class;
 however, member functions which set all elements to non-zero values (and hence do not make sense for sparse matrices) have been deliberately omitted;
 examples of omitted functions: <a href="#fill">.fill()</a>, <a href="#ones_member">.ones()</a>, +=&nbsp;scalar, etc.
+</li>
+<br>
+<li>
+The elements are stored in <a href="http://en.wikipedia.org/wiki/Sparse_matrix">compressed sparse column (CSC) format</a>
 </li>
 <br>
 <li>
