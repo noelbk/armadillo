@@ -6536,7 +6536,7 @@ SpMat<eT>::sync_cache() const
   #if defined(ARMA_USE_OPENMP)
     if(sync_state == 0)
       {
-      #pragma omp critical (arma_SpMat_sync_cache)
+      #pragma omp critical (arma_SpMat_sync)
       if(sync_state == 0)
         {
         cache      = (*this);
@@ -6585,7 +6585,7 @@ SpMat<eT>::sync_csc() const
   #if defined(ARMA_USE_OPENMP)
     if(sync_state == 1)
       {
-      #pragma omp critical (arma_SpMat_sync_csc)
+      #pragma omp critical (arma_SpMat_sync)
       if(sync_state == 1)
         {
         SpMat<eT> tmp(cache);
