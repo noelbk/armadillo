@@ -144,6 +144,8 @@ SpSubview<eT>::operator*=(const eT val)
   {
   arma_extra_debug_sigprint();
   
+  if(val == eT(0))  { (*this).zeros(); return *this; }
+  
   if((n_elem == 0) || (n_nonzero == 0))  { return *this; }
   
   m.sync_csc();
@@ -833,7 +835,12 @@ SpSubview<eT>::zeros()
   
   if((n_elem == 0) || (n_nonzero == 0))  { return; }
   
-  if((m.n_nonzero - n_nonzero) == 0)  { access::rw(m).zeros(); return; }
+  if((m.n_nonzero - n_nonzero) == 0)
+    {
+    access::rw(m).zeros();
+    access::rw(n_nonzero) = 0;
+    return;
+    }
   
   SpMat<eT> tmp(arma_reserve_indicator(), m.n_rows, m.n_cols, m.n_nonzero - n_nonzero);
   
