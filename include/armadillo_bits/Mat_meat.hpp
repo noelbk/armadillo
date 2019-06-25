@@ -8066,14 +8066,17 @@ inline
 typename Mat<eT>::row_col_iterator&
 Mat<eT>::row_col_iterator::operator++()
   {
-  current_ptr++;
-  current_row++;
-  
-  // Check to see if we moved a column.
-  if(current_row == M->n_rows)
+  if(current_col < M->n_cols)
     {
-    current_col++;
-    current_row = 0;
+    current_ptr++;
+    current_row++;
+    
+    // Check to see if we moved a column.
+    if(current_row == M->n_rows)
+      {
+      current_col++;
+      current_row = 0;
+      }
     }
   
   return *this;
@@ -8268,14 +8271,17 @@ inline
 typename Mat<eT>::const_row_col_iterator&
 Mat<eT>::const_row_col_iterator::operator++()
   {
-  current_ptr++;
-  current_row++;
-  
-  // Check to see if we moved a column.
-  if(current_row == M->n_rows)
+  if(current_col < M->n_cols)
     {
-    current_col++;
-    current_row = 0;
+    current_ptr++;
+    current_row++;
+    
+    // Check to see if we moved a column.
+    if(current_row == M->n_rows)
+      {
+      current_col++;
+      current_row = 0;
+      }
     }
   
   return *this;
