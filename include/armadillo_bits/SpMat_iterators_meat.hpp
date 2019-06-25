@@ -150,21 +150,18 @@ arma_hot
 typename SpMat<eT>::const_iterator&
 SpMat<eT>::const_iterator::operator++()
   {
-  if (iterator_base::internal_pos < iterator_base::M->n_nonzero)
+  ++iterator_base::internal_pos;
+
+  if (iterator_base::internal_pos == iterator_base::M->n_nonzero)
     {
-    ++iterator_base::internal_pos;
+    iterator_base::internal_col = iterator_base::M->n_cols;
+    return *this;
+    }
 
-    if (iterator_base::internal_pos == iterator_base::M->n_nonzero)
-      {
-      iterator_base::internal_col = iterator_base::M->n_cols;
-      return *this;
-      }
-
-    // Check to see if we moved a column.
-    while (iterator_base::M->col_ptrs[iterator_base::internal_col + 1] <= iterator_base::internal_pos)
-      {
-      ++iterator_base::internal_col;
-      }
+  // Check to see if we moved a column.
+  while (iterator_base::M->col_ptrs[iterator_base::internal_col + 1] <= iterator_base::internal_pos)
+    {
+    ++iterator_base::internal_col;
     }
 
   return *this;
@@ -578,8 +575,6 @@ arma_hot
 typename SpMat<eT>::const_row_iterator&
 SpMat<eT>::const_row_iterator::operator++()
   {
-  if(iterator_base::internal_pos == iterator_base::M->n_nonzero)  { return *this; }
-  
   // We just need to find the next nonzero element.
   iterator_base::internal_pos++;
 
