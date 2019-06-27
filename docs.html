@@ -2012,7 +2012,7 @@ The following subset of operations &amp; functions is available for sparse matri
 <li>generated matrices: <a href="#speye">speye()</a>, <a href="#spones">spones()</a>, <a href="#sprandu_sprandn">sprandu()</a>, <a href="#sprandu_sprandn">sprandn()</a>, <a href="#zeros_standalone">zeros()</a></li>
 <li>eigen and svd decomposition: <a href="#eigs_sym">eigs_sym()</a>, <a href="#eigs_gen">eigs_gen()</a>, <a href="#svds">svds()</a></li>
 <li>solution of sparse linear systems: <a href="#spsolve">spsolve()</a>
-<li>miscellaneous: <a href="#approx_equal">approx_equal()</a>, <a href="#element_access">element access</a>, <a href="#iterators_spmat">element iterators</a>, <a href="#as_col_row">.as_col()&nbsp;/&nbsp;.as_row()</a>, <a href="#for_each">.for_each()</a>, <a href="#print">.print()</a>, <a href="#replace">.replace()</a>, <a href="#transform">.transform()</a>, <a href="#is_finite">.is_finite()</a>, <a href="#is_symmetric">.is_symmetric()</a>, <a href="#is_hermitian">.is_hermitian()</a></li>
+<li>miscellaneous: <a href="#approx_equal">approx_equal()</a>, <a href="#element_access">element access</a>, <a href="#iterators_spmat">element iterators</a>, <a href="#as_col_row">.as_col()&nbsp;/&nbsp;.as_row()</a>, <a href="#for_each">.for_each()</a>, <a href="#print">.print()</a>, <a href="#clean">.clean()</a>, <a href="#replace">.replace()</a>, <a href="#transform">.transform()</a>, <a href="#is_finite">.is_finite()</a>, <a href="#is_symmetric">.is_symmetric()</a>, <a href="#is_hermitian">.is_hermitian()</a></li>
 </ul>
 </li>
 <br>
@@ -3042,6 +3042,7 @@ See also:
 <li><a href="#replace">.replace()</a></li>
 <li><a href="#transform">.transform()</a></li>
 <li><a href="#clamp">clamp()</a></li>
+<li><a href="#constants">datum::eps</a></li>
 </ul>
 </li>
 <br>
@@ -15691,7 +15692,7 @@ model.save("my_model.gmm");
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      the difference between 1 and the least value greater than 1 that is representable  (type and machine dependent)
+      machine epsilon: the difference between 1 and the value least greater than 1 that is representable  (type and machine dependent)
     </td>
   </tr>
   <tr>
