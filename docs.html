@@ -148,7 +148,7 @@ hr.greyline
 <a class="noprint" style="display:scroll; position:fixed; bottom:5px; right:5px;" href="#top"><font size=-1>[top]</font></a>
 
 <a name="top"></a>
-<big><b>API Documentation for Armadillo 9.500</b></big>
+<big><b>API Documentation for Armadillo 9.600</b></big>
 <br>
 <br>
 <br>
@@ -264,6 +264,7 @@ Conrad Sanderson and Ryan Curtin.
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
 <tr><td><a href="#fill">.fill</a></td><td>&nbsp;</td><td>set all elements to specified value</td></tr>
 <tr><td><a href="#imbue">.imbue</a></td><td>&nbsp;</td><td>imbue (fill) with values provided by functor or lambda function</td></tr>
+<tr><td><a href="#clean">.clean</a></td><td>&nbsp;</td><td>set all elements with absolute value below a threshold to zero</td></tr>
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
 <tr><td><a href="#replace">.replace</a></td><td>&nbsp;</td><td>replace specific elements with a new value</td></tr>
 <tr><td><a href="#transform">.transform</a></td><td>&nbsp;</td><td>transform each element via functor or lambda function</td></tr>
@@ -3012,6 +3013,41 @@ See also:
 </ul>
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="clean"></a>
+<b>.clean(&nbsp;</b>abs_limit<b>&nbsp;)</b>
+<br>
+<ul>
+<li>
+Member function of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>Cube</i> and <i>SpMat</i>
+</li>
+<br>
+<li>For objects with non-complex elements: any element with an absolute value &leq; <i>abs_limit</i> is replaced by zero</li>
+<br>
+<li>For objects with complex elements: for each element, any real or imaginary component with an absolute value &leq; <i>abs_limit</i> is replaced by zero</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+mat A(4,5, fill::randu);
+  
+A.clean(datum::eps);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#replace">.replace()</a></li>
+<li><a href="#transform">.transform()</a></li>
+<li><a href="#clamp">clamp()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="replace"></a>
 <b>.replace( old_value, new_value )</b>
 <ul>
@@ -3050,6 +3086,7 @@ See also:
 <ul>
 <li><a href="#transform">.transform()</a></li>
 <li><a href="#for_each">.for_each()</a></li>
+<li><a href="#clean">.clean()</a></li>
 <li><a href="#fill">.fill()</a></li>
 <li><a href="#has_nan">.has_nan()</a></li>
 <li><a href="#has_inf">.has_inf()</a></li>
@@ -3109,6 +3146,7 @@ See also:
 <li><a href="#for_each">.for_each()</a></li>
 <li><a href="#replace">.replace()</a></li>
 <li><a href="#imbue">.imbue()</a></li>
+<li><a href="#clean">.clean()</a></li>
 <li><a href="#fill">.fill()</a></li>
 <li><a href="#element_access">element access</a></li>
 <li><a href="#operators">overloaded operators</a></li>
@@ -8051,8 +8089,8 @@ mat D = clamp(A, 0.2, A.max());
 <li>
 See also:
 <ul>
-<li><a href="#min_and_max">min() &amp; max()</a> (standalone functions)</li>
-<li><a href="#min_and_max_member">.min() &amp; .max()</a> (member functions)</li>
+<li><a href="#min_and_max_member">.min() &amp; .max()</a></li>
+<li><a href="#clean">.clean()</a></li>
 <li><a href="#replace">.replace()</a></li>
 <li><a href="#find">find()</a></li>
 </ul>
@@ -18197,6 +18235,16 @@ List of additions and changes for each version:
 
 
 
+<a name="version_9600"></a>
+<li>Version 9.600:
+<ul>
+<li>faster handling of sparse submatrices</li>
+<li>faster handling of sparse matrices by <a href="#symmat">symmatu()</a> and <a href="#symmat">symmatl()</a></li>
+<li>faster handling of sparse matrices by <a href="#join">join_cols()</a></li>
+<li>added <a href="#clean">.clean()</a> to set all elements with absolute value below a threshold to zero</li>
+</ul>
+</li>
+<br>
 <a name="version_9500"></a>
 <li>Version 9.500:
 <ul>
