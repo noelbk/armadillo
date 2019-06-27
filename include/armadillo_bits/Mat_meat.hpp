@@ -6687,6 +6687,20 @@ Mat<eT>::replace(const eT old_val, const eT new_val)
 
 
 
+template<typename eT>
+inline
+const Mat<eT>&
+Mat<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
+  {
+  arma_extra_debug_sigprint();
+  
+  arrayops::clean(memptr(), n_elem, abs_limit);
+  
+  return *this;
+  }
+
+
+
 //! fill the matrix with the specified value
 template<typename eT>
 inline

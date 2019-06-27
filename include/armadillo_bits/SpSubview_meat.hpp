@@ -721,6 +721,34 @@ SpSubview<eT>::replace(const eT old_val, const eT new_val)
 template<typename eT>
 inline
 void
+SpSubview<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
+  {
+  arma_extra_debug_sigprint();
+  
+  if((n_elem == 0) || (n_nonzero == 0))  { return; }
+  
+  // TODO: replace with a more efficient implementation
+  
+  SpMat<eT> tmp(*this);
+  
+  tmp.clean(abs_limit);
+  
+  if(is_cx<eT>::yes)
+    {
+    (*this).operator=(tmp);
+    }
+  else
+  if(tmp.n_nonzero != n_nonzero)
+    {
+    (*this).operator=(tmp);
+    }
+  }
+
+
+
+template<typename eT>
+inline
+void
 SpSubview<eT>::fill(const eT val)
   {
   arma_extra_debug_sigprint();

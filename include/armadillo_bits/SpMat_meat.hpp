@@ -4202,6 +4202,27 @@ SpMat<eT>::replace(const eT old_val, const eT new_val)
 template<typename eT>
 inline
 const SpMat<eT>&
+SpMat<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(n_nonzero == 0)  { return *this; }
+  
+  sync_csc();
+  invalidate_cache();
+  
+  arrayops::clean(access::rwp(values), n_nonzero, abs_limit);
+  
+  remove_zeros();
+  
+  return *this;
+  }
+
+
+
+template<typename eT>
+inline
+const SpMat<eT>&
 SpMat<eT>::zeros()
   {
   arma_extra_debug_sigprint();
