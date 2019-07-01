@@ -74,7 +74,7 @@ Authors:
 
 ### 2: Citation Details
 
-Please cite the following papers if you use Armadillo
+Please cite one (or both) of the following papers if you use Armadillo
 in your research and/or software.  Citations are useful
 for the continued development and maintenance of the library.
 
