@@ -1215,7 +1215,7 @@ subview_cube<eT>::replace(const eT old_val, const eT new_val)
 template<typename eT>
 inline
 void
-subview_cube<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
+subview_cube<eT>::clean(const typename get_pod_type<eT>::result threshold)
   {
   arma_extra_debug_sigprint();
 
@@ -1227,7 +1227,7 @@ subview_cube<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
     {
     for(uword col = 0; col < local_n_cols; ++col)
       {
-      arrayops::clean( slice_colptr(slice,col), local_n_rows, abs_limit );
+      arrayops::clean( slice_colptr(slice,col), local_n_rows, threshold );
       }
     }
   }

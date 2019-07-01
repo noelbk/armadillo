@@ -89,7 +89,7 @@ class SpSubview : public SpBase<eT, SpSubview<eT> >
   
   inline void replace(const eT old_val, const eT new_val);
   
-  inline void clean(const pod_type abs_limit);
+  inline void clean(const pod_type threshold);
   
   inline void fill(const eT val);
   inline void zeros();

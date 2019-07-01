@@ -329,7 +329,7 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   inline const Cube& replace(const eT old_val, const eT new_val);
   
-  inline const Cube& clean(const pod_type abs_limit);
+  inline const Cube& clean(const pod_type threshold);
   
   inline const Cube& fill(const eT val);
   

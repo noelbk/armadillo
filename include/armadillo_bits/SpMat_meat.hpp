@@ -4202,7 +4202,7 @@ SpMat<eT>::replace(const eT old_val, const eT new_val)
 template<typename eT>
 inline
 const SpMat<eT>&
-SpMat<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
+SpMat<eT>::clean(const typename get_pod_type<eT>::result threshold)
   {
   arma_extra_debug_sigprint();
   
@@ -4211,7 +4211,7 @@ SpMat<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
   sync_csc();
   invalidate_cache();
   
-  arrayops::clean(access::rwp(values), n_nonzero, abs_limit);
+  arrayops::clean(access::rwp(values), n_nonzero, threshold);
   
   remove_zeros();
   

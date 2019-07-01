@@ -721,7 +721,7 @@ SpSubview<eT>::replace(const eT old_val, const eT new_val)
 template<typename eT>
 inline
 void
-SpSubview<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
+SpSubview<eT>::clean(const typename get_pod_type<eT>::result threshold)
   {
   arma_extra_debug_sigprint();
   
@@ -731,7 +731,7 @@ SpSubview<eT>::clean(const typename get_pod_type<eT>::result abs_limit)
   
   SpMat<eT> tmp(*this);
   
-  tmp.clean(abs_limit);
+  tmp.clean(threshold);
   
   if(is_cx<eT>::yes)
     {

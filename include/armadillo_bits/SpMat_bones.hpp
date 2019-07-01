@@ -341,7 +341,7 @@ class SpMat : public SpBase< eT, SpMat<eT> >
   
   inline const SpMat& replace(const eT old_val, const eT new_val);
   
-  inline const SpMat& clean(const pod_type abs_limit);
+  inline const SpMat& clean(const pod_type threshold);
   
   inline const SpMat& zeros();
   inline const SpMat& zeros(const uword in_elem);
