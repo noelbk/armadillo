@@ -145,19 +145,19 @@ arrayops::clean(std::complex<T>* mem, const uword n_elem, const T abs_limit)
     {
     eT& val = mem[i];
     
-    const T val_real_a = std::real(val);
-    const T val_imag_a = std::imag(val);
+    T val_real = std::real(val);
+    T val_imag = std::imag(val);
     
-    if(std::abs(val_real_a) <= abs_limit)
+    if(std::abs(val_real) <= abs_limit)
       {
-      const T val_imag_b = (std::abs(val_imag_a) <= abs_limit) ? T(0) : val_imag_a;
+      val_imag = (std::abs(val_imag) <= abs_limit) ? T(0) : val_imag;
       
-      val = std::complex<T>(T(0), val_imag_b);
+      val = std::complex<T>(T(0), val_imag);
       }
     else
-    if(std::abs(val_imag_a) <= abs_limit)
+    if(std::abs(val_imag) <= abs_limit)
       {
-      val = std::complex<T>(val_real_a, T(0));
+      val = std::complex<T>(val_real, T(0));
       }
     }
   }
