@@ -84,8 +84,7 @@ clamp(const SpBase<typename T1::elem_type,T1>& X, const typename T1::elem_type m
     {
     eT& out_val = out_values[i];
     
-         if(out_val < min_val)  { out_val = min_val; }
-    else if(out_val > max_val)  { out_val = max_val; }
+    out_val = (out_val < min_val) ? min_val : ( (out_val > max_val) ? max_val : out_val );
     }
   
   if( (min_val == eT(0)) || (max_val == eT(0)) )  { out.remove_zeros(); }
