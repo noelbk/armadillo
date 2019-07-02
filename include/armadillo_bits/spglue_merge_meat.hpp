@@ -388,7 +388,7 @@ spglue_merge::symmat_merge(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& 
   {
   arma_extra_debug_sigprint();
   
-  out.reserve(A.n_rows, A.n_cols, 2*A.n_nonzero); // worse case scenario
+  out.reserve(A.n_rows, A.n_cols, 2*A.n_nonzero); // worst case scenario
   
   typename SpMat<eT>::const_iterator x_it  = A.begin();
   typename SpMat<eT>::const_iterator x_end = A.end();
