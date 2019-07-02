@@ -27,7 +27,9 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const SpMat<eT>& B)
   {
   arma_extra_debug_sigprint();
   
-  if( (sv.n_elem == 0) || (B.n_nonzero == 0) )  { return; }
+  if(sv.n_elem == 0)  { return; }
+  
+  if(B.n_nonzero == 0)  { sv.zeros(); return; }
   
   SpMat<eT>& sv_m = access::rw(sv.m);
   
@@ -208,7 +210,9 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const Mat<eT>& B)
     B_n_nonzero += (B_memptr[i] != eT(0)) ? uword(1) : uword(0);
     }
   
-  if( (sv.n_elem == 0) || (B_n_nonzero == 0) )  { return; }
+  if(sv.n_elem == 0)  { return; }
+  
+  if(B_n_nonzero == 0)  { sv.zeros(); return; }
   
   SpMat<eT>& sv_m = access::rw(sv.m);
   
