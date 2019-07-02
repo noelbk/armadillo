@@ -31,9 +31,9 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const SpMat<eT>& B)
   
   if(B.n_nonzero == 0)  { sv.zeros(); return; }
   
-  SpMat<eT>& sv_m = access::rw(sv.m);
+  SpMat<eT>& A = access::rw(sv.m);
   
-  const uword merge_n_nonzero = sv_m.n_nonzero - sv.n_nonzero + B.n_nonzero;
+  const uword merge_n_nonzero = A.n_nonzero - sv.n_nonzero + B.n_nonzero;
   
   const uword sv_row_start = sv.aux_row1;
   const uword sv_col_start = sv.aux_col1;
@@ -42,12 +42,12 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const SpMat<eT>& B)
   const uword sv_col_end   = sv.aux_col1 + sv.n_cols - 1;
   
   
-  if(sv_m.n_nonzero == sv.n_nonzero)
+  if(A.n_nonzero == sv.n_nonzero)
     {
-    // sv_m is either all zeros or has all of its elements in the subview
-    // so the merge is equivalent to overwrite of sv_m
+    // A is either all zeros or has all of its elements in the subview
+    // so the merge is equivalent to overwrite of A
     
-    SpMat<eT> tmp(arma_reserve_indicator(), sv_m.n_rows, sv_m.n_cols, B.n_nonzero);
+    SpMat<eT> tmp(arma_reserve_indicator(), A.n_rows, A.n_cols, B.n_nonzero);
     
     typename SpMat<eT>::const_iterator B_it     = B.begin();
     typename SpMat<eT>::const_iterator B_it_end = B.end();
@@ -67,7 +67,7 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const SpMat<eT>& B)
       access::rw(tmp.col_ptrs[i + 1]) += tmp.col_ptrs[i];
       }
     
-    sv_m.steal_mem(tmp);
+    A.steal_mem(tmp);
     
     access::rw(sv.n_nonzero) = B.n_nonzero;
     
@@ -75,20 +75,20 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const SpMat<eT>& B)
     }
   
   
-  if(sv.n_nonzero > (sv_m.n_nonzero/2))
+  if(sv.n_nonzero > (A.n_nonzero/2))
     {
-    // sv_m has most of its elements in the subview,
-    // so regenerate sv_m with zeros in the subview region
+    // A has most of its elements in the subview,
+    // so regenerate A with zeros in the subview region
     // in order to increase merging efficiency
     
     sv.zeros();
     }
   
   
-  SpMat<eT> out(arma_reserve_indicator(), sv_m.n_rows, sv_m.n_cols, merge_n_nonzero);
+  SpMat<eT> out(arma_reserve_indicator(), A.n_rows, A.n_cols, merge_n_nonzero);
   
-  typename SpMat<eT>::const_iterator x_it  = sv_m.begin();
-  typename SpMat<eT>::const_iterator x_end = sv_m.end();
+  typename SpMat<eT>::const_iterator x_it  = A.begin();
+  typename SpMat<eT>::const_iterator x_end = A.end();
   
   typename SpMat<eT>::const_iterator y_it  = B.begin();
   typename SpMat<eT>::const_iterator y_end = B.end();
@@ -185,7 +185,7 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const SpMat<eT>& B)
     col_ptrs[c] += col_ptrs[c - 1];
     }
   
-  sv_m.steal_mem(out);
+  A.steal_mem(out);
   
   access::rw(sv.n_nonzero) = B.n_nonzero;
   }
@@ -200,6 +200,8 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const Mat<eT>& B)
   {
   arma_extra_debug_sigprint();
   
+  if(sv.n_elem == 0)  { return; }
+  
   const eT*   B_memptr = B.memptr();
   const uword B_n_elem = B.n_elem;
   
@@ -210,13 +212,11 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const Mat<eT>& B)
     B_n_nonzero += (B_memptr[i] != eT(0)) ? uword(1) : uword(0);
     }
   
-  if(sv.n_elem == 0)  { return; }
-  
   if(B_n_nonzero == 0)  { sv.zeros(); return; }
   
-  SpMat<eT>& sv_m = access::rw(sv.m);
+  SpMat<eT>& A = access::rw(sv.m);
   
-  const uword merge_n_nonzero = sv_m.n_nonzero - sv.n_nonzero + B_n_nonzero;
+  const uword merge_n_nonzero = A.n_nonzero - sv.n_nonzero + B_n_nonzero;
   
   const uword sv_row_start = sv.aux_row1;
   const uword sv_col_start = sv.aux_col1;
@@ -225,12 +225,12 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const Mat<eT>& B)
   const uword sv_col_end   = sv.aux_col1 + sv.n_cols - 1;
   
   
-  if(sv_m.n_nonzero == sv.n_nonzero)
+  if(A.n_nonzero == sv.n_nonzero)
     {
-    // sv_m is either all zeros or has all of its elements in the subview
-    // so the merge is equivalent to overwrite of sv_m
+    // A is either all zeros or has all of its elements in the subview
+    // so the merge is equivalent to overwrite of A
     
-    SpMat<eT> tmp(arma_reserve_indicator(), sv_m.n_rows, sv_m.n_cols, B_n_nonzero);
+    SpMat<eT> tmp(arma_reserve_indicator(), A.n_rows, A.n_cols, B_n_nonzero);
     
     typename Mat<eT>::const_row_col_iterator B_it     = B.begin_row_col();
     typename Mat<eT>::const_row_col_iterator B_it_end = B.end_row_col();
@@ -255,7 +255,7 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const Mat<eT>& B)
       access::rw(tmp.col_ptrs[i + 1]) += tmp.col_ptrs[i];
       }
     
-    sv_m.steal_mem(tmp);
+    A.steal_mem(tmp);
     
     access::rw(sv.n_nonzero) = B_n_nonzero;
     
@@ -263,20 +263,20 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const Mat<eT>& B)
     }
   
   
-  if(sv.n_nonzero > (sv_m.n_nonzero/2))
+  if(sv.n_nonzero > (A.n_nonzero/2))
     {
-    // sv_m has most of its elements in the subview,
-    // so regenerate sv_m with zeros in the subview region
+    // A has most of its elements in the subview,
+    // so regenerate A with zeros in the subview region
     // in order to increase merging efficiency
     
     sv.zeros();
     }
   
   
-  SpMat<eT> out(arma_reserve_indicator(), sv_m.n_rows, sv_m.n_cols, merge_n_nonzero);
+  SpMat<eT> out(arma_reserve_indicator(), A.n_rows, A.n_cols, merge_n_nonzero);
   
-  typename SpMat<eT>::const_iterator x_it  = sv_m.begin();
-  typename SpMat<eT>::const_iterator x_end = sv_m.end();
+  typename SpMat<eT>::const_iterator x_it  = A.begin();
+  typename SpMat<eT>::const_iterator x_end = A.end();
   
   typename Mat<eT>::const_row_col_iterator y_it  = B.begin_row_col();
   typename Mat<eT>::const_row_col_iterator y_end = B.end_row_col();
@@ -373,7 +373,7 @@ spglue_merge::subview_merge(SpSubview<eT>& sv, const Mat<eT>& B)
     col_ptrs[c] += col_ptrs[c - 1];
     }
   
-  sv_m.steal_mem(out);
+  A.steal_mem(out);
   
   access::rw(sv.n_nonzero) = B_n_nonzero;
   }
