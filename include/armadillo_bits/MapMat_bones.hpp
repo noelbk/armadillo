@@ -117,10 +117,10 @@ class MapMat
        inline void erase_val(const uword index);
   
   
+  friend class                SpMat<eT>;
   friend class           MapMat_val<eT>;
   friend class     SpMat_MapMat_val<eT>;
   friend class SpSubview_MapMat_val<eT>;
-  friend class SpMat<eT>;
   };
 
 
@@ -201,11 +201,11 @@ class SpMat_MapMat_val
   inline                  SpMat_MapMat_val<eT>& operator--();
   inline arma_warn_unused eT                    operator--(int);
   
-  inline void operator_equ  (const eT in_val);
-  inline void operator_p_equ(const eT in_val);
-  inline void operator_m_equ(const eT in_val);
-  inline void operator_t_equ(const eT in_val);
-  inline void operator_d_equ(const eT in_val);
+  inline void set(const eT in_val);
+  inline void add(const eT in_val);
+  inline void sub(const eT in_val);
+  inline void mul(const eT in_val);
+  inline void div(const eT in_val);
   };
 
 
@@ -219,10 +219,11 @@ class SpSubview_MapMat_val : public SpMat_MapMat_val<eT>
   
   arma_aligned SpSubview<eT>& sv_parent;
   
-  friend class        SpSubview<eT>;
   friend class            SpMat<eT>;
   friend class           MapMat<eT>;
+  friend class        SpSubview<eT>;
   friend class SpMat_MapMat_val<eT>;
+  
   
   public:
   

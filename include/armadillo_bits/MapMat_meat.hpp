@@ -1201,20 +1201,20 @@ SpMat_MapMat_val<eT>::operator=(const eT in_val)
     {
     #pragma omp critical (arma_SpMat_cache)
       {
-      (*this).operator_equ(in_val);
+      (*this).set(in_val);
       }
     }
   #elif defined(ARMA_USE_CXX11)
     {
     s_parent.cache_mutex.lock();
     
-    (*this).operator_equ(in_val);
+    (*this).set(in_val);
     
     s_parent.cache_mutex.unlock();
     }
   #else
     {
-    (*this).operator_equ(in_val);
+    (*this).set(in_val);
     }
   #endif
   
@@ -1236,20 +1236,20 @@ SpMat_MapMat_val<eT>::operator+=(const eT in_val)
     {
     #pragma omp critical (arma_SpMat_cache)
       {
-      (*this).operator_p_equ(in_val);
+      (*this).add(in_val);
       }
     }
   #elif defined(ARMA_USE_CXX11)
     {
     s_parent.cache_mutex.lock();
     
-    (*this).operator_p_equ(in_val);
+    (*this).add(in_val);
     
     s_parent.cache_mutex.unlock();
     }
   #else
     {
-    (*this).operator_p_equ(in_val);
+    (*this).add(in_val);
     }
   #endif
   
@@ -1271,20 +1271,20 @@ SpMat_MapMat_val<eT>::operator-=(const eT in_val)
     {
     #pragma omp critical (arma_SpMat_cache)
       {
-      (*this).operator_m_equ(in_val);
+      (*this).sub(in_val);
       }
     }
   #elif defined(ARMA_USE_CXX11)
     {
     s_parent.cache_mutex.lock();
     
-    (*this).operator_m_equ(in_val);
+    (*this).sub(in_val);
     
     s_parent.cache_mutex.unlock();
     }
   #else
     {
-    (*this).operator_m_equ(in_val);
+    (*this).sub(in_val);
     }
   #endif
   
@@ -1304,20 +1304,20 @@ SpMat_MapMat_val<eT>::operator*=(const eT in_val)
     {
     #pragma omp critical (arma_SpMat_cache)
       {
-      (*this).operator_t_equ(in_val);
+      (*this).mul(in_val);
       }
     }
   #elif defined(ARMA_USE_CXX11)
     {
     s_parent.cache_mutex.lock();
     
-    (*this).operator_t_equ(in_val);
+    (*this).mul(in_val);
     
     s_parent.cache_mutex.unlock();
     }
   #else
     {
-    (*this).operator_t_equ(in_val);
+    (*this).mul(in_val);
     }
   #endif
   
@@ -1337,20 +1337,20 @@ SpMat_MapMat_val<eT>::operator/=(const eT in_val)
     {
     #pragma omp critical (arma_SpMat_cache)
       {
-      (*this).operator_d_equ(in_val);
+      (*this).div(in_val);
       }
     }
   #elif defined(ARMA_USE_CXX11)
     {
     s_parent.cache_mutex.lock();
     
-    (*this).operator_d_equ(in_val);
+    (*this).div(in_val);
     
     s_parent.cache_mutex.unlock();
     }
   #else
     {
-    (*this).operator_d_equ(in_val);
+    (*this).div(in_val);
     }
   #endif
   
@@ -1420,7 +1420,7 @@ SpMat_MapMat_val<eT>::operator--(int)
 template<typename eT>
 inline
 void
-SpMat_MapMat_val<eT>::operator_equ(const eT in_val)
+SpMat_MapMat_val<eT>::set(const eT in_val)
   {
   arma_extra_debug_sigprint();
   
@@ -1445,7 +1445,7 @@ SpMat_MapMat_val<eT>::operator_equ(const eT in_val)
 template<typename eT>
 inline
 void
-SpMat_MapMat_val<eT>::operator_p_equ(const eT in_val)
+SpMat_MapMat_val<eT>::add(const eT in_val)
   {
   arma_extra_debug_sigprint();
   
@@ -1476,7 +1476,7 @@ SpMat_MapMat_val<eT>::operator_p_equ(const eT in_val)
 template<typename eT>
 inline
 void
-SpMat_MapMat_val<eT>::operator_m_equ(const eT in_val)
+SpMat_MapMat_val<eT>::sub(const eT in_val)
   {
   arma_extra_debug_sigprint();
   
@@ -1507,7 +1507,7 @@ SpMat_MapMat_val<eT>::operator_m_equ(const eT in_val)
 template<typename eT>
 inline
 void
-SpMat_MapMat_val<eT>::operator_t_equ(const eT in_val)
+SpMat_MapMat_val<eT>::mul(const eT in_val)
   {
   arma_extra_debug_sigprint();
   
@@ -1551,7 +1551,7 @@ SpMat_MapMat_val<eT>::operator_t_equ(const eT in_val)
 template<typename eT>
 inline
 void
-SpMat_MapMat_val<eT>::operator_d_equ(const eT in_val)
+SpMat_MapMat_val<eT>::div(const eT in_val)
   {
   arma_extra_debug_sigprint();
   
