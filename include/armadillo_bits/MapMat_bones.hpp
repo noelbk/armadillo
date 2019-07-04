@@ -175,8 +175,9 @@ class SpMat_MapMat_val
   
   inline SpMat_MapMat_val(SpMat<eT>& in_s_parent, MapMat<eT>& in_m_parent, const uword in_row, const uword in_col);
   
-  friend class  SpMat<eT>;
-  friend class MapMat<eT>;
+  friend class                SpMat<eT>;
+  friend class               MapMat<eT>;
+  friend class SpSubview_MapMat_val<eT>;
   
   
   public:
@@ -210,31 +211,20 @@ class SpMat_MapMat_val
 
 
 template<typename eT>
-class SpSubview_MapMat_val
+class SpSubview_MapMat_val : public SpMat_MapMat_val<eT>
   {
   private:
   
-  arma_aligned SpSubview<eT>& v_parent;
-  arma_aligned    MapMat<eT>& m_parent;
+  arma_inline SpSubview_MapMat_val(SpSubview<eT>& in_sv_parent, MapMat<eT>& in_m_parent, const uword in_row, const uword in_col);
   
-  arma_aligned const uword row;
-  arma_aligned const uword col;
+  arma_aligned SpSubview<eT>& sv_parent;
   
-  arma_inline SpSubview_MapMat_val(SpSubview<eT>& in_v_parent, MapMat<eT>& in_m_parent, const uword in_row, const uword in_col);
-  
-  arma_inline void update_n_nonzeros();
-  
-  friend class SpSubview<eT>;
-  friend class     SpMat<eT>;
-  friend class    MapMat<eT>;
-  
+  friend class        SpSubview<eT>;
+  friend class            SpMat<eT>;
+  friend class           MapMat<eT>;
+  friend class SpMat_MapMat_val<eT>;
   
   public:
-  
-  inline operator eT() const;
-  
-  inline typename get_pod_type<eT>::result real() const;
-  inline typename get_pod_type<eT>::result imag() const;
   
   inline SpSubview_MapMat_val<eT>& operator= (const SpSubview_MapMat_val<eT>& x);
   
