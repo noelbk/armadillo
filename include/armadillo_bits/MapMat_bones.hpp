@@ -194,11 +194,17 @@ class SpMat_MapMat_val
   inline SpMat_MapMat_val<eT>& operator*=(const eT in_val);
   inline SpMat_MapMat_val<eT>& operator/=(const eT in_val);
   
-  inline SpMat_MapMat_val<eT>& operator++();
-  inline eT                    operator++(int);
+  inline                  SpMat_MapMat_val<eT>& operator++();
+  inline arma_warn_unused eT                    operator++(int);
   
-  inline SpMat_MapMat_val<eT>& operator--();
-  inline eT                    operator--(int);
+  inline                  SpMat_MapMat_val<eT>& operator--();
+  inline arma_warn_unused eT                    operator--(int);
+  
+  inline void operator_equ  (const eT in_val);
+  inline void operator_p_equ(const eT in_val);
+  inline void operator_m_equ(const eT in_val);
+  inline void operator_t_equ(const eT in_val);
+  inline void operator_d_equ(const eT in_val);
   };
 
 

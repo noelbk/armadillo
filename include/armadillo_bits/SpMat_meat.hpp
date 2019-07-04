@@ -6239,6 +6239,29 @@ inline
 arma_hot
 arma_warn_unused
 bool
+SpMat<eT>::try_set_value_csc(const uword in_row, const uword in_col, const eT in_val)
+  {
+  const eT* val_ptr = find_value_csc(in_row, in_col);
+  
+  if(val_ptr == NULL)
+    {
+    return (in_val == eT(0));
+    }
+  
+  access::rw(*val_ptr) = in_val;
+  
+  invalidate_cache();
+  
+  return true;
+  }
+
+
+
+template<typename eT>
+inline
+arma_hot
+arma_warn_unused
+bool
 SpMat<eT>::try_add_value_csc(const uword in_row, const uword in_col, const eT in_val)
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
@@ -6518,6 +6541,7 @@ SpMat<eT>::invalidate_cache() const
   if(sync_state == 0)  { return; }
   
   cache.reset();
+  
   sync_state = 0;
   }
 
@@ -6555,33 +6579,48 @@ SpMat<eT>::sync_cache() const
   // data races are prevented via the mutex
   
   #if defined(ARMA_USE_OPENMP)
+    {
     if(sync_state == 0)
       {
-      #pragma omp critical (arma_SpMat_sync)
-      if(sync_state == 0)
+      #pragma omp critical (arma_SpMat_cache)
         {
-        cache      = (*this);
-        sync_state = 2;
+        sync_cache_simple();
         }
       }
+    }
   #elif defined(ARMA_USE_CXX11)
+    {
     if(sync_state == 0)
       {
       cache_mutex.lock();
-      if(sync_state == 0)
-        {
-        cache      = (*this);
-        sync_state = 2;
-        }
+      
+      sync_cache_simple();
+      
       cache_mutex.unlock();
       }
+    }
   #else
-    if(sync_state == 0)
-      {
-      cache      = (*this);
-      sync_state = 2;
-      }
+    {
+    sync_cache_simple();
+    }
   #endif
+  }
+
+
+
+
+template<typename eT>
+inline
+void
+SpMat<eT>::sync_cache_simple() const
+  {
+  arma_extra_debug_sigprint();
+  
+  if(sync_state == 0)
+    {
+    cache      = (*this);
+    sync_state = 2;
+    }
   }
 
 
@@ -6606,7 +6645,7 @@ SpMat<eT>::sync_csc() const
   #if defined(ARMA_USE_OPENMP)
     if(sync_state == 1)
       {
-      #pragma omp critical (arma_SpMat_sync)
+      #pragma omp critical (arma_SpMat_cache)
       if(sync_state == 1)
         {
         SpMat<eT> tmp(cache);
