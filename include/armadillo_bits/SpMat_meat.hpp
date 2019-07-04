@@ -6243,10 +6243,9 @@ SpMat<eT>::try_set_value_csc(const uword in_row, const uword in_col, const eT in
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
   
-  if(val_ptr == NULL)
-    {
-    return (in_val == eT(0));
-    }
+  if(val_ptr == NULL)  { return (in_val == eT(0)); }
+  
+  if(in_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = in_val;
   
