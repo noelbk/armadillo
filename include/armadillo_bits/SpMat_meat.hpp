@@ -2900,12 +2900,21 @@ SpMat<eT>::swap_cols(const uword in_col1, const uword in_col2)
   
   if(in_col1 == in_col2)  { return; }
   
-  for(uword lrow = 0; lrow < n_rows; ++lrow)
-    {
-    const eT tmp = at(lrow, in_col1);
-    at(lrow, in_col1) = eT( at(lrow, in_col2) );
-    at(lrow, in_col2) = tmp;
-    }
+  // TODO: this is a rudimentary implementation
+  
+  SpMat<eT> tmp = (*this);
+  
+  tmp.col(in_col1) = (*this).col(in_col2);
+  tmp.col(in_col2) = (*this).col(in_col1);
+  
+  steal_mem(tmp);
+  
+  // for(uword lrow = 0; lrow < n_rows; ++lrow)
+  //   {
+  //   const eT tmp = at(lrow, in_col1);
+  //   at(lrow, in_col1) = eT( at(lrow, in_col2) );
+  //   at(lrow, in_col2) = tmp;
+  //   }
   }
 
 
