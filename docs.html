@@ -1798,29 +1798,6 @@ The root sparse matrix class is <b>SpMat&lt;</b><i>type</i><b>&gt;</b>, where <i
 </li>
 <br>
 <li>
-This class behaves in a similar manner to the <a href="#Mat">Mat</a> class;
-however, member functions which set all elements to non-zero values (and hence do not make sense for sparse matrices) have been deliberately omitted;
-examples of omitted functions: <a href="#fill">.fill()</a>, <a href="#ones_member">.ones()</a>, +=&nbsp;scalar, etc.
-</li>
-<br>
-<li>
-The elements are stored in <a href="http://en.wikipedia.org/wiki/Sparse_matrix">compressed sparse column (CSC) format</a>
-</li>
-<br>
-<li>
-<b>NOTE:</b>
-<ul>
-<li>
-Armadillo version 9.100 is the minimum recommended version; it has considerably improved support for sparse matrices compared to earlier versions
-</li>
-<li>
-In Armadillo versions 7.x and earlier, incrementally populating <i>SpMat</i> via <a href="#element_access">element access operators</a> is inefficient;
-use <a href="#batch_constructors_sp_mat">batch insertion constructors</a> instead
-</li>
-</ul>
-</li>
-<br>
-<li>
 For convenience the following typedefs have been defined:
 <ul>
 <table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
@@ -1944,6 +1921,16 @@ All elements are treated as zero by default (ie. the matrix is initialised to co
 </li>
 <br>
 <li>
+Non-zero elements are stored in <a href="http://en.wikipedia.org/wiki/Sparse_matrix">compressed sparse column (CSC) format</a>
+</li>
+<br>
+<li>
+This class behaves in a similar manner to the <a href="#Mat">Mat</a> class;
+however, member functions which set all elements to non-zero values (and hence do not make sense for sparse matrices) have been deliberately omitted;
+examples of omitted functions: <a href="#fill">.fill()</a>, <a href="#ones_member">.ones()</a>, +=&nbsp;scalar, etc.
+</li>
+<br>
+<li>
 <a name="batch_constructors_sp_mat"></a>
 Batch insertion constructors:
 <ul>
@@ -1997,7 +1984,6 @@ If <i>check_for_zeros</i> is set to <i>false</i>, the <i>values</i> vector is as
 </ul>
 </ul>
 <br>
-
 <li>
 The following subset of operations &amp; functions is available for sparse matrices:
 <ul>
@@ -2016,7 +2002,19 @@ The following subset of operations &amp; functions is available for sparse matri
 </ul>
 </li>
 <br>
-
+<li>
+<b>Caveats:</b>
+<ul>
+<li>
+Armadillo 9.600 is the minimum recommended version; it has considerably improved support for sparse matrices compared to earlier versions
+</li>
+<li>
+In old versions of Armadillo (7.x and earlier), incrementally populating sparse matrices via <a href="#element_access">element access operators</a> is inefficient;
+use <a href="#batch_constructors_sp_mat">batch insertion constructors</a> instead
+</li>
+</ul>
+</li>
+<br>
 <li>
 Examples:
 <ul>
@@ -3710,6 +3708,10 @@ and does not take into account that the underlying matrix memory could be freed
 </li>
 <br>
 <li>
+Submatrix views of sparse matrices are only useful with Armadillo 9.600 and later versions; in earlier versions they are inefficient 
+</li>
+<br>
+<li>
 Examples:
 <ul>
 <pre>
@@ -5188,7 +5190,7 @@ Iterators for sparse matrices traverse over non-zero elements within the specifi
 <ul>
 <li>writing a zero value into a sparse matrix through an iterator will invalidate all current iterators associated with the sparse matrix;
 <br>consider using <a href="#transform">.transform()</a> and <a href="#for_each">.for_each()</a> as safer alternatives</li>
-<li>row iterators for sparse matrices are only useful with Armadillo versions 8.500 and later; in earlier versions they are inefficient
+<li>row iterators for sparse matrices are only useful with Armadillo 8.500 and later versions; in earlier versions they are inefficient
 </ul>
 </li>
 <br>
