@@ -235,11 +235,11 @@ class SpSubview_MapMat_val : public SpMat_MapMat_val<eT>
   inline SpSubview_MapMat_val<eT>& operator*=(const eT in_val);
   inline SpSubview_MapMat_val<eT>& operator/=(const eT in_val);
   
-  inline SpSubview_MapMat_val<eT>& operator++();
-  inline eT                        operator++(int);
+  inline                  SpSubview_MapMat_val<eT>& operator++();
+  inline arma_warn_unused eT                        operator++(int);
   
-  inline SpSubview_MapMat_val<eT>& operator--();
-  inline eT                        operator--(int);
+  inline                  SpSubview_MapMat_val<eT>& operator--();
+  inline arma_warn_unused eT                        operator--(int);
   };
 
 

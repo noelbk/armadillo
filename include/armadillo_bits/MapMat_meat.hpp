@@ -1745,6 +1745,7 @@ SpSubview_MapMat_val<eT>::operator++()
 
 template<typename eT>
 inline
+arma_warn_unused
 eT
 SpSubview_MapMat_val<eT>::operator++(int)
   {
@@ -1783,6 +1784,7 @@ SpSubview_MapMat_val<eT>::operator--()
 
 template<typename eT>
 inline
+arma_warn_unused
 eT
 SpSubview_MapMat_val<eT>::operator--(int)
   {
