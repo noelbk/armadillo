@@ -2791,17 +2791,9 @@ SpMat<eT>::swap_rows(const uword in_row1, const uword in_row2)
   {
   arma_extra_debug_sigprint();
   
-  arma_debug_check
-    (
-    (in_row1 >= n_rows) || (in_row2 >= n_rows),
-    "SpMat::swap_rows(): out of bounds"
-    );
-
-  // Sanity check.
-  if (in_row1 == in_row2)
-    {
-    return;
-    }
+  arma_debug_check( ((in_row1 >= n_rows) || (in_row2 >= n_rows)), "SpMat::swap_rows(): out of bounds" );
+  
+  if(in_row1 == in_row2)  { return; }
   
   sync_csc();
   invalidate_cache();
@@ -2904,7 +2896,10 @@ SpMat<eT>::swap_cols(const uword in_col1, const uword in_col2)
   {
   arma_extra_debug_sigprint();
   
-  // slow but works
+  arma_debug_check( ((in_col1 >= n_cols) || (in_col2 >= n_cols)), "SpMat::swap_cols(): out of bounds" );
+  
+  if(in_col1 == in_col2)  { return; }
+  
   for(uword lrow = 0; lrow < n_rows; ++lrow)
     {
     const eT tmp = at(lrow, in_col1);
