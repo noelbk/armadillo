@@ -3032,8 +3032,13 @@ Member function of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>Cube</i> and <i>SpMat<
 Examples:
 <ul>
 <pre>
-mat A(4,5, fill::randu);
-  
+sp_mat A;
+
+A.sprandu(1000, 1000, 0.01);
+
+A(12,34) =  datum::eps;
+A(56,78) = -datum::eps;
+
 A.clean(datum::eps);
 </pre>
 </ul>
