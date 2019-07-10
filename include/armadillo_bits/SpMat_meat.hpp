@@ -646,8 +646,7 @@ SpMat<eT>::operator*=(const eT val)
     }
   else
     {
-    // Everything will be zero.
-    init(n_rows, n_cols);
+    (*this).zeros();
     }
   
   return *this;
