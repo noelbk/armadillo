@@ -438,48 +438,18 @@ spdiagview<eT>::operator= (const SpBase<eT,T1>& o)
   {
   arma_extra_debug_sigprint();
   
-  spdiagview<eT>& d = *this;
-  
-  SpMat<eT>& d_m = const_cast< SpMat<eT>& >(d.m);
-  
-  const uword d_n_elem     = d.n_elem;
-  const uword d_row_offset = d.row_offset;
-  const uword d_col_offset = d.col_offset;
-  
-  const SpProxy<T1> P( o.get_ref() );
+  const unwrap_spmat<T1> U( o.get_ref() );
+  const SpMat<eT>& x   = U.M;
   
   arma_debug_check
     (
-    ( (d_n_elem != P.get_n_elem()) || ((P.get_n_rows() != 1) && (P.get_n_cols() != 1)) ),
+    ( (n_elem != x.n_elem) || ((x.n_rows != 1) && (x.n_cols != 1)) ),
     "spdiagview: given object has incompatible size"
     );
   
-  if( SpProxy<T1>::use_iterator || P.is_alias(d_m) )
-    {
-    const SpMat<eT> tmp(P.Q);
-    
-    if(tmp.n_cols == 1)
-      {
-      for(uword i=0; i < d_n_elem; ++i)  { d_m.at(i + d_row_offset, i + d_col_offset) = tmp.at(i,0); }
-      }
-    else
-    if(tmp.n_rows == 1)
-      {
-      for(uword i=0; i < d_n_elem; ++i)  { d_m.at(i + d_row_offset, i + d_col_offset) = tmp.at(0,i); }
-      }
-    }
-  else
-    {
-    if(P.get_n_cols() == 1)
-      {
-      for(uword i=0; i < d_n_elem; ++i)  { d_m.at(i + d_row_offset, i + d_col_offset) = P.at(i,0); }
-      }
-    else
-    if(P.get_n_rows() == 1)
-      {
-      for(uword i=0; i < d_n_elem; ++i)  { d_m.at(i + d_row_offset, i + d_col_offset) = P.at(0,i); }
-      }
-    }
+  const Mat<eT> tmp(x);
+  
+  (*this).operator=(tmp);
   }
 
 
