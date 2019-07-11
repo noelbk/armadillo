@@ -185,34 +185,48 @@ spdiagview<eT>::operator= (const Base<eT,T1>& o)
   const uword d_n_elem     = d.n_elem;
   const uword d_row_offset = d.row_offset;
   const uword d_col_offset = d.col_offset;
-    
-  const Proxy<T1> P( o.get_ref() );
+  
+  const quasi_unwrap<T1> U(o.get_ref());
+  const Mat<eT>& x     = U.M;
+  
+  const eT* x_mem = x.memptr();
   
   arma_debug_check
     (
-    ( (d_n_elem != P.get_n_elem()) || ((P.get_n_rows() != 1) && (P.get_n_cols() != 1)) ),
+    ( (d_n_elem != x.n_elem) || ((x.n_rows != 1) && (x.n_cols != 1)) ),
     "spdiagview: given object has incompatible size"
     );
   
-  if( (is_Mat<typename Proxy<T1>::stored_type>::value) || (Proxy<T1>::use_at) )
+  if( (d_row_offset == 0) && (d_col_offset == 0) )
     {
-    const unwrap<typename Proxy<T1>::stored_type> tmp(P.Q);
-    const Mat<eT>& x = tmp.M;
+    SpMat<eT> tmp1;
     
-    const eT* x_mem = x.memptr();
-
+    tmp1.eye(d_m.n_rows, d_m.n_cols);
+    
+    bool has_zero = false;
+    
     for(uword i=0; i < d_n_elem; ++i)
       {
-      d_m.at(i + d_row_offset, i + d_col_offset) = x_mem[i];
+      const eT val = x_mem[i];
+      
+      access::rw(tmp1.values[i]) = val;
+      
+      if(val == eT(0))  { has_zero = true; }
       }
+    
+    if(has_zero)  { tmp1.remove_zeros(); }
+    
+    SpMat<eT> tmp2;
+    
+    spglue_merge::diagview_merge(tmp2, d_m, tmp1);
+    
+    d_m.steal_mem(tmp2);
     }
   else
     {
-    typename Proxy<T1>::ea_type Pea = P.get_ea();
-      
     for(uword i=0; i < d_n_elem; ++i)
       {
-      d_m.at(i + d_row_offset, i + d_col_offset) = Pea[i];
+      d_m.at(i + d_row_offset, i + d_col_offset) = x_mem[i];
       }
     }
   }
