@@ -6324,21 +6324,17 @@ SpMat<eT>::try_mul_value_csc(const uword in_row, const uword in_col, const eT in
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
   
-  if(val_ptr != NULL)
-    {
-    const eT new_val = eT(*val_ptr) * in_val;
-    
-    if(new_val != eT(0))
-      {
-      access::rw(*val_ptr) = new_val;
-      
-      invalidate_cache();
-      
-      return true;
-      }
-    }
+  if(val_ptr == NULL)  { return true; }
   
-  return false;
+  const eT new_val = eT(*val_ptr) * in_val;
+  
+  if(new_val == eT(0))  { return false; }
+  
+  access::rw(*val_ptr) = new_val;
+  
+  invalidate_cache();
+  
+  return true;
   }
 
 
