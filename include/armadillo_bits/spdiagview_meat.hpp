@@ -86,6 +86,8 @@ spdiagview<eT>::operator+=(const eT val)
   {
   arma_extra_debug_sigprint();
   
+  if(val == eT(0))  { return; }
+  
   SpMat<eT>& t_m = const_cast< SpMat<eT>& >(m);
   
   const uword t_n_elem     = n_elem;
@@ -107,6 +109,8 @@ spdiagview<eT>::operator-=(const eT val)
   {
   arma_extra_debug_sigprint();
   
+  if(val == eT(0))  { return; }
+  
   SpMat<eT>& t_m = const_cast< SpMat<eT>& >(m);
   
   const uword t_n_elem     = n_elem;
@@ -127,6 +131,8 @@ void
 spdiagview<eT>::operator*=(const eT val)
   {
   arma_extra_debug_sigprint();
+  
+  if(val == eT(0))  { (*this).zeros(); return; }
   
   SpMat<eT>& t_m = const_cast< SpMat<eT>& >(m);
   
@@ -874,13 +880,71 @@ spdiagview<eT>::fill(const eT val)
   {
   arma_extra_debug_sigprint();
   
-  SpMat<eT>& x = const_cast< SpMat<eT>& >(m);
-  
-  const uword local_n_elem = n_elem;
-  
-  for(uword i=0; i < local_n_elem; ++i)
+  if( (row_offset == 0) && (col_offset == 0) )
     {
-    x.at(i+row_offset, i+col_offset) = val;
+    const uword tmp_n_nonzero = (val == eT(0)) ? uword(m.n_nonzero) : uword(m.n_nonzero + n_elem);  // worst case scenarios
+    
+    SpMat<eT> tmp(arma_reserve_indicator(), m.n_rows, m.n_cols, tmp_n_nonzero);
+    
+    typename SpMat<eT>::const_iterator it     = m.begin();
+    typename SpMat<eT>::const_iterator it_end = m.end();
+    
+    uword count = 0;
+      
+    if(val == eT(0))
+      {
+      for(; it != it_end; ++it)
+        {
+        const uword row = it.row();
+        const uword col = it.col();
+        
+        if(row != col)
+          {
+          access::rw(tmp.values[count])      = (*it);
+          access::rw(tmp.row_indices[count]) = row;
+          access::rw(tmp.col_ptrs[col + 1])++;
+          ++count;
+          }
+        }
+      }
+    else  // val != eT(0)
+      {
+      for(; it != it_end; ++it)
+        {
+        const uword row = it.row();
+        const uword col = it.col();
+        
+        const eT new_val = (row != col) ? (*it) : val;
+        
+        access::rw(tmp.values[count])      = new_val;
+        access::rw(tmp.row_indices[count]) = row;
+        access::rw(tmp.col_ptrs[col + 1])++;
+        ++count;
+        }
+      }
+      
+    for(uword i=0; i < tmp.n_cols; ++i)
+      {
+      access::rw(tmp.col_ptrs[i + 1]) += tmp.col_ptrs[i];
+      }
+    
+    // quick resize without reallocating memory and copying data
+    access::rw(         tmp.n_nonzero) = count;
+    access::rw(     tmp.values[count]) = eT(0);
+    access::rw(tmp.row_indices[count]) = uword(0);
+    
+    access::rw(m).steal_mem(tmp);
+    }
+  else
+    {
+    SpMat<eT>& x = const_cast< SpMat<eT>& >(m);
+    
+    const uword local_n_elem = n_elem;
+    
+    for(uword i=0; i < local_n_elem; ++i)
+      {
+      x.at(i+row_offset, i+col_offset) = val;
+      }
     }
   }
 
