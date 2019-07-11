@@ -689,6 +689,7 @@ class SpMat : public SpBase< eT, SpMat<eT> >
   friend class SpCol<eT>;
   friend class SpMat_MapMat_val<eT>;
   friend class SpSubview_MapMat_val<eT>;
+  friend class spdiagview<eT>;
   
   
   public:
