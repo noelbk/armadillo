@@ -5668,35 +5668,28 @@ SpMat<eT>::steal_mem_simple(SpMat<eT>& x)
   
   if(layout_ok)
     {
-    if(x.n_nonzero == 0)
-      {
-      (*this).zeros(x.n_rows, x.n_cols);
-      }
-    else
-      {
-      if(values     )  { memory::release(access::rw(values));      }
-      if(row_indices)  { memory::release(access::rw(row_indices)); }
-      if(col_ptrs   )  { memory::release(access::rw(col_ptrs));    }
-      
-      access::rw(n_rows)    = x.n_rows;
-      access::rw(n_cols)    = x.n_cols;
-      access::rw(n_elem)    = x.n_elem;
-      access::rw(n_nonzero) = x.n_nonzero;
-      
-      access::rw(values)      = x.values;
-      access::rw(row_indices) = x.row_indices;
-      access::rw(col_ptrs)    = x.col_ptrs;
-      
-      // Set other matrix to empty.
-      access::rw(x.n_rows)    = 0;
-      access::rw(x.n_cols)    = 0;
-      access::rw(x.n_elem)    = 0;
-      access::rw(x.n_nonzero) = 0;
-      
-      access::rw(x.values)      = NULL;
-      access::rw(x.row_indices) = NULL;
-      access::rw(x.col_ptrs)    = NULL;
-      }
+    if(values     )  { memory::release(access::rw(values));      }
+    if(row_indices)  { memory::release(access::rw(row_indices)); }
+    if(col_ptrs   )  { memory::release(access::rw(col_ptrs));    }
+    
+    access::rw(n_rows)    = x.n_rows;
+    access::rw(n_cols)    = x.n_cols;
+    access::rw(n_elem)    = x.n_elem;
+    access::rw(n_nonzero) = x.n_nonzero;
+    
+    access::rw(values)      = x.values;
+    access::rw(row_indices) = x.row_indices;
+    access::rw(col_ptrs)    = x.col_ptrs;
+    
+    // Set other matrix to empty.
+    access::rw(x.n_rows)    = 0;
+    access::rw(x.n_cols)    = 0;
+    access::rw(x.n_elem)    = 0;
+    access::rw(x.n_nonzero) = 0;
+    
+    access::rw(x.values)      = NULL;
+    access::rw(x.row_indices) = NULL;
+    access::rw(x.col_ptrs)    = NULL;
     }
   else
     {
@@ -6679,17 +6672,9 @@ SpMat<eT>::sync_csc_simple() const
     {
     SpMat<eT>& x = const_cast< SpMat<eT>& >(*this);
     
-    if(cache.get_n_nonzero() == 0)
-      {
-      // init() will zap the cache, but as it's empty it doesn't matter
-      x.init(cache.n_rows, cache.n_cols, 0);
-      }
-    else
-      {
-      SpMat<eT> tmp(cache);
-      
-      x.steal_mem_simple(tmp);
-      }
+    SpMat<eT> tmp(cache);
+    
+    x.steal_mem_simple(tmp);
     
     sync_state = 2;
     }
