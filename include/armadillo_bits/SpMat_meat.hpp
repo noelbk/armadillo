@@ -6249,7 +6249,7 @@ SpMat<eT>::try_set_value_csc(const uword in_row, const uword in_col, const eT in
   // element not found, ie. it's zero; fail if trying to set it to non-zero value
   if(val_ptr == NULL)  { return (in_val == eT(0)); }
   
-  // erasing an existing element?
+  // fail if trying to erase an existing element
   if(in_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = in_val;
@@ -6275,7 +6275,7 @@ SpMat<eT>::try_add_value_csc(const uword in_row, const uword in_col, const eT in
   
   const eT new_val = eT(*val_ptr) + in_val;
   
-  // erasing an existing element?
+  // fail if trying to erase an existing element
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
@@ -6301,7 +6301,7 @@ SpMat<eT>::try_sub_value_csc(const uword in_row, const uword in_col, const eT in
   
   const eT new_val = eT(*val_ptr) - in_val;
   
-  // erasing an existing element?
+  // fail if trying to erase an existing element
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
@@ -6327,7 +6327,7 @@ SpMat<eT>::try_mul_value_csc(const uword in_row, const uword in_col, const eT in
   
   const eT new_val = eT(*val_ptr) * in_val;
   
-  // erasing an existing element?
+  // fail if trying to erase an existing element
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
@@ -6353,7 +6353,7 @@ SpMat<eT>::try_div_value_csc(const uword in_row, const uword in_col, const eT in
   
   const eT new_val = eT(*val_ptr) / in_val;
   
-  // erasing an existing element?
+  // fail if trying to erase an existing element
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
