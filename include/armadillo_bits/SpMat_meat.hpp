@@ -5659,7 +5659,6 @@ SpMat<eT>::steal_mem(SpMat<eT>& x)
     {
     (*this).operator=(x);
     }
-  
   }
 
 
