@@ -4230,7 +4230,9 @@ SpMat<eT>::zeros()
   {
   arma_extra_debug_sigprint();
   
-  if(n_nonzero != 0)
+  const bool already_done = ( (sync_state != 1) && (n_nonzero == 0) );
+  
+  if(already_done == false)
     {
     init(n_rows, n_cols);
     }
@@ -4268,7 +4270,7 @@ SpMat<eT>::zeros(const uword in_rows, const uword in_cols)
   {
   arma_extra_debug_sigprint();
   
-  const bool already_done = ( (n_nonzero == 0) && (n_rows == in_rows) && (n_cols == in_cols) );
+  const bool already_done = ( (sync_state != 1) && (n_nonzero == 0) && (n_rows == in_rows) && (n_cols == in_cols) );
   
   if(already_done == false)
     {
