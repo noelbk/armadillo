@@ -1550,7 +1550,7 @@ SpMat_MapMat_val<eT>::mul(const eT in_val)
         {
         const eT result = eT(0) * in_val;
         
-        if(result != eT(0))  // paranoia
+        if(result != eT(0))  // paranoia, in case compiling with -ffast-math
           {
           m_parent.set_val(index, result);
           
@@ -1594,6 +1594,7 @@ SpMat_MapMat_val<eT>::div(const eT in_val)
       if(val == eT(0))  { map_ref.erase(it); }
       
       s_parent.sync_state = 1;
+      
       access::rw(s_parent.n_nonzero) = m_parent.get_n_nonzero();
       }
     else
@@ -1603,7 +1604,7 @@ SpMat_MapMat_val<eT>::div(const eT in_val)
         {
         const eT result = eT(0) / in_val;
         
-        if(result != eT(0))  // paranoia
+        if(result != eT(0))  // paranoia, in case compiling with -ffast-math
           {
           m_parent.set_val(index, result);
           
