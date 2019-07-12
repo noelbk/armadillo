@@ -5062,6 +5062,8 @@ SpMat<eT>::init(const MapMat<eT>& x)
   
   init(x_n_rows, x_n_cols, x_n_nz);
   
+  if(x_n_nz == 0)  { return; }
+  
   typename MapMat<eT>::map_type& x_map_ref = *(x.map_ptr);
   
   typename MapMat<eT>::map_type::const_iterator x_it = x_map_ref.begin();
@@ -6631,6 +6633,39 @@ SpMat<eT>::sync_csc() const
   {
   arma_extra_debug_sigprint();
   
+  #if defined(ARMA_USE_OPENMP)
+    if(sync_state == 1)
+      {
+      #pragma omp critical (arma_SpMat_cache)
+        {
+        sync_csc_simple();
+        }
+      }
+  #elif defined(ARMA_USE_CXX11)
+    if(sync_state == 1)
+      {
+      cache_mutex.lock();
+      
+      sync_csc_simple();
+      
+      cache_mutex.unlock();
+      }
+  #else
+    {
+    sync_csc_simple();
+    }
+  #endif
+  }
+
+
+
+template<typename eT>
+inline
+void
+SpMat<eT>::sync_csc_simple() const
+  {
+  arma_extra_debug_sigprint();
+  
   // method:
   // 1. construct temporary matrix to prevent the cache from getting zapped
   // 2. steal memory from the temporary matrix
@@ -6640,50 +6675,26 @@ SpMat<eT>::sync_csc() const
   
   // see also the note in sync_cache() above
   
-  #if defined(ARMA_USE_OPENMP)
-    if(sync_state == 1)
+  if(sync_state == 1)
+    {
+    SpMat<eT>& x = const_cast< SpMat<eT>& >(*this);
+    
+    if(cache.get_n_nonzero() == 0)
       {
-      #pragma omp critical (arma_SpMat_cache)
-      if(sync_state == 1)
-        {
-        SpMat<eT> tmp(cache);
-        
-        SpMat<eT>& x = const_cast< SpMat<eT>& >(*this);
-        
-        x.steal_mem_simple(tmp);
-        
-        sync_state = 2;
-        }
+      // init() will zap the cache, but as it's empty it doesn't matter
+      x.init(cache.n_rows, cache.n_cols, 0);
       }
-  #elif defined(ARMA_USE_CXX11)
-    if(sync_state == 1)
-      {
-      cache_mutex.lock();
-      if(sync_state == 1)
-        {
-        SpMat<eT> tmp(cache);
-        
-        SpMat<eT>& x = const_cast< SpMat<eT>& >(*this);
-        
-        x.steal_mem_simple(tmp);
-        
-        sync_state = 2;
-        }
-      cache_mutex.unlock();
-      }
-  #else
-    if(sync_state == 1)
+    else
       {
       SpMat<eT> tmp(cache);
       
-      SpMat<eT>& x = const_cast< SpMat<eT>& >(*this);
-      
       x.steal_mem_simple(tmp);
-      
-      sync_state = 2;
       }
-  #endif
+    
+    sync_state = 2;
+    }
   }
+
 
 
 

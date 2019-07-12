@@ -681,6 +681,7 @@ class SpMat : public SpBase< eT, SpMat<eT> >
   inline void sync_cache()        const;
   inline void sync_cache_simple() const;
   inline void sync_csc()          const;
+  inline void sync_csc_simple()   const;
   
   
   friend class SpValProxy< SpMat<eT> >;  // allow SpValProxy to call insert_element() and delete_element()
