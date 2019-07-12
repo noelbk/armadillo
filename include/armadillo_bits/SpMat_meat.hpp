@@ -6246,8 +6246,10 @@ SpMat<eT>::try_set_value_csc(const uword in_row, const uword in_col, const eT in
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
   
+  // element not found, ie. it's zero; fail if trying to set it to non-zero value
   if(val_ptr == NULL)  { return (in_val == eT(0)); }
   
+  // erasing an existing element?
   if(in_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = in_val;
@@ -6268,10 +6270,12 @@ SpMat<eT>::try_add_value_csc(const uword in_row, const uword in_col, const eT in
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
   
+  // element not found, ie. it's zero; fail if trying to add a non-zero value
   if(val_ptr == NULL)  { return (in_val == eT(0)); }
   
   const eT new_val = eT(*val_ptr) + in_val;
   
+  // erasing an existing element?
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
@@ -6292,10 +6296,12 @@ SpMat<eT>::try_sub_value_csc(const uword in_row, const uword in_col, const eT in
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
   
+  // element not found, ie. it's zero; fail if trying to subtract a non-zero value
   if(val_ptr == NULL)  { return (in_val == eT(0)); }
   
   const eT new_val = eT(*val_ptr) - in_val;
   
+  // erasing an existing element?
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
@@ -6316,10 +6322,12 @@ SpMat<eT>::try_mul_value_csc(const uword in_row, const uword in_col, const eT in
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
   
-  if(val_ptr == NULL)  { return true; }
+  // element not found, ie. it's zero; succeed if given value is finite; zero multiplied by anything is zero, except for nan and inf
+  if(val_ptr == NULL)  { return arma_isfinite(in_val); }
   
   const eT new_val = eT(*val_ptr) * in_val;
   
+  // erasing an existing element?
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
@@ -6340,10 +6348,12 @@ SpMat<eT>::try_div_value_csc(const uword in_row, const uword in_col, const eT in
   {
   const eT* val_ptr = find_value_csc(in_row, in_col);
   
-  if(val_ptr == NULL)  { return (in_val != eT(0)); }
+  // element not found, ie. it's zero; succeed if given value is not zero and not nan; zero divided by anything is zero, except for zero and nan
+  if(val_ptr == NULL)  { return ((in_val != eT(0)) && (arma_isnan(in_val) == false)); }
   
   const eT new_val = eT(*val_ptr) / in_val;
   
+  // erasing an existing element?
   if(new_val == eT(0))  { return false; }
   
   access::rw(*val_ptr) = new_val;
