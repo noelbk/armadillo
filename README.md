@@ -83,8 +83,8 @@ for the continued development and maintenance of the library.
     Journal of Open Source Software, Vol. 1, pp. 26, 2016.  
   
   * Conrad Sanderson and Ryan Curtin.  
-    A User-Friendly Hybrid Sparse Matrix Class in C++.  
-    Lecture Notes in Computer Science (LNCS), Vol. 10931, pp. 422-430, 2018.
+    Practical Sparse Matrices in C++ with Hybrid Storage and Template-Based Expression Optimisation.  
+    Mathematical and Computational Applications, Vol. 24, No. 3, 2019.
 
 ---
 
