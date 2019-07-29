@@ -4651,13 +4651,9 @@ SpMat<eT>::save(const std::string name, const file_type type, const bool print_s
   
   switch(type)
     {
-    // case raw_ascii:
-    //   save_okay = diskio::save_raw_ascii(*this, name);
-    //   break;
-    
-    // case csv_ascii:
-    //   save_okay = diskio::save_csv_ascii(*this, name);
-    //   break;
+    case csv_ascii:
+      save_okay = diskio::save_csv_ascii(*this, name);
+      break;
     
     case arma_binary:
       save_okay = diskio::save_arma_binary(*this, name);
@@ -4694,13 +4690,9 @@ SpMat<eT>::save(std::ostream& os, const file_type type, const bool print_status)
   
   switch(type)
     {
-    // case raw_ascii:
-    //   save_okay = diskio::save_raw_ascii(*this, os);
-    //   break;
-    
-    // case csv_ascii:
-    //   save_okay = diskio::save_csv_ascii(*this, os);
-    //   break;
+    case csv_ascii:
+      save_okay = diskio::save_csv_ascii(*this, os);
+      break;
     
     case arma_binary:
       save_okay = diskio::save_arma_binary(*this, os);
@@ -4742,13 +4734,9 @@ SpMat<eT>::load(const std::string name, const file_type type, const bool print_s
     //   load_okay = diskio::load_auto_detect(*this, name, err_msg);
     //   break;
     
-    // case raw_ascii:
-    //   load_okay = diskio::load_raw_ascii(*this, name, err_msg);
-    //   break;
-    
-    // case csv_ascii:
-    //   load_okay = diskio::load_csv_ascii(*this, name, err_msg);
-    //   break;
+    case csv_ascii:
+      load_okay = diskio::load_csv_ascii(*this, name, err_msg);
+      break;
     
     case arma_binary:
       load_okay = diskio::load_arma_binary(*this, name, err_msg);
@@ -4805,13 +4793,9 @@ SpMat<eT>::load(std::istream& is, const file_type type, const bool print_status)
     //   load_okay = diskio::load_auto_detect(*this, is, err_msg);
     //   break;
     
-    // case raw_ascii:
-    //   load_okay = diskio::load_raw_ascii(*this, is, err_msg);
-    //   break;
-    
-    // case csv_ascii:
-    //   load_okay = diskio::load_csv_ascii(*this, is, err_msg);
-    //   break;
+    case csv_ascii:
+      load_okay = diskio::load_csv_ascii(*this, is, err_msg);
+      break;
     
     case arma_binary:
       load_okay = diskio::load_arma_binary(*this, is, err_msg);
