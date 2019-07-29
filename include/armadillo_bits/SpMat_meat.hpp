@@ -985,6 +985,8 @@ SpMat<eT>::operator=(const Base<eT, T1>& expr)
   
   init(x_n_rows, x_n_cols, n);
   
+  if(n == 0)  { return *this; }
+  
   // Now the memory is resized correctly; set nonzero elements.
   n = 0;
   for(uword j = 0; j < x_n_cols; ++j)
