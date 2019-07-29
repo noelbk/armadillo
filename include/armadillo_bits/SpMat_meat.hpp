@@ -948,6 +948,24 @@ SpMat<eT>::operator=(const Base<eT, T1>& expr)
   {
   arma_extra_debug_sigprint();
   
+  if(is_same_type< T1, Gen<Mat<eT>, gen_zeros> >::yes)
+    {
+    const Proxy<T1> P(expr.get_ref());
+    
+    (*this).zeros( P.get_n_rows(), P.get_n_cols() );
+    
+    return *this;
+    }
+  
+  if(is_same_type< T1, Gen<Mat<eT>, gen_eye> >::yes)
+    {
+    const Proxy<T1> P(expr.get_ref());
+    
+    (*this).eye( P.get_n_rows(), P.get_n_cols() );
+    
+    return *this;
+    }
+  
   const quasi_unwrap<T1> tmp(expr.get_ref());
   const Mat<eT>& x     = tmp.M;
   
