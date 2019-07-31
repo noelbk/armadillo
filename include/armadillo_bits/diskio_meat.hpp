@@ -2279,7 +2279,10 @@ diskio::save_csv_ascii(const SpMat< std::complex<T> >& x, std::ostream& f)
   {
   arma_extra_debug_sigprint();
   
-  arma_check(true, "diskio::save_csv_ascii(SpMat<std::complex<T>>): not yet implemented");
+  arma_ignore(x);
+  arma_ignore(f);
+  
+  arma_warn("saving complex sparse matrices as csv_ascii not yet implemented");
   
   return false;
   }
@@ -2579,9 +2582,12 @@ bool
 diskio::load_csv_ascii(SpMat< std::complex<T> >& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
+  
+  arma_ignore(x);
+  arma_ignore(f);
   arma_ignore(err_msg);
   
-  arma_check(true, "diskio::load_csv_ascii(SpMat<std::complex<T>>): not yet implemented");
+  arma_warn("loading complex sparse matrices as csv_ascii not yet implemented");
   
   return false;
   }
