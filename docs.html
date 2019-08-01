@@ -6579,7 +6579,7 @@ A.raw_print(cout, "A:");
 </table>
 <br>
 <ul>
-<li>Member functions of <i>Mat</i>, <i>Col</i>, <i>Row</i> and <i>Cube</i></li>
+<li>Member functions of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>Cube</i> and <i>SpMat</i></li>
 <br>
 <li>Store/retrieve data in a file or stream (<b>caveat:</b> the stream must be opened in binary mode)</li>
 <br>
@@ -6660,7 +6660,7 @@ Complex numbers are stored in standard C++ notation, which is a tuple surrounded
                         </td>
                         <td style="vertical-align: top;">
 Numerical data stored in comma separated value (CSV) text format, without a header.
-Applicable to <i>Mat</i> only.
+Applicable to <i>Mat</i> and <i>SpMat</i>.
 <br>
 <br>
                         </td>
@@ -6741,7 +6741,7 @@ By providing either <b>hdf5_name(</b>filename<b>,</b> dataset<b>)</b> or <b>hdf5
 <ul>
 <li>
 the <i>dataset</i> argument specifies an HDF5 dataset name (eg. "my_dataset") that can include a full path (eg. "/group_name/my_dataset");
-if a blank dataset name is specified (ie. ""), it's assumed to be "dataset"
+if a blank dataset name is specified (ie.&nbsp;""), it's assumed to be "dataset"
 <br>
 <br>
 </li>
