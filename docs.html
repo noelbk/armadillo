@@ -5195,8 +5195,11 @@ Iterators for sparse matrices traverse over non-zero elements within the specifi
 <li>
 <b>Caveats:</b>
 <ul>
-<li>writing a zero value into a sparse matrix through an iterator will invalidate all current iterators associated with the sparse matrix;
-<br>consider using <a href="#transform">.transform()</a> and <a href="#for_each">.for_each()</a> as safer alternatives</li>
+<li>
+to modify the non-zero elements in a safer manner,
+use <a href="#transform">.transform()</a> or <a href="#for_each">.for_each()</a> instead of iterators;
+<br>
+writing a zero value into a sparse matrix through an iterator will invalidate all current iterators associated with the sparse matrix</li>
 <li>row iterators for sparse matrices are only useful with Armadillo 8.500 and later versions; in earlier versions they are inefficient
 </ul>
 </li>
@@ -5396,8 +5399,8 @@ Examples:
 <pre>
 sp_mat X = sprandu&lt;sp_mat&gt;(1000, 2000, 0.1);
 
-sp_mat::iterator it     = X.begin();
-sp_mat::iterator it_end = X.end();
+sp_mat::const_iterator it     = X.begin();
+sp_mat::const_iterator it_end = X.end();
 
 for(; it != it_end; ++it)
   {
