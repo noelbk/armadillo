@@ -1388,6 +1388,13 @@ subview<eT>::extract(Mat<eT>& out, const subview<eT>& in)
     {
     arma_extra_debug_print("subview::extract(): general submatrix");
     
+    if( (in.aux_row1 == 0) && (n_rows == in.m.n_rows) )
+      {
+      arrayops::copy( out.memptr(), in.m.colptr(in.aux_col1), in.n_elem );
+      
+      return;
+      }
+    
     for(uword col=0; col < n_cols; ++col)
       {
       arrayops::copy( out.colptr(col), in.colptr(col), n_rows );
