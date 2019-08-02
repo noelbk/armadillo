@@ -172,13 +172,20 @@ subview<eT>::inplace_op(const Base<eT,T1>& in, const char* identifier)
       }
     else  // not a row vector
       {
-      for(uword ucol=0; ucol < s_n_cols; ++ucol)
+      if( (is_same_type<op_type, op_internal_equ>::yes) && (s.aux_row1 == 0) && (s_n_rows == s.m.n_rows) )
         {
-        if(is_same_type<op_type, op_internal_equ  >::yes)  { arrayops::copy         ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
-        if(is_same_type<op_type, op_internal_plus >::yes)  { arrayops::inplace_plus ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
-        if(is_same_type<op_type, op_internal_minus>::yes)  { arrayops::inplace_minus( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
-        if(is_same_type<op_type, op_internal_schur>::yes)  { arrayops::inplace_mul  ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
-        if(is_same_type<op_type, op_internal_div  >::yes)  { arrayops::inplace_div  ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
+        arrayops::copy( s.colptr(0), B.memptr(), s.n_elem );
+        }
+      else
+        {
+        for(uword ucol=0; ucol < s_n_cols; ++ucol)
+          {
+          if(is_same_type<op_type, op_internal_equ  >::yes)  { arrayops::copy         ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
+          if(is_same_type<op_type, op_internal_plus >::yes)  { arrayops::inplace_plus ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
+          if(is_same_type<op_type, op_internal_minus>::yes)  { arrayops::inplace_minus( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
+          if(is_same_type<op_type, op_internal_schur>::yes)  { arrayops::inplace_mul  ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
+          if(is_same_type<op_type, op_internal_div  >::yes)  { arrayops::inplace_div  ( s.colptr(ucol), B.colptr(ucol), s_n_rows ); }
+          }
         }
       }
     }
