@@ -974,6 +974,13 @@ subview<eT>::fill(const eT val)
     }
   else
     {
+    if( (s.aux_row1 == 0) && (s_n_rows == s.m.n_rows) )
+      {
+      arrayops::inplace_set( s.colptr(0), val, s.n_elem );
+      
+      return;
+      }
+    
     for(uword ucol=0; ucol < s_n_cols; ++ucol)
       {
       arrayops::inplace_set( s.colptr(ucol), val, s_n_rows );
