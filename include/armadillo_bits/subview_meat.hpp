@@ -1404,7 +1404,7 @@ subview<eT>::extract(Mat<eT>& out, const subview<eT>& in)
     
     if( (in.aux_row1 == 0) && (n_rows == in.m.n_rows) )
       {
-      arrayops::copy( out.memptr(), in.m.colptr(in.aux_col1), in.n_elem );
+      arrayops::copy( out.memptr(), in.colptr(0), in.n_elem );
       
       return;
       }
