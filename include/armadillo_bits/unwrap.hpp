@@ -18,6 +18,9 @@
 //! @{
 
 
+// TODO: document the conditions and restrictions for the use of the each unwrap variant:
+// TODO: unwrap, unwrap_check, quasi_unwrap, partial_unwrap, partial_unwrap_check
+
 
 template<typename T1>
 struct unwrap_default
