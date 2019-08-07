@@ -18,7 +18,7 @@
 //! @{
 
 
-// TODO: document the conditions and restrictions for the use of the each unwrap variant:
+// TODO: document the conditions and restrictions for the use of each unwrap variant:
 // TODO: unwrap, unwrap_check, quasi_unwrap, partial_unwrap, partial_unwrap_check
 
 
