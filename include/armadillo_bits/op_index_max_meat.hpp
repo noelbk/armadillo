@@ -384,6 +384,8 @@ op_index_max::apply(Mat<uword>& out, const SpBase<typename T1::elem_type,T1>& ex
     
     uword* out_mem = out.memptr();
     
+    // TODO: might be faster to transpose the matrix and do column-wise index_max
+    
     for(uword row=0; row<X_n_rows; ++row)
       {
       out_mem[row] = X.row(row).index_max();
