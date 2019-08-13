@@ -94,6 +94,9 @@ class glue_rel_noteq;
 class glue_rel_and;
 class glue_rel_or;
 
+class spglue_rel_lt;
+class spglue_rel_gt;
+
 class op_rel_lt_pre;
 class op_rel_lt_post;
 class op_rel_gt_pre;
@@ -104,6 +107,15 @@ class op_rel_gteq_pre;
 class op_rel_gteq_post;
 class op_rel_eq;
 class op_rel_noteq;
+
+class spop_rel_lt_pre;
+class spop_rel_lt_post;
+class spop_rel_gt_pre;
+class spop_rel_gt_post;
+class spop_rel_lteq_pre;
+class spop_rel_lteq_post;
+class spop_rel_gteq_pre;
+class spop_rel_gteq_post;
 
 class gen_eye;
 class gen_ones;
