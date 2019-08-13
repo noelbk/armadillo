@@ -20,9 +20,9 @@
 
 
 #define ARMA_VERSION_MAJOR 9
-#define ARMA_VERSION_MINOR 600
-#define ARMA_VERSION_PATCH 6
-#define ARMA_VERSION_NAME  "Napa Invasion"
+#define ARMA_VERSION_MINOR 690
+#define ARMA_VERSION_PATCH 0
+#define ARMA_VERSION_NAME  "unstable"
 
 
 
