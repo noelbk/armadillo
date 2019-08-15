@@ -1410,6 +1410,8 @@ SpMat<eT>::operator=(const SpSubview<eT>& X)
   {
   arma_extra_debug_sigprint();
   
+  if(X.n_nonzero == 0)  { zeros(X.n_rows, X.n_cols); return *this; }
+  
   X.m.sync_csc();
   
   const bool alias = (this == &(X.m));
