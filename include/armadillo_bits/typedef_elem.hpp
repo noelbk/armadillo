@@ -127,36 +127,51 @@ typedef void* void_ptr;
   #define ARMA_MAX_BLAS_INT 0x7fffffffU
 #endif
 
+
+//
+
+
 #ifdef ARMA_USE_MKL_TYPES
-// type name used in function prototypes
-typedef MKL_Complex8 blas_cx8;
-typedef MKL_Complex16 blas_cx16;
+  // for compatibility with MKL
+  typedef MKL_Complex8  blas_cxf;
+  typedef MKL_Complex16 blas_cxd;
 
-typedef blas_int (*c_select_1) (const blas_cx8*);
-typedef blas_int (*c_select_2) (const blas_cx8*, const blas_cx8*);
+  typedef blas_int (*c_select_1) (const blas_cxf*);
+  typedef blas_int (*c_select_2) (const blas_cxf*, const blas_cxf*);
 
-typedef blas_int (*d_select_2) (const double*, const double*);
-typedef blas_int (*d_select_3) (const double*, const double*, const double*);
+  typedef blas_int (*d_select_2) (const double*, const double*);
+  typedef blas_int (*d_select_3) (const double*, const double*, const double*);
 
-typedef blas_int (*s_select_2) (const float*, const float*);
-typedef blas_int (*s_select_3) (const float*, const float*,  const float*);
+  typedef blas_int (*s_select_2) (const float*, const float*);
+  typedef blas_int (*s_select_3) (const float*, const float*,  const float*);
 
-typedef blas_int (*z_select_1) (const blas_cx16*);
-typedef blas_int (*z_select_2) (const blas_cx16*, const blas_cx16*);
+  typedef blas_int (*z_select_1) (const blas_cxd*);
+  typedef blas_int (*z_select_2) (const blas_cxd*, const blas_cxd*);
 #else
-// type name used in function prototypes for compatibility with older versions
-typedef void blas_cx8;
-typedef void blas_cx16;
-
-#define c_select_1 const void*
-#define c_select_2 const void*
-#define d_select_2 const void*
-#define d_select_3 const void*
-#define s_select_2 const void*
-#define s_select_3 const void*
-#define z_select_1 const void*
-#define z_select_2 const void*
+  // standard BLAS and LAPACK prototypes use "void*" pointers for complex arrays
+  typedef void blas_cxf;
+  typedef void blas_cxd;
+  
+  #undef c_select_1
+  #undef c_select_2
+  #undef d_select_2
+  #undef d_select_3
+  #undef s_select_2
+  #undef s_select_3
+  #undef z_select_1
+  #undef z_select_2
+  
+  #define c_select_1 const void*
+  #define c_select_2 const void*
+  #define d_select_2 const void*
+  #define d_select_3 const void*
+  #define s_select_2 const void*
+  #define s_select_3 const void*
+  #define z_select_1 const void*
+  #define z_select_2 const void*
 #endif
+
+
 
 // NOTE: blas_len is the fortran type for "hidden" arguments that specify the length of character arguments;
 // NOTE: it varies across compilers, compiler versions and systems (eg. 32 bit vs 64 bit);
