@@ -396,6 +396,19 @@
 #endif
 
 
+typedef blas_int (*s_select_2) (const float*, const float*               );
+typedef blas_int (*s_select_3) (const float*, const float*,  const float*);
+
+typedef blas_int (*d_select_2) (const double*, const double*               );
+typedef blas_int (*d_select_3) (const double*, const double*, const double*);
+
+typedef blas_int (*c_select_1) (const blas_cxf*                 );
+typedef blas_int (*c_select_2) (const blas_cxf*, const blas_cxf*);
+
+typedef blas_int (*z_select_1) (const blas_cxd*                 );
+typedef blas_int (*z_select_2) (const blas_cxd*, const blas_cxd*);
+
+
 // NOTE: "For arguments of CHARACTER type, the character length is passed as a hidden argument at the end of the argument list."
 // NOTE: https://gcc.gnu.org/onlinedocs/gfortran/Argument-passing-conventions.html
 
