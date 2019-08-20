@@ -69,12 +69,12 @@ extern "C"
     
     
     
-    float arma_fortran_with_prefix(arma_sdot)(const blas_int* n, const float*  x, blas_int* incx, const float*  y, const blas_int* incy)
+    float arma_fortran_with_prefix(arma_sdot)(const blas_int* n, const float*  x, const blas_int* incx, const float*  y, const blas_int* incy)
       {
       return arma_fortran_sans_prefix(arma_sdot)(n, x, incx, y, incy);
       }
     
-    double arma_fortran_with_prefix(arma_ddot)(const blas_int* n, const double* x, blas_int* incx, const double* y, const blas_int* incy)
+    double arma_fortran_with_prefix(arma_ddot)(const blas_int* n, const double* x, const blas_int* incx, const double* y, const blas_int* incy)
       {
       return arma_fortran_sans_prefix(arma_ddot)(n, x, incx, y, incy);
       }
@@ -754,24 +754,24 @@ extern "C"
     
     
     
-    void arma_fortran_with_prefix(arma_sgees)(char* jobvs, char* sort, void* select, blas_int* n, float*  a, blas_int* lda, blas_int* sdim, float*  wr, float*  wi, float*  vs, blas_int* ldvs, float*  work, blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_sgees)(char* jobvs, char* sort, s_select_2 select, blas_int* n, float*  a, blas_int* lda, blas_int* sdim, float*  wr, float*  wi, float*  vs, blas_int* ldvs, float*  work, blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_sgees)(jobvs, sort, select, n, a, lda, sdim, wr, wi, vs, ldvs, work, lwork, bwork, info, jobvs_len, sort_len);
       }
       
-    void arma_fortran_with_prefix(arma_dgees)(char* jobvs, char* sort, void* select, blas_int* n, double* a, blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, blas_int* ldvs, double* work, blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_dgees)(char* jobvs, char* sort, d_select_2 select, blas_int* n, double* a, blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, blas_int* ldvs, double* work, blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_dgees)(jobvs, sort, select, n, a, lda, sdim, wr, wi, vs, ldvs, work, lwork, bwork, info, jobvs_len, sort_len);
       }
     
     
     
-    void arma_fortran_with_prefix(arma_cgees)(char* jobvs, char* sort, void* select, blas_int* n, void* a, blas_int* lda, blas_int* sdim, void* w, void* vs, blas_int* ldvs, void* work, blas_int* lwork, float*  rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_cgees)(char* jobvs, char* sort, c_select_1 select, blas_int* n, void* a, blas_int* lda, blas_int* sdim, void* w, void* vs, blas_int* ldvs, void* work, blas_int* lwork, float*  rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_cgees)(jobvs, sort, select, n, a, lda, sdim, w, vs, ldvs, work, lwork, rwork, bwork, info, jobvs_len, sort_len);
       }
     
-    void arma_fortran_with_prefix(arma_zgees)(char* jobvs, char* sort, void* select, blas_int* n, void* a, blas_int* lda, blas_int* sdim, void* w, void* vs, blas_int* ldvs, void* work, blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_zgees)(char* jobvs, char* sort, z_select_1 select, blas_int* n, void* a, blas_int* lda, blas_int* sdim, void* w, void* vs, blas_int* ldvs, void* work, blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_zgees)(jobvs, sort, select, n, a, lda, sdim, w, vs, ldvs, work, lwork, rwork, bwork, info, jobvs_len, sort_len);
       }
@@ -801,22 +801,22 @@ extern "C"
     
     
     
-    void arma_fortran_with_prefix(arma_sgges)(char* jobvsl, char* jobvsr, char* sort, void* selctg, blas_int* n,  float* a, blas_int* lda,  float* b, blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, blas_int* ldvsl,  float* vsr, blas_int* ldvsr,  float* work, blas_int* lwork,  float* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_sgges)(char* jobvsl, char* jobvsr, char* sort, s_select_3 selctg, blas_int* n,  float* a, blas_int* lda,  float* b, blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, blas_int* ldvsl,  float* vsr, blas_int* ldvsr,  float* work, blas_int* lwork,  float* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_sgges)(jobvsl, jobvsr, sort, selctg, n, a, lda, b, ldb, sdim, alphar, alphai, beta, vsl, ldvsl, vsr, ldvsr, work, lwork, bwork, info, jobvsl_len, jobvsr_len, sort_len);
       }
     
-    void arma_fortran_with_prefix(arma_dgges)(char* jobvsl, char* jobvsr, char* sort, void* selctg, blas_int* n, double* a, blas_int* lda, double* b, blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, blas_int* ldvsl, double* vsr, blas_int* ldvsr, double* work, blas_int* lwork, double* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_dgges)(char* jobvsl, char* jobvsr, char* sort, d_select_3 selctg, blas_int* n, double* a, blas_int* lda, double* b, blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, blas_int* ldvsl, double* vsr, blas_int* ldvsr, double* work, blas_int* lwork, double* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_dgges)(jobvsl, jobvsr, sort, selctg, n, a, lda, b, ldb, sdim, alphar, alphai, beta, vsl, ldvsl, vsr, ldvsr, work, lwork, bwork, info, jobvsl_len, jobvsr_len, sort_len);
       }
     
-    void arma_fortran_with_prefix(arma_cgges)(char* jobvsl, char* jobvsr, char* sort, void* selctg, blas_int* n, void* a, blas_int* lda, void* b, blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, blas_int* ldvsl, void* vsr, blas_int* ldvsr, void* work, blas_int* lwork,  float* rwork,  float* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_cgges)(char* jobvsl, char* jobvsr, char* sort, c_select_2 selctg, blas_int* n, void* a, blas_int* lda, void* b, blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, blas_int* ldvsl, void* vsr, blas_int* ldvsr, void* work, blas_int* lwork,  float* rwork,  float* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_cgges)(jobvsl, jobvsr, sort, selctg, n, a, lda, b, ldb, sdim, alpha, beta, vsl, ldvsl, vsr, ldvsr, work, lwork, rwork, bwork, info, jobvsl_len, jobvsr_len, sort_len);
       }
     
-    void arma_fortran_with_prefix(arma_zgges)(char* jobvsl, char* jobvsr, char* sort, void* selctg, blas_int* n, void* a, blas_int* lda, void* b, blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, blas_int* ldvsl, void* vsr, blas_int* ldvsr, void* work, blas_int* lwork, double* rwork, double* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
+    void arma_fortran_with_prefix(arma_zgges)(char* jobvsl, char* jobvsr, char* sort, z_select_2 selctg, blas_int* n, void* a, blas_int* lda, void* b, blas_int* ldb, blas_int* sdim, void* alpha, void* beta, void* vsl, blas_int* ldvsl, void* vsr, blas_int* ldvsr, void* work, blas_int* lwork, double* rwork, double* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len)
       {
       arma_fortran_sans_prefix(arma_zgges)(jobvsl, jobvsr, sort, selctg, n, a, lda, b, ldb, sdim, alpha, beta, vsl, ldvsl, vsr, ldvsr, work, lwork, rwork, bwork, info, jobvsl_len, jobvsr_len, sort_len);
       }
@@ -934,12 +934,12 @@ extern "C"
     
     
     
-    void arma_fortran_with_prefix(arma_slarnv)(blas_int* idist, blas_int* iseed, blas_int* n, float*  x)
+    void arma_fortran_with_prefix(arma_slarnv)(const blas_int* idist, blas_int* iseed, const blas_int* n, float*  x)
       {
       arma_fortran_sans_prefix(arma_slarnv)(idist, iseed, n, x);
       }
     
-    void arma_fortran_with_prefix(arma_dlarnv)(blas_int* idist, blas_int* iseed, blas_int* n, double* x)
+    void arma_fortran_with_prefix(arma_dlarnv)(const blas_int* idist, blas_int* iseed, const blas_int* n, double* x)
       {
       arma_fortran_sans_prefix(arma_dlarnv)(idist, iseed, n, x);
       }
