@@ -1046,7 +1046,7 @@ namespace lapack
   template<typename eT>
   inline
   void
-  larnv(blas_int* idist, blas_int* iseed, blas_int* n, eT* x)
+  larnv(blas_int* idist, blas_int* iseed, const blas_int* n, eT* x)
     {
     arma_type_check(( is_supported_blas_type<eT>::value == false ));
     
