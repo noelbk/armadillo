@@ -862,7 +862,7 @@ namespace lapack
     eT* alpha, eT* beta,
     eT* vsl, blas_int* ldvsl, eT* vsr, blas_int* ldvsr,
     eT* work, blas_int* lwork, typename eT::value_type* rwork,
-    typename eT::value_type* bwork,
+    blas_int* bwork,
     blas_int* info
     )
     {
