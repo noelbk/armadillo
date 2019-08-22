@@ -835,7 +835,8 @@ namespace lapack
     eT* a, blas_int* lda, eT* b, blas_int* ldb, blas_int* sdim,
     eT* alphar, eT* alphai, eT* beta,
     eT* vsl, blas_int* ldvsl, eT* vsr, blas_int* ldvsr,
-    eT* work, blas_int* lwork, blas_int* bwork,
+    eT* work, blas_int* lwork,
+    blas_int* bwork,
     blas_int* info
     )
     {
