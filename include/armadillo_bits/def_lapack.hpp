@@ -396,17 +396,17 @@
 #endif
 
 
-typedef blas_int (*s_select_2) (const float*, const float*               );
-typedef blas_int (*s_select_3) (const float*, const float*,  const float*);
+typedef blas_int (*fn_select_s2) (const float*, const float*               );
+typedef blas_int (*fn_select_s3) (const float*, const float*,  const float*);
 
-typedef blas_int (*d_select_2) (const double*, const double*               );
-typedef blas_int (*d_select_3) (const double*, const double*, const double*);
+typedef blas_int (*fn_select_d2) (const double*, const double*               );
+typedef blas_int (*fn_select_d3) (const double*, const double*, const double*);
 
-typedef blas_int (*c_select_1) (const blas_cxf*                 );
-typedef blas_int (*c_select_2) (const blas_cxf*, const blas_cxf*);
+typedef blas_int (*fn_select_c1) (const blas_cxf*                 );
+typedef blas_int (*fn_select_c2) (const blas_cxf*, const blas_cxf*);
 
-typedef blas_int (*z_select_1) (const blas_cxd*                 );
-typedef blas_int (*z_select_2) (const blas_cxd*, const blas_cxd*);
+typedef blas_int (*fn_select_z1) (const blas_cxd*                 );
+typedef blas_int (*fn_select_z2) (const blas_cxd*, const blas_cxd*);
 
 
 // NOTE: "For arguments of CHARACTER type, the character length is passed as a hidden argument at the end of the argument list."
@@ -600,12 +600,12 @@ extern "C"
   void arma_fortran(arma_zgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const blas_cxd* dl, const blas_cxd* d, const blas_cxd* du, blas_cxd* dlf, blas_cxd* df, blas_cxd* duf, blas_cxd* du2, blas_int* ipiv, const blas_cxd* b, const blas_int* ldb, blas_cxd* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, blas_cxd* work, double* rwork, blas_int* info, blas_len fact_len, blas_len trans_len);
   
   // Schur decomposition (real matrices)
-  void arma_fortran(arma_sgees)(const char* jobvs, const char* sort, s_select_2 select, const blas_int* n,  float* a, const blas_int* lda, blas_int* sdim,  float* wr,  float* wi,  float* vs, const blas_int* ldvs,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
-  void arma_fortran(arma_dgees)(const char* jobvs, const char* sort, d_select_2 select, const blas_int* n, double* a, const blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, const blas_int* ldvs, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
+  void arma_fortran(arma_sgees)(const char* jobvs, const char* sort, fn_select_s2 select, const blas_int* n,  float* a, const blas_int* lda, blas_int* sdim,  float* wr,  float* wi,  float* vs, const blas_int* ldvs,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
+  void arma_fortran(arma_dgees)(const char* jobvs, const char* sort, fn_select_d2 select, const blas_int* n, double* a, const blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, const blas_int* ldvs, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
   
   // Schur decomposition (complex matrices)
-  void arma_fortran(arma_cgees)(const char* jobvs, const char* sort, c_select_1 select, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_int* sdim, blas_cxf* w, blas_cxf* vs, const blas_int* ldvs, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
-  void arma_fortran(arma_zgees)(const char* jobvs, const char* sort, z_select_1 select, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_int* sdim, blas_cxd* w, blas_cxd* vs, const blas_int* ldvs, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
+  void arma_fortran(arma_cgees)(const char* jobvs, const char* sort, fn_select_c1 select, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_int* sdim, blas_cxf* w, blas_cxf* vs, const blas_int* ldvs, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
+  void arma_fortran(arma_zgees)(const char* jobvs, const char* sort, fn_select_z1 select, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_int* sdim, blas_cxd* w, blas_cxd* vs, const blas_int* ldvs, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvs_len, blas_len sort_len);
   
   // solve a Sylvester equation ax + xb = c, with a and b assumed to be in Schur form
   void arma_fortran(arma_strsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const    float* a, const blas_int* lda, const    float* b, const blas_int* ldb,    float* c, const blas_int* ldc,  float* scale, blas_int* info, blas_len transa_len, blas_len transb_len);
@@ -614,12 +614,12 @@ extern "C"
   void arma_fortran(arma_ztrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const blas_cxd* a, const blas_int* lda, const blas_cxd* b, const blas_int* ldb, blas_cxd* c, const blas_int* ldc, double* scale, blas_int* info, blas_len transa_len, blas_len transb_len);
   
   // QZ decomposition (real matrices)
-  void arma_fortran(arma_sgges)(const char* jobvsl, const char* jobvsr, const char* sort, s_select_3 selctg, const blas_int* n,  float* a, const blas_int* lda,  float* b, const blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, const blas_int* ldvsl,  float* vsr, const blas_int* ldvsr,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
-  void arma_fortran(arma_dgges)(const char* jobvsl, const char* jobvsr, const char* sort, d_select_3 selctg, const blas_int* n, double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, const blas_int* ldvsl, double* vsr, const blas_int* ldvsr, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
+  void arma_fortran(arma_sgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_s3 selctg, const blas_int* n,  float* a, const blas_int* lda,  float* b, const blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, const blas_int* ldvsl,  float* vsr, const blas_int* ldvsr,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
+  void arma_fortran(arma_dgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_d3 selctg, const blas_int* n, double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, const blas_int* ldvsl, double* vsr, const blas_int* ldvsr, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
   
   // QZ decomposition (complex matrices)
-  void arma_fortran(arma_cgges)(const char* jobvsl, const char* jobvsr, const char* sort, c_select_2 selctg, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_cxf* b, const blas_int* ldb, blas_int* sdim, blas_cxf* alpha, blas_cxf* beta, blas_cxf* vsl, const blas_int* ldvsl, blas_cxf* vsr, const blas_int* ldvsr, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
-  void arma_fortran(arma_zgges)(const char* jobvsl, const char* jobvsr, const char* sort, z_select_2 selctg, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_cxd* b, const blas_int* ldb, blas_int* sdim, blas_cxd* alpha, blas_cxd* beta, blas_cxd* vsl, const blas_int* ldvsl, blas_cxd* vsr, const blas_int* ldvsr, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
+  void arma_fortran(arma_cgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_c2 selctg, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_cxf* b, const blas_int* ldb, blas_int* sdim, blas_cxf* alpha, blas_cxf* beta, blas_cxf* vsl, const blas_int* ldvsl, blas_cxf* vsr, const blas_int* ldvsr, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
+  void arma_fortran(arma_zgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_z2 selctg, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_cxd* b, const blas_int* ldb, blas_int* sdim, blas_cxd* alpha, blas_cxd* beta, blas_cxd* vsl, const blas_int* ldvsl, blas_cxd* vsr, const blas_int* ldvsr, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info, blas_len jobvsl_len, blas_len jobvsr_len, blas_len sort_len);
   
   // 1-norm
   float  arma_fortran(arma_slange)(const char* norm, const blas_int* m, const blas_int* n, const    float* a, const blas_int* lda,  float* work, blas_len norm_len);
@@ -855,12 +855,12 @@ extern "C"
   void arma_fortran(arma_zgtsvx)(const char* fact, const char* trans, const blas_int* n, const blas_int* nrhs, const blas_cxd* dl, const blas_cxd* d, const blas_cxd* du, blas_cxd* dlf, blas_cxd* df, blas_cxd* duf, blas_cxd* du2, blas_int* ipiv, const blas_cxd* b, const blas_int* ldb, blas_cxd* x, const blas_int* ldx, double* rcond, double* ferr, double* berr, blas_cxd* work, double* rwork, blas_int* info);
   
   // Schur decomposition (real matrices)
-  void arma_fortran(arma_sgees)(const char* jobvs, const char* sort, s_select_2 select, const blas_int* n,  float* a, const blas_int* lda, blas_int* sdim,  float* wr,  float* wi,  float* vs, const blas_int* ldvs,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
-  void arma_fortran(arma_dgees)(const char* jobvs, const char* sort, d_select_2 select, const blas_int* n, double* a, const blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, const blas_int* ldvs, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_sgees)(const char* jobvs, const char* sort, fn_select_s2 select, const blas_int* n,  float* a, const blas_int* lda, blas_int* sdim,  float* wr,  float* wi,  float* vs, const blas_int* ldvs,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_dgees)(const char* jobvs, const char* sort, fn_select_d2 select, const blas_int* n, double* a, const blas_int* lda, blas_int* sdim, double* wr, double* wi, double* vs, const blas_int* ldvs, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
   
   // Schur decomposition (complex matrices)
-  void arma_fortran(arma_cgees)(const char* jobvs, const char* sort, c_select_1 select, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_int* sdim, blas_cxf* w, blas_cxf* vs, const blas_int* ldvs, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info);
-  void arma_fortran(arma_zgees)(const char* jobvs, const char* sort, z_select_1 select, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_int* sdim, blas_cxd* w, blas_cxd* vs, const blas_int* ldvs, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_cgees)(const char* jobvs, const char* sort, fn_select_c1 select, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_int* sdim, blas_cxf* w, blas_cxf* vs, const blas_int* ldvs, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_zgees)(const char* jobvs, const char* sort, fn_select_z1 select, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_int* sdim, blas_cxd* w, blas_cxd* vs, const blas_int* ldvs, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info);
   
   // solve a Sylvester equation ax + xb = c, with a and b assumed to be in Schur form
   void arma_fortran(arma_strsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const    float* a, const blas_int* lda, const    float* b, const blas_int* ldb,    float* c, const blas_int* ldc,  float* scale, blas_int* info);
@@ -869,12 +869,12 @@ extern "C"
   void arma_fortran(arma_ztrsyl)(const char* transa, const char* transb, const blas_int* isgn, const blas_int* m, const blas_int* n, const blas_cxd* a, const blas_int* lda, const blas_cxd* b, const blas_int* ldb, blas_cxd* c, const blas_int* ldc, double* scale, blas_int* info);
   
   // QZ decomposition (real matrices)
-  void arma_fortran(arma_sgges)(const char* jobvsl, const char* jobvsr, const char* sort, s_select_3 selctg, const blas_int* n,  float* a, const blas_int* lda,  float* b, const blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, const blas_int* ldvsl,  float* vsr, const blas_int* ldvsr,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
-  void arma_fortran(arma_dgges)(const char* jobvsl, const char* jobvsr, const char* sort, d_select_3 selctg, const blas_int* n, double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, const blas_int* ldvsl, double* vsr, const blas_int* ldvsr, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_sgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_s3 selctg, const blas_int* n,  float* a, const blas_int* lda,  float* b, const blas_int* ldb, blas_int* sdim,  float* alphar,  float* alphai,  float* beta,  float* vsl, const blas_int* ldvsl,  float* vsr, const blas_int* ldvsr,  float* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_dgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_d3 selctg, const blas_int* n, double* a, const blas_int* lda, double* b, const blas_int* ldb, blas_int* sdim, double* alphar, double* alphai, double* beta, double* vsl, const blas_int* ldvsl, double* vsr, const blas_int* ldvsr, double* work, const blas_int* lwork, blas_int* bwork, blas_int* info);
   
   // QZ decomposition (complex matrices)
-  void arma_fortran(arma_cgges)(const char* jobvsl, const char* jobvsr, const char* sort, c_select_2 selctg, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_cxf* b, const blas_int* ldb, blas_int* sdim, blas_cxf* alpha, blas_cxf* beta, blas_cxf* vsl, const blas_int* ldvsl, blas_cxf* vsr, const blas_int* ldvsr, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info);
-  void arma_fortran(arma_zgges)(const char* jobvsl, const char* jobvsr, const char* sort, z_select_2 selctg, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_cxd* b, const blas_int* ldb, blas_int* sdim, blas_cxd* alpha, blas_cxd* beta, blas_cxd* vsl, const blas_int* ldvsl, blas_cxd* vsr, const blas_int* ldvsr, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_cgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_c2 selctg, const blas_int* n, blas_cxf* a, const blas_int* lda, blas_cxf* b, const blas_int* ldb, blas_int* sdim, blas_cxf* alpha, blas_cxf* beta, blas_cxf* vsl, const blas_int* ldvsl, blas_cxf* vsr, const blas_int* ldvsr, blas_cxf* work, const blas_int* lwork,  float* rwork, blas_int* bwork, blas_int* info);
+  void arma_fortran(arma_zgges)(const char* jobvsl, const char* jobvsr, const char* sort, fn_select_z2 selctg, const blas_int* n, blas_cxd* a, const blas_int* lda, blas_cxd* b, const blas_int* ldb, blas_int* sdim, blas_cxd* alpha, blas_cxd* beta, blas_cxd* vsl, const blas_int* ldvsl, blas_cxd* vsr, const blas_int* ldvsr, blas_cxd* work, const blas_int* lwork, double* rwork, blas_int* bwork, blas_int* info);
   
   // 1-norm
   float  arma_fortran(arma_slange)(const char* norm, const blas_int* m, const blas_int* n, const    float* a, const blas_int* lda,  float* work);
