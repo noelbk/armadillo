@@ -11011,9 +11011,10 @@ mat Y = unique(X);
 <a name="vectorise"></a>
 <b>vectorise( X )</b>
 <br><b>vectorise( X, dim )</b>
+<br><b>vectorise( Q )</b>
 <ul>
 <li>
-Generate a flattened version of matrix <i>X</i>, either as a column vector (<i>dim=0</i>) or row vector (<i>dim=1</i>)
+Generate a flattened version of matrix <i>X</i> or cube <i>Q</i>
 </li>
 <br>
 <li>
@@ -11021,11 +11022,11 @@ The argument <i>dim</i> is optional; by default <i>dim=0</i> is used
 </li>
 <br>
 <li>
-For <i>dim=0</i>, the elements are copied from <i>X</i> column-wise; equivalent to concatenating all the columns of <i>X</i>
+For <i>dim=0</i>, the elements are copied from <i>X</i> column-wise, resulting in a column vector; equivalent to concatenating all the columns of <i>X</i>
 </li>
 <br>
 <li>
-For <i>dim=1</i>, the elements are copied from <i>X</i> row-wise; equivalent to concatenating all the rows of <i>X</i>
+For <i>dim=1</i>, the elements are copied from <i>X</i> row-wise, resulting in a row vector; equivalent to concatenating all the rows of <i>X</i>
 </li>
 <br>
 <li>
