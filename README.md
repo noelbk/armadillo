@@ -466,7 +466,7 @@ Octave/Matlab with C++ code that uses Armadillo matrices.
 * MLPACK: extensive library of machine learning algorithms  
   http://mlpack.org
 
-* ensmallen: flexible C++ library for efficient mathematical optimisation  
+* ensmallen: C++ library of numerical optimisation methods  
   http://ensmallen.org/
 
 * SigPack: C++ signal processing library  
