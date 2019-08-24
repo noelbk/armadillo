@@ -72,15 +72,15 @@ join_vert(const T1& A, const T2& B)
 
 
 
-template<typename T1, typename T2, typename T3>
+template<typename eT, typename T1, typename T2, typename T3>
 arma_warn_unused
 inline
-Mat<typename T1::elem_type>
-join_vert(const Base<typename T1::elem_type,T1>& A, const Base<typename T1::elem_type,T2>& B, const Base<typename T1::elem_type,T3>& C)
+Mat<eT>
+join_vert(const Base<eT,T1>& A, const Base<eT,T2>& B, const Base<eT,T3>& C)
   {
   arma_extra_debug_sigprint();
   
-  Mat<typename T1::elem_type> out;
+  Mat<eT> out;
   
   glue_join_cols::apply(out, A.get_ref(), B.get_ref(), C.get_ref());
   
@@ -254,15 +254,15 @@ join_cols(const SpBase<typename T1::elem_type,T1>& A, const SpBase<typename T1::
 
 
 
-template<typename T1, typename T2, typename T3>
+template<typename eT, typename T1, typename T2, typename T3>
 arma_warn_unused
 inline
-SpMat<typename T1::elem_type>
-join_cols(const SpBase<typename T1::elem_type,T1>& A, const SpBase<typename T1::elem_type,T2>& B, const SpBase<typename T1::elem_type,T3>& C)
+SpMat<eT>
+join_cols(const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C)
   {
   arma_extra_debug_sigprint();
   
-  SpMat<typename T1::elem_type> out;
+  SpMat<eT> out;
   
   spglue_join_cols::apply(out, A.get_ref(), B.get_ref(), C.get_ref());
   
@@ -314,15 +314,15 @@ join_rows(const SpBase<typename T1::elem_type,T1>& A, const SpBase<typename T1::
 
 
 
-template<typename T1, typename T2, typename T3>
+template<typename eT, typename T1, typename T2, typename T3>
 arma_warn_unused
 inline
-SpMat<typename T1::elem_type>
-join_rows(const SpBase<typename T1::elem_type,T1>& A, const SpBase<typename T1::elem_type,T2>& B, const SpBase<typename T1::elem_type,T3>& C)
+SpMat<eT>
+join_rows(const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C)
   {
   arma_extra_debug_sigprint();
   
-  SpMat<typename T1::elem_type> out;
+  SpMat<eT> out;
   
   spglue_join_rows::apply(out, A.get_ref(), B.get_ref(), C.get_ref());
   
@@ -344,11 +344,11 @@ join_horiz(const SpBase<typename T1::elem_type,T1>& A, const SpBase<typename T1:
 
 
 
-template<typename T1, typename T2, typename T3>
+template<typename eT, typename T1, typename T2, typename T3>
 arma_warn_unused
 inline
-SpMat<typename T1::elem_type>
-join_horiz(const SpBase<typename T1::elem_type,T1>& A, const SpBase<typename T1::elem_type,T2>& B, const SpBase<typename T1::elem_type,T3>& C)
+SpMat<eT>
+join_horiz(const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C)
   {
   arma_extra_debug_sigprint();
   
