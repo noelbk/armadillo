@@ -36,6 +36,9 @@ class spglue_join_cols
   
   template<typename eT>
   inline static void apply_noalias(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& B);
+  
+  template<typename eT, typename T1, typename T2, typename T3>
+  inline static void apply(SpMat<eT>& out, const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C);
   };
 
 
@@ -57,6 +60,9 @@ class spglue_join_rows
   
   template<typename eT>
   inline static void apply_noalias(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>& B);
+  
+  template<typename eT, typename T1, typename T2, typename T3>
+  inline static void apply(SpMat<eT>& out, const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C);
   };
 
 

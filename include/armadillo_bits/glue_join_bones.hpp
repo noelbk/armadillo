@@ -37,6 +37,9 @@ class glue_join_cols
   
   template<typename T1, typename T2>
   inline static void apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& A, const Proxy<T2>& B);
+  
+  template<typename eT, typename T1, typename T2, typename T3>
+  inline static void apply(Mat<eT>& out, const Base<eT,T1>& A, const Base<eT,T2>& B, const Base<eT,T3>& C);
   };
 
 
@@ -58,6 +61,9 @@ class glue_join_rows
   
   template<typename T1, typename T2>
   inline static void apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& A, const Proxy<T2>& B);
+  
+  template<typename eT, typename T1, typename T2, typename T3>
+  inline static void apply(Mat<eT>& out, const Base<eT,T1>& A, const Base<eT,T2>& B, const Base<eT,T3>& C);
   };
 
 
