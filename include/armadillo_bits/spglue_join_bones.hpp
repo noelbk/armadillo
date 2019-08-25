@@ -39,6 +39,9 @@ class spglue_join_cols
   
   template<typename eT, typename T1, typename T2, typename T3>
   inline static void apply(SpMat<eT>& out, const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C);
+  
+  template<typename eT, typename T1, typename T2, typename T3, typename T4>
+  inline static void apply(SpMat<eT>& out, const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C, const SpBase<eT,T4>& D);
   };
 
 
@@ -63,6 +66,9 @@ class spglue_join_rows
   
   template<typename eT, typename T1, typename T2, typename T3>
   inline static void apply(SpMat<eT>& out, const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C);
+  
+  template<typename eT, typename T1, typename T2, typename T3, typename T4>
+  inline static void apply(SpMat<eT>& out, const SpBase<eT,T1>& A, const SpBase<eT,T2>& B, const SpBase<eT,T3>& C, const SpBase<eT,T4>& D);
   };
 
 
