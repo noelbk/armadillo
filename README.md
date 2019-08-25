@@ -51,12 +51,14 @@ aiming towards a good balance between speed and ease of use.
 
 It's useful for algorithm development directly in C++,
 and/or quick conversion of research code into production environments.
-The syntax (API) is deliberately similar to Matlab.
+It has high-level syntax and functionality which is deliberately similar to Matlab.
 
 The library provides efficient classes for vectors, matrices and cubes,
-as well as 200+ associated functions (eg. contiguous and non-contiguous
-submatrix views). Various matrix decompositions are provided through
-integration with LAPACK, or one of its high performance drop-in replacements
+as well as 200+ associated functions covering essential and advanced functionality
+for data processing and manipulation of matrices.
+
+Various matrix decompositions are provided through integration with LAPACK,
+or one of its high performance drop-in replacements
 (eg. OpenBLAS, Intel MKL, Apple Accelerate framework, etc).
 
 A sophisticated expression evaluator (via C++ template meta-programming)
