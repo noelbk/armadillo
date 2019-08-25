@@ -108,15 +108,6 @@ class op_rel_gteq_post;
 class op_rel_eq;
 class op_rel_noteq;
 
-class spop_rel_lt_pre;
-class spop_rel_lt_post;
-class spop_rel_gt_pre;
-class spop_rel_gt_post;
-class spop_rel_lteq_pre;
-class spop_rel_lteq_post;
-class spop_rel_gteq_pre;
-class spop_rel_gteq_post;
-
 class gen_eye;
 class gen_ones;
 class gen_zeros;
