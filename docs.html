@@ -9308,22 +9308,42 @@ intersect(CC, iA, iB, A, B);
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="join"></a>
+<table>
+<tbody>
+<tr>
+<td>
 <b>join_rows( A, B )</b>
-<br><b>join_horiz( A,  B )</b>
-<br>
+<br><b>join_rows( A, B, C )</b>
+<br><b>join_rows( A, B, C, D )</b>
+<br>&nbsp;
 <br><b>join_cols( A, B )</b>
+<br><b>join_cols( A, B, C )</b>
+<br><b>join_cols( A, B, C, D )</b>
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td>
+<b>join_horiz( A, B )</b>
+<br><b>join_horiz( A, B, C )</b>
+<br><b>join_horiz( A, B, C, D )</b>
+<br>&nbsp;
 <br><b>join_vert( A, B )</b>
+<br><b>join_vert( A, B, C )</b>
+<br><b>join_vert( A, B, C, D )</b>
+</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li>
 <i>join_rows()</i> and <i>join_horiz()</i>: horizontal concatenation;
-for two matrices <i>A</i> and <i>B</i>, join each row of <i>A</i> with the corresponding row of <i>B</i>;
-matrices <i>A</i> and <i>B</i> must have the same number of rows
+join the corresponding rows of the given matrices;
+the given matrices must have the same number of rows
 </li>
 <br>
 <li>
 <i>join_cols()</i> and <i>join_vert()</i>: vertical concatenation;
-for two matrices <i>A</i> and <i>B</i>, join each column of <i>A</i> with the corresponding column of <i>B</i>;
-matrices <i>A</i> and <i>B</i> must have the same number of columns
+join the corresponding columns of the given matrices;
+the given matrices must have the same number of columns
 </li>
 <br>
 <li>
@@ -9334,8 +9354,8 @@ mat A = randu&lt;mat&gt;(4,5);
 mat B = randu&lt;mat&gt;(4,6);
 mat C = randu&lt;mat&gt;(6,5);
 
-mat X = join_rows(A,B);
-mat Y = join_cols(A,C);
+mat AB = join_rows(A,B);
+mat AC = join_cols(A,C);
 </pre>
 </ul>
 </li>
@@ -18240,6 +18260,7 @@ List of additions and changes for each version:
 <ul>
 <li>faster handling of cubes by <a href="#vectorise">vectorise()</a></li>
 <li>faster row-wise <a href="#index_min_and_index_max_standalone">index_min()</a> and <a href="#index_min_and_index_max_standalone">index_max()</a></li>
+<li>expanded <a href="#join">join_rows()</a> and <a href="#join">join_cols()</a> to handle joining 3 and 4 matrices</li>
 </ul>
 </li>
 <br>
