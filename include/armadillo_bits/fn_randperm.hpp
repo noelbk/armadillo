@@ -30,7 +30,9 @@ internal_randperm_helper(obj_type& x, const uword N, const uword N_keep)
   
   // see op_sort_index_bones.hpp for the definition of arma_sort_index_packet
   
-  std::vector< arma_sort_index_packet<int> > packet_vec(N);
+  typedef arma_sort_index_packet<int> packet;
+  
+  std::vector<packet> packet_vec(N);
   
   for(uword i=0; i < N; ++i)
     {
@@ -40,7 +42,21 @@ internal_randperm_helper(obj_type& x, const uword N, const uword N_keep)
   
   arma_sort_index_helper_ascend<int> comparator;
   
-  std::sort( packet_vec.begin(), packet_vec.end(), comparator );
+  if(N >= 2)
+    {
+    if(N_keep < N)
+      {
+      typename std::vector<packet>::iterator first    = packet_vec.begin();
+      typename std::vector<packet>::iterator nth      = first + N_keep;
+      typename std::vector<packet>::iterator pastlast = packet_vec.end();
+      
+      std::partial_sort(first, nth, pastlast, comparator);
+      }
+    else
+      {
+      std::sort( packet_vec.begin(), packet_vec.end(), comparator );
+      }
+    }
   
   if(is_Row<obj_type>::value)
     {
