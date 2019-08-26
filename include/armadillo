@@ -533,6 +533,7 @@ namespace arma
   #include "armadillo_bits/fn_chi2rnd.hpp"
   #include "armadillo_bits/fn_wishrnd.hpp"
   #include "armadillo_bits/fn_roots.hpp"
+  #include "armadillo_bits/fn_randperm.hpp"
   
   #include "armadillo_bits/fn_speye.hpp"
   #include "armadillo_bits/fn_spones.hpp"
