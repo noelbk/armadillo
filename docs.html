@@ -10460,6 +10460,11 @@ The dimensions support simple arithmetic operations; they can also be printed an
 </li>
 <br>
 <li>
+<b>Caveat:</b> to prevent interference from <a href="https://en.cppreference.com/w/cpp/iterator/size"><i>std::size()</i></a> in C++17,
+preface Armadillo's <i>size()</i> with the <i>arma</i> namespace qualification, eg. <i>arma::size(X)</i>
+</li>
+<br>
+<li>
 Examples:
 <ul>
 <pre>
