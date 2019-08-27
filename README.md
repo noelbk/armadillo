@@ -84,7 +84,7 @@ Citations are useful for the continued development and maintenance of the librar
     Journal of Open Source Software, Vol. 1, pp. 26, 2016.  
   
   * Conrad Sanderson and Ryan Curtin.  
-    Practical Sparse Matrices in C++ with Hybrid Storage and Template-Based Expression Optimisation.  
+    Practical sparse matrices in C++ with hybrid storage and template-based expression optimisation.  
     Mathematical and Computational Applications, Vol. 24, No. 3, 2019.
 
 ---
