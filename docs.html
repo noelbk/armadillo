@@ -7113,21 +7113,11 @@ sampled without replacement from <i>0</i> to <i>N-1</i>
 </li>
 <br>
 <li>
-Usage:
-<ul>
-<li><i>uvec</i> v = randperm( N )</li>
-<li><i>uvec</i> v = randperm( N, M )</li>
-<li><i>vector_type</i> v = randperm&lt;<i>vector_type</i>&gt;( N )</li>
-<li><i>vector_type</i> v = randperm&lt;<i>vector_type</i>&gt;( N, M )</li>
-</ul>
-</li>
-<br>
-<li>
 Examples:
 <ul>
 <pre>
 uvec X = randperm(10);
- vec Y = randperm&lt;vec&gt;(10,2);
+uvec Y = randperm(10,2);
 </pre>
 </ul>
 </li>
