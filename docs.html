@@ -6959,6 +6959,7 @@ The argument <i>N</i> is optional; by default <i>N = 100</i>
 <li>
 Usage:
 <ul>
+<li>vec v = linspace(start, end, N)</li>
 <li><i>vector_type</i> v = linspace&lt;<i>vector_type</i>&gt;(start, end, N)</li>
 </ul>
 </li>
@@ -6971,9 +6972,9 @@ Usage:
 Examples:
 <ul>
 <pre>
-vec a = linspace&lt;vec&gt;(0, 5, 6);
+   vec a = linspace(0, 5, 6);
 
-vec b = linspace&lt;vec&gt;(5, 0, 6);
+rowvec b = linspace&lt;rowvec&gt;(5, 0, 6);
 </pre>
 </ul>
 </li>
@@ -7008,6 +7009,7 @@ The argument <i>N</i> is optional; by default <i>N = 50</i>
 <li>
 Usage:
 <ul>
+<li>vec v = logspace(A, B, N)</li>
 <li><i>vector_type</i> v = logspace&lt;<i>vector_type</i>&gt;(A, B, N)</li>
 </ul>
 </li>
@@ -7016,9 +7018,9 @@ Usage:
 Examples:
 <ul>
 <pre>
-vec a = logspace&lt;vec&gt;(0, 5, 6);
+   vec a = logspace(0, 5, 6);
 
-vec b = logspace&lt;vec&gt;(5, 0, 6);
+rowvec b = logspace&lt;rowvec&gt;(5, 0, 6);
 </pre>
 </ul>
 </li>
@@ -7068,6 +7070,8 @@ An empty vector is generated when one of the following conditions is true:
 <li>
 Usage:
 <ul>
+<li>vec v = regspace(start, end)</li>
+<li>vec v = regspace(start, delta, end)</li>
 <li><i>vector_type</i> v = regspace&lt;<i>vector_type</i>&gt;(start, end)</li>
 <li><i>vector_type</i> v = regspace&lt;<i>vector_type</i>&gt;(start, delta, end)</li>
 </ul>
@@ -7077,8 +7081,10 @@ Usage:
 Examples:
 <ul>
 <pre>
- vec a = regspace&lt; vec&gt;(0,  9);       // 0,  1, ...,   9
+ vec a = regspace(0,  9);             // 0,  1, ...,   9
+
 uvec b = regspace&lt;uvec&gt;(2,  2,  10);  // 2,  4, ...,  10
+
 ivec c = regspace&lt;ivec&gt;(0, -1, -10);  // 0, -1, ..., -10
 </pre>
 </ul>
@@ -7151,6 +7157,7 @@ An identity matrix is generated when <i>n_rows</i> = <i>n_cols</i>
 <li>
 Usage:
 <ul>
+<li>mat X = eye( n_rows, n_cols )</li>
 <li><i>matrix_type</i> X = eye&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
 <li><i>matrix_type</i> Y = eye&lt;<i>matrix_type</i>&gt;( size(X) )</li>
 </ul>
@@ -7160,11 +7167,11 @@ Usage:
 Examples:
 <ul>
 <pre>
-mat A = eye&lt;mat&gt;(5,5);  // or:  mat A(5,5,fill::eye);
+   mat A = eye(5,5);  // or:  mat A(5,5,fill::eye);
 
-mat B = 123.0 * eye&lt;mat&gt;(5,5);
+  fmat B = 123.0 * eye&lt;fmat&gt;(5,5);
 
-mat C = eye&lt;mat&gt;( size(B) );
+cx_mat C = eye&lt;cx_mat&gt;( size(B) );
 </pre>
 </ul>
 </li>
