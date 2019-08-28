@@ -721,6 +721,58 @@ struct quasi_unwrap< Op<subview_col<eT>, op_htrans> >
 
 
 
+template<typename T1>
+struct quasi_unwrap< CubeToMatOp<T1, op_vectorise_cube_col> >
+  {
+  typedef typename T1::elem_type eT;
+  
+  inline
+  quasi_unwrap(const CubeToMatOp<T1, op_vectorise_cube_col>& A)
+    : U( A.m )
+    , M( const_cast<eT*>(U.M.memptr()), U.M.n_elem, 1, false, true )
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  const unwrap_cube<T1> U;
+  const Mat<eT>         M;
+  
+  static const bool is_const     = true;
+  static const bool has_subview  = true;
+  static const bool has_orig_mem = true;
+  
+  template<typename eT2>
+  arma_inline bool is_alias(const Mat<eT2>&) const { return false; }
+  };
+
+
+
+template<typename T1>
+struct quasi_unwrap< SpToDOp<T1, op_nonzeros_spmat> >
+  {
+  typedef typename T1::elem_type eT;
+  
+  inline
+  quasi_unwrap(const SpToDOp<T1, op_nonzeros_spmat>& A)
+    : U( A.m )
+    , M( const_cast<eT*>(U.M.values), U.M.n_nonzero, 1, false, true )
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  const unwrap_spmat<T1> U;
+  const Mat<eT>          M;
+  
+  static const bool is_const     = true;
+  static const bool has_subview  = true;
+  static const bool has_orig_mem = true;
+  
+  template<typename eT2>
+  arma_inline bool is_alias(const Mat<eT2>&) const { return false; }
+  };
+
+
+
 //
 //
 //
