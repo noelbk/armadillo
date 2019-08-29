@@ -333,7 +333,7 @@ struct quasi_unwrap< subview<eT> >
   
   static const bool is_const     = true;
   static const bool has_subview  = true;
-  static const bool has_orig_mem = false;
+  static const bool has_orig_mem = false;  // NOTE: set to false as this is the general case; original memory is only used when the subview is a contiguous chunk
   
   template<typename eT2>
   arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? (void_ptr(&(sv.m)) == void_ptr(&X)) : false ); }
