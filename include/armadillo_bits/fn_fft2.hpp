@@ -67,8 +67,8 @@ fft2(const T1& A, const uword n_rows, const uword n_cols)
   
   typedef typename T1::elem_type eT;
   
-  const unwrap<T1>   tmp(A);
-  const Mat<eT>& B = tmp.M;
+  const quasi_unwrap<T1> tmp(A);
+  const Mat<eT>&     B = tmp.M;
   
   const bool do_resize = (B.n_rows != n_rows) || (B.n_cols != n_cols);
   
@@ -121,8 +121,8 @@ ifft2(const T1& A, const uword n_rows, const uword n_cols)
   
   typedef typename T1::elem_type eT;
   
-  const unwrap<T1>   tmp(A);
-  const Mat<eT>& B = tmp.M;
+  const quasi_unwrap<T1> tmp(A);
+  const Mat<eT>&     B = tmp.M;
   
   const bool do_resize = (B.n_rows != n_rows) || (B.n_cols != n_cols);
   
