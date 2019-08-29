@@ -15,6 +15,17 @@
 # ------------------------------------------------------------------------
 
 
+## NOTE: If you prefer to link your programs directly with BLAS and LAPACK,
+## NOTE: do not use this installer.
+## NOTE: To use Armadillo without installation, compile your programs along these lines:
+## NOTE: g++ prog.cpp -o prog -O2 -I /home/blah/armadillo-7.200.3/include -DARMA_DONT_USE_WRAPPER -lblas -llapack
+## NOTE: The above command line assumes that you have unpacked the armadillo archive into /home/blah/  
+## NOTE: You will need to adjust this for later versions of Armadillo (ie. change the 7.200.3 part)
+## NOTE: and/or if you have unpacked the armadillo archive into a different directory.
+## NOTE: Replace -lblas with -lopenblas if you have OpenBLAS (recommended).
+## NOTE: On macOS, replace -lblas -llapack with -framework Accelerate
+## NOTE: More details: http://arma.sourceforge.net/faq.html
+
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
@@ -22,13 +33,7 @@ project(armadillo CXX C)
 include(CheckIncludeFileCXX)
 include(CheckLibraryExists)
 
-## Set ARMA_USE_WRAPPER to false if you're getting linking errors when compiling your programs,
-## or if you prefer to directly link with BLAS and/or LAPACK.
-## You will then need to link your programs with -lblas -llapack instead of -larmadillo
-## If you're using OpenBLAS, link your programs with -lopenblas -llapack instead of -larmadillo
-
 set(ARMA_USE_WRAPPER true)
-
 
 # the settings below will be automatically configured by the rest of this script
 
