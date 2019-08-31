@@ -8800,6 +8800,54 @@ Mat<eT>::size() const
 
 
 template<typename eT>
+inline
+eT&
+Mat<eT>::front()
+  {
+  arma_debug_check( (n_elem == 0), "Mat::front(): matrix is empty" );
+  
+  return access::rw(mem[0]);
+  }
+
+
+
+template<typename eT>
+inline
+const eT&
+Mat<eT>::front() const
+  {
+  arma_debug_check( (n_elem == 0), "Mat::front(): matrix is empty" );
+  
+  return mem[0];
+  }
+
+
+
+template<typename eT>
+inline
+eT&
+Mat<eT>::back()
+  {
+  arma_debug_check( (n_elem == 0), "Mat::back(): matrix is empty" );
+  
+  return access::rw(mem[n_elem-1]);
+  }
+
+
+
+template<typename eT>
+inline
+const eT&
+Mat<eT>::back() const
+  {
+  arma_debug_check( (n_elem == 0), "Mat::back(): matrix is empty" );
+  
+  return mem[n_elem-1];
+  }
+
+
+
+template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols>
 arma_inline
 Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::fixed()
