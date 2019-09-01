@@ -2532,9 +2532,7 @@ Mat<eT>::operator=(const SpBase<eT, T1>& m)
     
     const uword x_n_cols = x.n_cols;
     
-    init_warm(x.n_rows, x_n_cols);
-    
-    zeros();
+    (*this).zeros(x.n_rows, x_n_cols);
     
     const    eT* x_values      = x.values;
     const uword* x_row_indices = x.row_indices;
@@ -2558,9 +2556,7 @@ Mat<eT>::operator=(const SpBase<eT, T1>& m)
     {
     const SpProxy<T1> p(m.get_ref());
     
-    init_warm(p.get_n_rows(), p.get_n_cols());
-    
-    zeros();
+    (*this).zeros(p.get_n_rows(), p.get_n_cols());
     
     typename SpProxy<T1>::const_iterator_type it     = p.begin();
     typename SpProxy<T1>::const_iterator_type it_end = p.end();
