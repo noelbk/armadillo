@@ -12441,6 +12441,16 @@ By default, matrix <i>A</i> is analysed to automatically determine whether it is
 based on the detected matrix structure, a specialised solver is used for faster execution
 </li>
 <br>
+<li>
+By default, iterative refinement is used to improve the quality of the solution; this can be optionally disabled to obtain the solution faster
+</li>
+<br>
+<li>
+If <i>A</i> is known to be a triangular matrix,
+the solution can be computed faster by explicitly indicating that <i>A</i> is triangular through <a href="#trimat">trimatu()</a> or <a href="#trimat">trimatl()</a>; see examples below;
+<br>indicating a triangular matrix also implies that iterative refinement is disabled
+</li>
+<br>
 <li><i>A</i> can be square (critically determined system), or non-square (under/over-determined system)
 </li>
 <br>
@@ -12457,7 +12467,7 @@ The number of rows in <i>A</i> and <i>B</i> must be the same
 <br>
 <table>
 <tbody>
-<tr><td><code>solve_opts::fast</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>fast mode: do not apply iterative refinement and/or equilibration</td></tr>
+<tr><td><code>solve_opts::fast</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>fast mode: disable iterative refinement and/or equilibration</td></tr>
 <tr><td><code>solve_opts::equilibrate</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>equilibrate the system before solving &nbsp; (matrix <i>A</i> must be square)</td></tr>
 <tr><td><code>solve_opts::no_approx</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not find approximate solutions for rank deficient systems</td></tr>
 <tr><td><code>solve_opts::no_band</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for band matrices or diagonal matrices</td></tr>
@@ -12468,12 +12478,6 @@ The number of rows in <i>A</i> and <i>B</i> must be the same
 </table>
 <br>
 the above settings can be combined using the <code>+</code> operator; for example: <code>solve_opts::fast&nbsp;+&nbsp;solve_opts::no_approx</code>
-</li>
-<br>
-<li>
-If <i>A</i> is known to be a triangular matrix,
-the solution can be computed faster by explicitly indicating that <i>A</i> is triangular through <a href="#trimat">trimatu()</a> or <a href="#trimat">trimatl()</a>;
-<br>indicating a triangular matrix also implies that <i><code>solve_opts::fast</code></i> is enabled
 </li>
 <br>
 <li>
@@ -12528,6 +12532,7 @@ See also:
 <li><a href="https://en.wikipedia.org/wiki/Band_matrix">band matrix in Wikipedia</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Definiteness_of_a_matrix">definiteness of a matrix in Wikipedia</a></li>
 <li><a href="http://mathworld.wolfram.com/PositiveDefiniteMatrix.html">positive definite matrix in MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Iterative_refinement">iterative refinement</a></li>
 </ul>
 </li>
 <br>
