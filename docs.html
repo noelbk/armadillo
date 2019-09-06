@@ -8696,8 +8696,6 @@ See also:
 <br>
 <li><b>Caveat</b>: the matrix exponential operation is generally <b>not</b> the same as applying the <a href="#misc_fns">exp()</a> function to each element</li>
 <br>
-<li><b>Note</b>: This is based on the method of <a href="http://dx.doi.org/10.1137/S00361445024180">Moler 2003</a></li>
-<br>
 <li>
 Examples:
 <ul>
@@ -8718,6 +8716,7 @@ See also:
 <li><a href="#misc_fns">miscellaneous element-wise functions</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Matrix_exponential">matrix exponential in Wikipedia</a></li>
 <li><a href="http://mathworld.wolfram.com/MatrixExponential.html">matrix exponential in MathWorld</a></li>
+<li><a href="http://doi.org/10.1137/S00361445024180">Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later</a></li>
 </ul>
 </li>
 <br>
@@ -8729,6 +8728,8 @@ See also:
 <br><b>expmat_sym(B, A)</b>
 <ul>
 <li>Matrix exponential of symmetric/hermitian matrix <i>A</i></li>
+<br>
+<li>The computation is based on eigen decomposition</li>
 <br>
 <li>If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown</li>
 <br>
@@ -8745,7 +8746,6 @@ See also:
 <br>
 <li><b>Caveat</b>: the matrix exponential operation is generally <b>not</b> the same as applying the <a href="#misc_fns">exp()</a> function to each element</li>
 <br>
-<li><b>Note</b>: This is based on the method of <a href="http://dx.doi.org/10.1137/S00361445024180">Moler 2003</a></li>
 <li>
 Examples:
 <ul>
@@ -8770,6 +8770,7 @@ See also:
 <li><a href="#misc_fns">miscellaneous element-wise functions</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Matrix_exponential">matrix exponential in Wikipedia</a></li>
 <li><a href="http://mathworld.wolfram.com/MatrixExponential.html">matrix exponential in MathWorld</a></li>
+<li><a href="http://doi.org/10.1137/S00361445024180">Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later</a></li>
 </ul>
 </li>
 <br>
