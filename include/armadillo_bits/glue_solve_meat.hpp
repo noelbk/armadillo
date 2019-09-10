@@ -90,39 +90,17 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
       const bool is_band  = false;
     #endif
     
+    const bool is_triu = (fast) ? ((no_trimat || is_band           ) ? false : trimat_helper::is_triu(A)) : false;
+    const bool is_tril = (fast) ? ((no_trimat || is_band || is_triu) ? false : trimat_helper::is_tril(A)) : false;
+    
     #if defined(ARMA_OPTIMISE_SOLVE_SYMPD)
-      const bool try_sympd = ((no_sympd == false) && (auxlib::crippled_lapack(A) == false) && (is_band == false)) ? (likely_sympd ? true : sympd_helper::guess_sympd(A)) : false;
+      const bool try_sympd = ((no_sympd == false) && (auxlib::crippled_lapack(A) == false) && (is_band == false) && (is_triu == false) && (is_tril == false)) ? (likely_sympd ? true : sympd_helper::guess_sympd(A)) : false;
     #else
       const bool try_sympd = false;
     #endif
     
     if(fast)
       {
-      const bool is_trimatu_tentative = is_band && (KL == 0);
-      const bool is_trimatl_tentative = is_band && (KU == 0);
-      
-      if( (no_trimat == false) && ((is_band == false) || is_trimatu_tentative || is_trimatl_tentative) )
-        {
-        bool is_trimatu = is_trimatu_tentative;
-        bool is_trimatl = is_trimatl_tentative;
-        
-        is_trimatu = ((is_trimatu == false) && (is_trimatl == false)) ? trimat_helper::is_triu(A) : is_trimatu;
-        is_trimatl = ((is_trimatu == false) && (is_trimatl == false)) ? trimat_helper::is_tril(A) : is_trimatl;
-        
-        if(is_trimatu || is_trimatl)
-          {
-          if(is_trimatu)  { arma_extra_debug_print("glue_solve_gen::apply(): fast + upper triangular matrix"); }
-          if(is_trimatl)  { arma_extra_debug_print("glue_solve_gen::apply(): fast + lower triangular matrix"); }
-          
-          uword flags2 = flags;
-          
-          if(is_trimatu)  { flags2 |= solve_opts::flag_triu; }
-          if(is_trimatl)  { flags2 |= solve_opts::flag_tril; }
-          
-          return glue_solve_tri::apply(out, A, B_expr, flags2);
-          }
-        }
-      
       if(is_band)
         {
         if( (KL == 1) && (KU == 1) )
@@ -137,6 +115,19 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
           
           status = auxlib::solve_band_fast(out, A, KL, KU, B_expr.get_ref());
           }
+        }
+      else
+      if(is_triu || is_tril)
+        {
+        if(is_triu)  { arma_extra_debug_print("glue_solve_gen::apply(): fast + upper triangular matrix"); }
+        if(is_tril)  { arma_extra_debug_print("glue_solve_gen::apply(): fast + lower triangular matrix"); }
+        
+        uword flags2 = flags;
+        
+        if(is_triu)  { flags2 |= solve_opts::flag_triu; }
+        if(is_tril)  { flags2 |= solve_opts::flag_tril; }
+        
+        return glue_solve_tri::apply(out, A, B_expr, flags2);
         }
       else
       if(try_sympd)
