@@ -71,9 +71,22 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
     status = auxlib::inv_tiny(out, A);
     }
   else
-  if(sympd_helper::guess_sympd(A))
     {
-    status = auxlib::inv_sympd(out, A);
+    const bool is_trimatu = trimat_helper::is_triu(A);
+    const bool is_trimatl = (is_trimatu == false) ? trimat_helper::is_tril(A) : false;
+    
+    if(is_trimatu || is_trimatl)
+      {
+      if(is_trimatu)  { arma_extra_debug_print("op_inv::apply_noalias(): detected upper triangular matrix"); }
+      if(is_trimatl)  { arma_extra_debug_print("op_inv::apply_noalias(): detected lower triangular matrix"); }
+      
+      status = auxlib::inv_tr(out, A, ((is_trimatu) ? uword(0) : uword(1)));
+      }
+    else
+    if(sympd_helper::guess_sympd(A))
+      {
+      status = auxlib::inv_sympd(out, A);
+      }
     }
   
   if(status == false)
