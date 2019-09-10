@@ -82,8 +82,7 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
       if(is_trimatl)  { arma_extra_debug_print("op_inv::apply_noalias(): detected lower triangular matrix"); }
       
       status = auxlib::inv_tr(out, A, ((is_trimatu) ? uword(0) : uword(1)));
-      
-      if(status == false)  { retry = false; }
+      retry  = false;
       }
     else
     if(sympd_helper::guess_sympd(A))
