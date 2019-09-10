@@ -65,6 +65,7 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
   arma_debug_check( (A.n_rows != A.n_cols), "inv(): given matrix must be square sized" );
   
   bool status = false;
+  bool retry  = true;
   
   if(A.n_rows <= 4)
     {
@@ -81,6 +82,8 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
       if(is_trimatl)  { arma_extra_debug_print("op_inv::apply_noalias(): detected lower triangular matrix"); }
       
       status = auxlib::inv_tr(out, A, ((is_trimatu) ? uword(0) : uword(1)));
+      
+      if(status == false)  { retry = false; }
       }
     else
     if(sympd_helper::guess_sympd(A))
@@ -89,7 +92,7 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
       }
     }
   
-  if(status == false)
+  if( (status == false) && (retry == true) )
     {
     status = auxlib::inv(out, A);
     }
