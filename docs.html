@@ -11872,16 +11872,10 @@ If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown
 <li>
 <b>Caveats:</b>
 <ul>
-<li>
-if matrix <i>A</i> is know to be symmetric positive definite, using <a href="#inv_sympd">inv_sympd()</a> is faster
-</li>
-<li>
-if matrix <i>A</i> is know to be diagonal, use <i>inv(&nbsp;diagmat(A)&nbsp;)</i>
-</li>
-<li>
-to solve a system of linear equations, such as <i>Z&nbsp;=&nbsp;inv(X)*Y</i>,
-using <a href="#solve">solve()</a> can be faster and/or more accurate
-</li>
+<li>if matrix <i>A</i> is know to be symmetric positive definite, using <a href="#inv_sympd">inv_sympd()</a> is faster</li>
+<li>if matrix <i>A</i> is know to be diagonal, use <i>inv(&nbsp;diagmat(A)&nbsp;)</i></li>
+<li>if matrix <i>A</i> is know to be triangular, use <i>inv(&nbsp;trimatu(A)&nbsp;)</i> or <i>inv(&nbsp;trimatl(A)&nbsp;)</i></li>
+<li>to solve a system of linear equations, such as <i>Z&nbsp;=&nbsp;inv(X)*Y</i>, using <a href="#solve">solve()</a> can be faster and/or more accurate</li>
 </ul>
 </li>
 <br>
@@ -11906,6 +11900,7 @@ See also:
 <li><a href="#solve">solve()</a></li>
 <li><a href="#spsolve">spsolve()</a></li>
 <li><a href="#diagmat">diagmat()</a></li>
+<li><a href="#trimat">trimatu() / trimatl()</a></li>
 <li><a href="http://mathworld.wolfram.com/MatrixInverse.html">matrix inverse in MathWorld</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Invertible_matrix">invertible matrix in Wikipedia</a></li>
 </ul>
