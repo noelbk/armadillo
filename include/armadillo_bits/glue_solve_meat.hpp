@@ -56,6 +56,7 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   const bool no_sympd     = bool(flags & solve_opts::flag_no_sympd    );
   const bool allow_ugly   = bool(flags & solve_opts::flag_allow_ugly  );
   const bool likely_sympd = bool(flags & solve_opts::flag_likely_sympd);
+  const bool refine       = bool(flags & solve_opts::flag_refine      );
   
   arma_extra_debug_print("glue_solve_gen::apply(): enabled flags:");
   
@@ -66,8 +67,10 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
   if(allow_ugly  )  { arma_extra_debug_print("allow_ugly");   }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
+  if(refine      )  { arma_extra_debug_print("refine");       }
   
   arma_debug_check( (fast     && equilibrate ), "solve(): options 'fast' and 'equilibrate' are mutually exclusive"        );
+  arma_debug_check( (fast     && refine      ), "solve(): options 'fast' and 'refine' are mutually exclusive"             );
   arma_debug_check( (no_sympd && likely_sympd), "solve(): options 'no_sympd' and 'likely_sympd' are mutually exclusive"   );
   
   T    rcond  = T(0);
@@ -207,6 +210,7 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
     arma_extra_debug_print("glue_solve_gen::apply(): detected non-square system");
     
     if(equilibrate)   { arma_debug_warn( "solve(): option 'equilibrate' ignored for non-square matrix" );  }
+    if(refine)        { arma_debug_warn( "solve(): option 'refine' ignored for non-square matrix" );       }
     if(likely_sympd)  { arma_debug_warn( "solve(): option 'likely_sympd' ignored for non-square matrix" ); }
     
     if(fast)
@@ -268,6 +272,7 @@ glue_solve_tri::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   const bool triu         = bool(flags & solve_opts::flag_triu        );
   const bool tril         = bool(flags & solve_opts::flag_tril        );
   const bool likely_sympd = bool(flags & solve_opts::flag_likely_sympd);
+  const bool refine       = bool(flags & solve_opts::flag_refine      );
   
   arma_extra_debug_print("glue_solve_tri::apply(): enabled flags:");
   
@@ -277,10 +282,12 @@ glue_solve_tri::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   if(triu        )  { arma_extra_debug_print("triu");         }
   if(tril        )  { arma_extra_debug_print("tril");         }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
+  if(refine      )  { arma_extra_debug_print("refine");       }
   
   bool status = false;
   
   if(equilibrate)   { arma_debug_warn("solve(): option 'equilibrate' ignored for triangular matrix");  }
+  if(refine)        { arma_debug_warn("solve(): option 'refine' ignored for triangular matrix");       }
   if(likely_sympd)  { arma_debug_warn("solve(): option 'likely_sympd' ignored for triangular matrix"); }
   
   const quasi_unwrap<T1> U(A_expr.get_ref());
