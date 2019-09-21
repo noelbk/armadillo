@@ -4627,7 +4627,7 @@ auxlib::solve_tridiag_fast(Mat< std::complex<typename T1::pod_type> >& out, Mat<
   
   #if defined(ARMA_CRIPPLED_LAPACK)
     {
-    arma_extra_debug_print("auxlib::solve_band_fast(): redirecting to auxlib::solve_square_fast() due to crippled LAPACK");
+    arma_extra_debug_print("auxlib::solve_tridiag_fast(): redirecting to auxlib::solve_square_fast() due to crippled LAPACK");
     
     return auxlib::solve_square_fast(out, A, B_expr);
     }
