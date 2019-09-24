@@ -86,17 +86,18 @@ namespace solve_opts
   // The values below (eg. 1u << 1) are for internal Armadillo use only.
   // The values can change without notice.
   
-  static const uword flag_none         = uword(0      );
-  static const uword flag_fast         = uword(1u << 0);
-  static const uword flag_equilibrate  = uword(1u << 1);
-  static const uword flag_no_approx    = uword(1u << 2);
-  static const uword flag_triu         = uword(1u << 3);
-  static const uword flag_tril         = uword(1u << 4);
-  static const uword flag_no_band      = uword(1u << 5);
-  static const uword flag_no_sympd     = uword(1u << 6);
-  static const uword flag_allow_ugly   = uword(1u << 7);
-  static const uword flag_likely_sympd = uword(1u << 8);
-  static const uword flag_refine       = uword(1u << 9);
+  static const uword flag_none         = uword(0       );
+  static const uword flag_fast         = uword(1u <<  0);
+  static const uword flag_equilibrate  = uword(1u <<  1);
+  static const uword flag_no_approx    = uword(1u <<  2);
+  static const uword flag_triu         = uword(1u <<  3);
+  static const uword flag_tril         = uword(1u <<  4);
+  static const uword flag_no_band      = uword(1u <<  5);
+  static const uword flag_no_sympd     = uword(1u <<  6);
+  static const uword flag_allow_ugly   = uword(1u <<  7);
+  static const uword flag_likely_sympd = uword(1u <<  8);
+  static const uword flag_refine       = uword(1u <<  9);
+  static const uword flag_no_trimat    = uword(1u << 10);
   
   struct opts_none         : public opts { inline opts_none()         : opts(flag_none        ) {} };
   struct opts_fast         : public opts { inline opts_fast()         : opts(flag_fast        ) {} };
@@ -109,6 +110,7 @@ namespace solve_opts
   struct opts_allow_ugly   : public opts { inline opts_allow_ugly()   : opts(flag_allow_ugly  ) {} };
   struct opts_likely_sympd : public opts { inline opts_likely_sympd() : opts(flag_likely_sympd) {} };
   struct opts_refine       : public opts { inline opts_refine()       : opts(flag_refine      ) {} };
+  struct opts_no_trimat    : public opts { inline opts_no_trimat()    : opts(flag_no_trimat   ) {} };
   
   static const opts_none         none;
   static const opts_fast         fast;
@@ -121,6 +123,7 @@ namespace solve_opts
   static const opts_allow_ugly   allow_ugly;
   static const opts_likely_sympd likely_sympd;
   static const opts_refine       refine;
+  static const opts_no_trimat    no_trimat;
   }
 
 
