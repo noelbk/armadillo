@@ -3846,7 +3846,7 @@ auxlib::solve_sympd_refine(Mat< std::complex<typename T1::pod_type> >& out, type
   
   #if defined(ARMA_CRIPPLED_LAPACK)
     {
-    arma_extra_debug_print("auxlib::solve_band_refine(): redirecting to auxlib::solve_square_refine() due to crippled LAPACK");
+    arma_extra_debug_print("auxlib::solve_sympd_refine(): redirecting to auxlib::solve_square_refine() due to crippled LAPACK");
     
     return auxlib::solve_square_refine(out, out_rcond, A, B_expr, equilibrate, allow_ugly);
     }
