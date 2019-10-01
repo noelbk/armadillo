@@ -436,8 +436,6 @@ glue_solve_tri::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base
     {
     const uword mask = ~(solve_opts::flag_triu | solve_opts::flag_tril);
     
-    // TODO: check the execution trace to ensure that trimatu()/trimatl() are given to glue_solve_gen::apply() without copying A_expr
-    
     return glue_solve_gen::apply(actual_out, ((triu) ? trimatu(A_expr.get_ref()) : trimatl(A_expr.get_ref())), B_expr, (flags & mask));
     }
   
