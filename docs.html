@@ -149,7 +149,7 @@ hr.greyline
 <a class="noprint" style="display:scroll; position:fixed; bottom:5px; right:5px;" href="#top"><font size=-1>[top]</font></a>
 
 <a name="top"></a>
-<big><b>API Documentation for Armadillo 9.700</b></big>
+<big><b>API Documentation for Armadillo 10.100</b></big>
 <br>
 <br>
 <br>
@@ -312,6 +312,8 @@ Conrad Sanderson and Ryan Curtin.
 <tr><td><a href="#is_vec">.is_vec</a></td><td>&nbsp;</td><td>check whether matrix is a vector</td></tr>
 <tr><td><a href="#is_sorted">.is_sorted</a></td><td>&nbsp;</td><td>check whether vector or matrix is sorted</td></tr>
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
+<tr><td><a href="#is_trimat">.is_trimatu / .is_trimatl</a></td><td>&nbsp;</td><td>check whether matrix is upper/lower triangular</td></tr>
+<tr><td><a href="#is_diagmat">.is_diagmat</a></td><td>&nbsp;</td><td>check whether matrix is diagonal</td></tr>
 <tr><td><a href="#is_square">.is_square</a></td><td>&nbsp;</td><td>check whether matrix is square sized</td></tr>
 <tr><td><a href="#is_symmetric">.is_symmetric</a></td><td>&nbsp;</td><td>check whether matrix is symmetric</td></tr>
 <tr><td><a href="#is_hermitian">.is_hermitian</a></td><td>&nbsp;</td><td>check whether matrix is hermitian</td></tr>
@@ -2001,7 +2003,7 @@ The following subset of operations &amp; functions is available for sparse matri
 <li>generated matrices: <a href="#speye">speye()</a>, <a href="#spones">spones()</a>, <a href="#sprandu_sprandn">sprandu()</a>, <a href="#sprandu_sprandn">sprandn()</a>, <a href="#zeros_standalone">zeros()</a></li>
 <li>eigen and svd decomposition: <a href="#eigs_sym">eigs_sym()</a>, <a href="#eigs_gen">eigs_gen()</a>, <a href="#svds">svds()</a></li>
 <li>solution of sparse linear systems: <a href="#spsolve">spsolve()</a>
-<li>miscellaneous: <a href="#approx_equal">approx_equal()</a>, <a href="#element_access">element access</a>, <a href="#iterators_spmat">element iterators</a>, <a href="#as_col_row">.as_col()&nbsp;/&nbsp;.as_row()</a>, <a href="#for_each">.for_each()</a>, <a href="#print">.print()</a>, <a href="#clean">.clean()</a>, <a href="#replace">.replace()</a>, <a href="#transform">.transform()</a>, <a href="#is_finite">.is_finite()</a>, <a href="#is_symmetric">.is_symmetric()</a>, <a href="#is_hermitian">.is_hermitian()</a></li>
+<li>miscellaneous: <a href="#approx_equal">approx_equal()</a>, <a href="#element_access">element access</a>, <a href="#iterators_spmat">element iterators</a>, <a href="#as_col_row">.as_col()&nbsp;/&nbsp;.as_row()</a>, <a href="#for_each">.for_each()</a>, <a href="#print">.print()</a>, <a href="#clean">.clean()</a>, <a href="#replace">.replace()</a>, <a href="#transform">.transform()</a>, <a href="#is_finite">.is_finite()</a>, <a href="#is_symmetric">.is_symmetric()</a>, <a href="#is_hermitian">.is_hermitian()</a>, <a href="#is_trimat">.is_trimatu()</a>, <a href="#is_trimat">.is_trimatl()</a>, <a href="#is_diagmat">.is_diagmat()</a></li>
 </ul>
 </li>
 <br>
@@ -6142,6 +6144,92 @@ See also:
 </ul>
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="is_trimat"></a>
+<b>.is_trimatu()</b>
+<br>
+<b>.is_trimatl()</b>
+<ul>
+<li>
+Member functions of <i>Mat</i> and <i>SpMat</i>
+</li>
+<br>
+<li><i>.is_trimatu()</i>: return <i>true</i> if the matrix is upper triangular, ie. the matrix is square sized and all elements below the main diagonal are zero; return <i>false</i> otherwise
+</li>
+<br>
+<li><i>.is_trimatl()</i>: return <i>true</i> if the matrix is lower triangular, ie. the matrix is square sized and all elements above the main diagonal are zero; return <i>false</i> otherwise
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+mat A = randu&lt;mat&gt;(5,5);
+mat B = trimatu(A);
+
+cout &lt;&lt; A.is_trimatu() &lt;&lt; endl;
+cout &lt;&lt; B.is_trimatu() &lt;&lt; endl;
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#trimat">trimatu() / trimatl()</a></li>
+<li><a href="#is_symmetric">.is_symmetric()</a></li>
+<li><a href="#is_diagmat">.is_diagmat()</a></li>
+<li><a href="http://mathworld.wolfram.com/TriangularMatrix.html">Triangular matrix in MathWorld</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Triangular_matrix">Triangular matrix in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="is_diagmat"></a>
+<b>.is_diagmat()</b>
+<ul>
+<li>
+Member function of <i>Mat</i> and <i>SpMat</i>
+</li>
+<br>
+<li>Return <i>true</i> if the matrix is diagonal, ie. all elements outside of the main diagonal are zero
+</li>
+<br>
+<li>Return <i>false</i> otherwise
+</li>
+<br>
+<li>
+<b>Caveat:</b> if the function returns <i>true</i>, do not assume that the matrix contains non-zero elements on the main diagonal
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+mat A = randu&lt;mat&gt;(5,5);
+mat B = diagmat(A);
+
+cout &lt;&lt; A.is_diagmat() &lt;&lt; endl;
+cout &lt;&lt; B.is_diagmat() &lt;&lt; endl;
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#diagmat">diagmat()</a></li>
+<li><a href="#is_trimat">.is_trimatu() / .is_trimatl()</a></li>
+<li><a href="#is_symmetric">.is_symmetric()</a></li>
+<li><a href="http://mathworld.wolfram.com/DiagonalMatrix.html">Diagonal matrix in MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Diagonal_matrix">Diagonal matrix in Wikipedia</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="is_square"></a>
 <b>.is_square()</b>
 <ul>
@@ -6217,6 +6305,7 @@ See also:
 <li><a href="#is_hermitian">.is_hermitian()</a></li>
 <li><a href="#is_sympd">.is_sympd()</a></li>
 <li><a href="#is_square">.is_square()</a></li>
+<li><a href="#is_trimat">.is_trimatu() / .is_trimatl()</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Symmetric_matrix">Symmetric matrix in Wikipedia</a></li>
 <li><a href="http://mathworld.wolfram.com/SymmetricMatrix.html">Symmetric matrix in MathWorld</a></li>
 </ul>
@@ -8495,6 +8584,7 @@ mat E = diagmat(v,1);
 See also:
 <ul>
 <li><a href="#diag">.diag()</a></li>
+<li><a href="#is_diagmat">.is_diagmat()</a></li>
 <li><a href="#diagvec">diagvec()</a></li>
 <li><a href="#trimat">trimatu() / trimatl()</a></li>
 <li><a href="#symmat">symmatu() / symmatl()</a></li>
@@ -11039,6 +11129,7 @@ mat LL = trimatl(A, -1);  // omit the main diagonal
 <br>
 <li>See also:
 <ul>
+<li><a href="#is_trimat">.is_trimatu() / .is_trimatl()</a></li>
 <li><a href="#symmat">symmatu() / symmatl()</a></li>
 <li><a href="#diagmat">diagmat()</a></li>
 <li><a href="#nonzeros">nonzeros()</a></li>
@@ -12437,13 +12528,8 @@ based on the detected matrix structure, a specialised solver is used for faster 
 </li>
 <br>
 <li>
-By default, iterative refinement is used to improve the quality of the solution; this can be optionally disabled to obtain the solution faster
-</li>
-<br>
-<li>
 If <i>A</i> is known to be a triangular matrix,
-the solution can be computed faster by explicitly indicating that <i>A</i> is triangular through <a href="#trimat">trimatu()</a> or <a href="#trimat">trimatl()</a>; see examples below;
-<br>indicating a triangular matrix also implies that iterative refinement is disabled
+the solution can be computed faster by explicitly indicating that <i>A</i> is triangular through <a href="#trimat">trimatu()</a> or <a href="#trimat">trimatl()</a>; see examples below
 </li>
 <br>
 <li><i>A</i> can be square (critically determined system), or non-square (under/over-determined system)
@@ -12462,13 +12548,15 @@ The number of rows in <i>A</i> and <i>B</i> must be the same
 <br>
 <table>
 <tbody>
-<tr><td><code>solve_opts::fast</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>fast mode: disable iterative refinement and/or equilibration</td></tr>
+<tr><td><code>solve_opts::fast</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>fast mode: disable determining solution quality via rcond, disable iterative refinement, disable equilibration</td></tr>
+<tr><td><code>solve_opts::refine</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>apply iterative refinement to improve solution quality &nbsp; (matrix <i>A</i> must be square)</td></tr>
 <tr><td><code>solve_opts::equilibrate</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>equilibrate the system before solving &nbsp; (matrix <i>A</i> must be square)</td></tr>
+<tr><td><code>solve_opts::likely_sympd</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>indicate that matrix <i>A</i> is likely symmetric/hermitian positive definite</td></tr>
+<tr><td><code>solve_opts::allow_ugly</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>keep solutions of systems that are singular to working precision</td></tr>
 <tr><td><code>solve_opts::no_approx</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not find approximate solutions for rank deficient systems</td></tr>
 <tr><td><code>solve_opts::no_band</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for band matrices or diagonal matrices</td></tr>
+<tr><td><code>solve_opts::no_trimat</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for triangular matrices</td></tr>
 <tr><td><code>solve_opts::no_sympd</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for symmetric/hermitian positive definite matrices</td></tr>
-<tr><td><code>solve_opts::allow_ugly</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>keep solutions of systems that are singular to working precision</td></tr>
-<tr><td><code>solve_opts::likely_sympd</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>indicate that matrix <i>A</i> is likely symmetric/hermitian positive definite</td></tr>
 </tbody>
 </table>
 <br>
@@ -18387,6 +18475,17 @@ List of additions and changes for each version:
 
 
 
+<a name="version_10100"></a>
+<li>Version 10.100:
+<ul>
+<li>faster <a href="#solve">solve()</a> in default operation; iterative refinement is no longer applied by default; use <code>solve_opts::refine</code> to explicitly enable refinement</li>
+<li>faster <a href="#expmat">expmat()</a></li>
+<li>faster handling of triangular matrices by <a href="#rcond">rcond()</a></li>
+<li>added <a href="#is_trimat">.is_trimatu()</a> and <a href="#is_trimat">.is_trimatl()</a></li>
+<li>added <a href="#is_diagmat">.is_diagmat()</a></li>
+</ul>
+</li>
+<br>
 <a name="version_9700"></a>
 <li>Version 9.700:
 <ul>

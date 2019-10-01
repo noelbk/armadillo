@@ -19,10 +19,10 @@
 
 
 
-#define ARMA_VERSION_MAJOR 9
-#define ARMA_VERSION_MINOR 700
-#define ARMA_VERSION_PATCH 3
-#define ARMA_VERSION_NAME  "Gangster Democracy"
+#define ARMA_VERSION_MAJOR 10
+#define ARMA_VERSION_MINOR 100
+#define ARMA_VERSION_PATCH 0
+#define ARMA_VERSION_NAME  "unstable"
 
 
 
