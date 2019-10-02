@@ -165,11 +165,11 @@ if(APPLE)
   set(ARMA_USE_BLAS   true)
   
   set(ARMA_LIBS ${ARMA_LIBS} "-framework Accelerate")  # or "-framework accelerate" ?
-  message(STATUS "MacOS X detected. Added '-framework Accelerate' to compiler flags")
+  message(STATUS "macOS detected. Added '-framework Accelerate' to compiler flags")
   
   if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-    message(STATUS "Clang compiler on MacOS X detected. Added '-stdlib=libc++' to compiler flags")
+    message(STATUS "Clang compiler on macOS detected. Added '-stdlib=libc++' to compiler flags")
   endif()
   
   set(CMAKE_MACOSX_RPATH 1)
@@ -393,7 +393,7 @@ configure_file(${PROJECT_SOURCE_DIR}/examples/Makefile.cmake ${PROJECT_SOURCE_DI
 include_directories(${PROJECT_BINARY_DIR}/tmp/include/ ${CMAKE_REQUIRED_INCLUDES})
 
 
-## work around a silly limitation in Mac OS X
+## work around a silly limitation in macOS
 if(APPLE)
   if(${ARMA_VERSION_MINOR} GREATER 99)
     math(EXPR ARMA_VERSION_MINOR_ALT "${ARMA_VERSION_MINOR} / 10")
