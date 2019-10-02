@@ -6153,10 +6153,18 @@ See also:
 Member functions of <i>Mat</i> and <i>SpMat</i>
 </li>
 <br>
-<li><i>.is_trimatu()</i>: return <i>true</i> if the matrix is upper triangular, ie. the matrix is square sized and all elements below the main diagonal are zero; return <i>false</i> otherwise
+<li><i>.is_trimatu()</i>:
+<ul>
+<li>return <i>true</i> if the matrix is upper triangular, ie. the matrix is square sized and all elements below the main diagonal are zero; return <i>false</i> otherwise</li>
+<li><b>caveat:</b> if this function returns <i>true</i>, do not assume that the matrix contains non-zero elements on or above the main diagonal</li>
+</ul>
 </li>
 <br>
-<li><i>.is_trimatl()</i>: return <i>true</i> if the matrix is lower triangular, ie. the matrix is square sized and all elements above the main diagonal are zero; return <i>false</i> otherwise
+<li><i>.is_trimatl()</i>:
+<ul>
+<li>return <i>true</i> if the matrix is lower triangular, ie. the matrix is square sized and all elements above the main diagonal are zero; return <i>false</i> otherwise</li>
+<li><b>caveat:</b> if this function returns <i>true</i>, do not assume that the matrix contains non-zero elements on or below the main diagonal</li>
+</ul>
 </li>
 <br>
 <li>
@@ -6164,10 +6172,10 @@ Examples:
 <ul>
 <pre>
 mat A = randu&lt;mat&gt;(5,5);
-mat B = trimatu(A);
+mat B = trimatl(A);
 
 cout &lt;&lt; A.is_trimatu() &lt;&lt; endl;
-cout &lt;&lt; B.is_trimatu() &lt;&lt; endl;
+cout &lt;&lt; B.is_trimatl() &lt;&lt; endl;
 </pre>
 </ul>
 </li>
@@ -6200,7 +6208,7 @@ Member function of <i>Mat</i> and <i>SpMat</i>
 </li>
 <br>
 <li>
-<b>Caveat:</b> if the function returns <i>true</i>, do not assume that the matrix contains non-zero elements on the main diagonal
+<b>Caveat:</b> if this function returns <i>true</i>, do not assume that the matrix contains non-zero elements on the main diagonal
 </li>
 <br>
 <li>
