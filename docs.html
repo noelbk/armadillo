@@ -18088,7 +18088,8 @@ See Fortran <a href="https://gcc.gnu.org/onlinedocs/gfortran/Argument-passing-co
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-Disable use of so-called "hidden arguments" when calling BLAS and LAPACK functions
+Disable use of so-called "hidden arguments" when calling BLAS and LAPACK functions.
+May be necessary when using Armadillo in conjunction with broken MKL headers (eg. if you have <code>#include "mkl_lapack.h"</code> in your code).
     </td>
   </tr>
   <tr>
