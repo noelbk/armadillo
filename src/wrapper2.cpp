@@ -709,22 +709,22 @@ extern "C"
     
     
     
-    void arma_fortran_with_prefix(arma_sgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs,    float* ab, const blas_int* ldab, blas_int* ipiv,    float* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
+    void arma_fortran_with_prefix(arma_sgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, const    float* ab, const blas_int* ldab, const blas_int* ipiv,    float* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
       {
       arma_fortran_sans_prefix(arma_sgbtrs)(trans, n, kl, ku, nrhs, ab, ldab, ipiv, b, ldb, info, trans_len);
       }
     
-    void arma_fortran_with_prefix(arma_dgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs,   double* ab, const blas_int* ldab, blas_int* ipiv,   double* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
+    void arma_fortran_with_prefix(arma_dgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, const   double* ab, const blas_int* ldab, const blas_int* ipiv,   double* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
       {
       arma_fortran_sans_prefix(arma_dgbtrs)(trans, n, kl, ku, nrhs, ab, ldab, ipiv, b, ldb, info, trans_len);
       }
     
-    void arma_fortran_with_prefix(arma_cgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, blas_cxf* ab, const blas_int* ldab, blas_int* ipiv, blas_cxf* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
+    void arma_fortran_with_prefix(arma_cgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, const blas_cxf* ab, const blas_int* ldab, const blas_int* ipiv, blas_cxf* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
       {
       arma_fortran_sans_prefix(arma_cgbtrs)(trans, n, kl, ku, nrhs, ab, ldab, ipiv, b, ldb, info, trans_len);
       }
     
-    void arma_fortran_with_prefix(arma_zgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, blas_cxd* ab, const blas_int* ldab, blas_int* ipiv, blas_cxd* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
+    void arma_fortran_with_prefix(arma_zgbtrs)(const char* trans, const blas_int* n, const blas_int* kl, const blas_int* ku, const blas_int* nrhs, const blas_cxd* ab, const blas_int* ldab, const blas_int* ipiv, blas_cxd* b, const blas_int* ldb, blas_int* info, blas_len trans_len)
       {
       arma_fortran_sans_prefix(arma_zgbtrs)(trans, n, kl, ku, nrhs, ab, ldab, ipiv, b, ldb, info, trans_len);
       }
