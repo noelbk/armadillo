@@ -223,22 +223,22 @@ extern "C"
     
     
     
-    void arma_fortran_with_prefix(arma_sgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs,    float* a, const blas_int* lda, const blas_int* ipiv,    float* b, const blas_int* ldb, blas_int* info)
+    void arma_fortran_with_prefix(arma_sgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs, const    float* a, const blas_int* lda, const blas_int* ipiv,    float* b, const blas_int* ldb, blas_int* info)
       {
       arma_fortran_sans_prefix(arma_sgetrs)(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
       }
     
-    void arma_fortran_with_prefix(arma_dgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs,   double* a, const blas_int* lda, const blas_int* ipiv,   double* b, const blas_int* ldb, blas_int* info)
+    void arma_fortran_with_prefix(arma_dgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs, const   double* a, const blas_int* lda, const blas_int* ipiv,   double* b, const blas_int* ldb, blas_int* info)
       {
       arma_fortran_sans_prefix(arma_dgetrs)(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
       }
     
-    void arma_fortran_with_prefix(arma_cgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs, blas_cxf* a, const blas_int* lda, const blas_int* ipiv, blas_cxf* b, const blas_int* ldb, blas_int* info)
+    void arma_fortran_with_prefix(arma_cgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs, const blas_cxf* a, const blas_int* lda, const blas_int* ipiv, blas_cxf* b, const blas_int* ldb, blas_int* info)
       {
       arma_fortran_sans_prefix(arma_cgetrs)(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
       }
     
-    void arma_fortran_with_prefix(arma_zgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs, blas_cxd* a, const blas_int* lda, const blas_int* ipiv, blas_cxd* b, const blas_int* ldb, blas_int* info)
+    void arma_fortran_with_prefix(arma_zgetrs)(const char* trans, const blas_int* n, const blas_int* nrhs, const blas_cxd* a, const blas_int* lda, const blas_int* ipiv, blas_cxd* b, const blas_int* ldb, blas_int* info)
       {
       arma_fortran_sans_prefix(arma_zgetrs)(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
       }
