@@ -29,6 +29,13 @@
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
+if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
+  if(POLICY CMP0025)
+    cmake_policy(SET CMP0025 NEW)
+    message(STATUS "*** set cmake policy CMP0025 to NEW")
+  endif()
+endif()
+
 project(armadillo CXX C)
 include(CheckIncludeFileCXX)
 include(CheckLibraryExists)
@@ -167,9 +174,16 @@ if(APPLE)
   set(ARMA_LIBS ${ARMA_LIBS} "-framework Accelerate")  # or "-framework accelerate" ?
   message(STATUS "macOS detected. Added '-framework Accelerate' to compiler flags")
   
-  if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
     message(STATUS "Clang compiler on macOS detected. Added '-stdlib=libc++' to compiler flags")
+  endif()
+  
+  if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+      message(STATUS "AppleClang compiler on macOS detected. Added '-stdlib=libc++' to compiler flags")
+    endif()
   endif()
   
   set(CMAKE_MACOSX_RPATH 1)
@@ -369,13 +383,27 @@ message(STATUS "")
 
 # NOTE: ARMA_USE_EXTERN_CXX11_RNG requires compiler support for thread_local and C++11
 # NOTE: for Linux, this is available with gcc 4.8.3 onwards
-# TODO: for macOS, thread_local is supoported in Xcode 8 (mid 2016 onwards) in C++11 mode
+# NOTE: for macOS, thread_local is supoported in Xcode 8 (mid 2016 onwards) in C++11 mode
 
 if(DEFINED CMAKE_CXX_COMPILER_ID AND DEFINED CMAKE_CXX_COMPILER_VERSION)
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND NOT ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.8.3)
     set(ARMA_USE_EXTERN_CXX11_RNG true)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
     message(STATUS "Detected gcc 4.8.3 or later. Added '-std=c++11' to compiler flags")
+  else()
+    if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
+      
+      if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 6.0)
+        set(ARMA_USE_EXTERN_CXX11_RNG true)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+        message(STATUS "Detected Clang 6.0 or later. Added '-std=c++14' to compiler flags")
+      elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang" AND NOT ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 8.0)
+        set(ARMA_USE_EXTERN_CXX11_RNG true)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+        message(STATUS "Detected AppleClang 8.0 or later. Added '-std=c++14' to compiler flags")
+      endif()
+      
+    endif()
   endif()
 endif()
 
