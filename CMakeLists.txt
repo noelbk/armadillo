@@ -31,6 +31,7 @@ cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
 if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
   if(POLICY CMP0025)
+    # enable differentiation between vanilla Clang and AppleClang
     cmake_policy(SET CMP0025 NEW)
     message(STATUS "*** set cmake policy CMP0025 to NEW")
   endif()
@@ -172,17 +173,19 @@ if(APPLE)
   set(ARMA_USE_BLAS   true)
   
   set(ARMA_LIBS ${ARMA_LIBS} "-framework Accelerate")  # or "-framework accelerate" ?
-  message(STATUS "macOS detected. Added '-framework Accelerate' to compiler flags")
+  message(STATUS "Detected macOS. Added '-framework Accelerate' to compiler flags")
   
-  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-    message(STATUS "Clang compiler on macOS detected. Added '-stdlib=libc++' to compiler flags")
-  endif()
-  
-  if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
-    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+  if(DEFINED CMAKE_CXX_COMPILER_ID)
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-      message(STATUS "AppleClang compiler on macOS detected. Added '-stdlib=libc++' to compiler flags")
+      message(STATUS "Detected Clang compiler on macOS. Added '-stdlib=libc++' to compiler flags")
+    endif()
+    
+    if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
+      if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
+        message(STATUS "Detected AppleClang compiler on macOS. Added '-stdlib=libc++' to compiler flags")
+      endif()
     endif()
   endif()
   
@@ -443,7 +446,18 @@ endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+else()
+  if(DEFINED CMAKE_CXX_COMPILER_ID)
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    endif()
+  endif()
 endif()
+
 
 message(STATUS "CMAKE_CXX_FLAGS           = ${CMAKE_CXX_FLAGS}"          )
 message(STATUS "CMAKE_SHARED_LINKER_FLAGS = ${CMAKE_SHARED_LINKER_FLAGS}")
