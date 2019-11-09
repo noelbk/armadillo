@@ -7834,6 +7834,19 @@ Mat<eT>::row_iterator::row_iterator(Mat<eT>& in_M, const uword in_row)
 
 template<typename eT>
 inline
+Mat<eT>::row_iterator::row_iterator(Mat<eT>& in_M, const uword in_row, const uword in_col)
+  : M          (&in_M                    )
+  , current_ptr(&(in_M.at(in_row,in_col)))
+  , current_row(in_row                   )
+  , current_col(in_col                   )
+  {
+  arma_extra_debug_sigprint();
+  }
+
+
+
+template<typename eT>
+inline
 arma_warn_unused
 eT&
 Mat<eT>::row_iterator::operator*()
@@ -7850,7 +7863,7 @@ Mat<eT>::row_iterator::operator++()
   {
   current_col++;
   
-  if(current_col == M->n_cols)
+  if((current_col == M->n_cols) && (M->n_rows > 1))
     {
     current_col = 0;
     current_row++;
@@ -8023,6 +8036,19 @@ Mat<eT>::const_row_iterator::const_row_iterator(const Mat<eT>& in_M, const uword
 
 template<typename eT>
 inline
+Mat<eT>::const_row_iterator::const_row_iterator(const Mat<eT>& in_M, const uword in_row, const uword in_col)
+  : M          (&in_M                    )
+  , current_ptr(&(in_M.at(in_row,in_col)))
+  , current_row(in_row                   )
+  , current_col(in_col                   )
+  {
+  arma_extra_debug_sigprint();
+  }
+
+
+
+template<typename eT>
+inline
 arma_warn_unused
 const eT&
 Mat<eT>::const_row_iterator::operator*() const
@@ -8039,7 +8065,7 @@ Mat<eT>::const_row_iterator::operator++()
   {
   current_col++;
   
-  if(current_col == M->n_cols)
+  if((current_col == M->n_cols) && (M->n_rows > 1))
     {
     current_col = 0;
     current_row++;
@@ -8720,7 +8746,12 @@ Mat<eT>::end_row(const uword row_num)
   
   arma_debug_check( (row_num >= n_rows), "Mat::end_row(): index out of bounds" );
   
-  return typename Mat<eT>::row_iterator(*this, row_num + 1);
+  // return typename Mat<eT>::row_iterator(*this, row_num + 1);
+  
+  const uword it_row = (n_rows == 1) ? uword(0)      : uword(row_num+1);
+  const uword it_col = (n_rows == 1) ? uword(n_cols) : uword(0);
+  
+  return typename Mat<eT>::row_iterator(*this, it_row, it_col);
   }
 
 
@@ -8734,7 +8765,12 @@ Mat<eT>::end_row(const uword row_num) const
   
   arma_debug_check( (row_num >= n_rows), "Mat::end_row(): index out of bounds" );
   
-  return typename Mat<eT>::const_row_iterator(*this, row_num + 1);
+  // return typename Mat<eT>::const_row_iterator(*this, row_num + 1);
+  
+  const uword it_row = (n_rows == 1) ? uword(0)      : uword(row_num+1);
+  const uword it_col = (n_rows == 1) ? uword(n_cols) : uword(0);
+  
+  return typename Mat<eT>::const_row_iterator(*this, it_row, it_col);
   }
 
 

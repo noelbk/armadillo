@@ -555,6 +555,7 @@ class Mat : public Base< eT, Mat<eT> >
     inline row_iterator();
     inline row_iterator(const row_iterator& X);
     inline row_iterator(Mat<eT>& in_M, const uword in_row);
+    inline row_iterator(Mat<eT>& in_M, const uword in_row, const uword in_col);
     
     inline arma_warn_unused eT& operator* ();
     
@@ -590,6 +591,7 @@ class Mat : public Base< eT, Mat<eT> >
     inline const_row_iterator(const       row_iterator& X);
     inline const_row_iterator(const const_row_iterator& X);
     inline const_row_iterator(const Mat<eT>& in_M, const uword in_row);
+    inline const_row_iterator(const Mat<eT>& in_M, const uword in_row, const uword in_col);
     
     inline arma_warn_unused const eT& operator*() const;
     
