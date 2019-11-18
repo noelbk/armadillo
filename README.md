@@ -106,18 +106,20 @@ informational purposes only and do not modify the License.
 
 ### 4: Compilers and External Dependencies
 
-Armadillo makes extensive use of template meta-programming, recursive templates
-and template based function overloading. As such, C++ compilers which do not
-fully implement the C++ standard may not work correctly.
+Armadillo makes extensive use of template meta-programming and many other
+advanced C++ features.  As such, C++ compilers which do not fully implement
+the C++ standard may not work correctly.
 
 The functionality of Armadillo is partly dependent on other libraries:
-LAPACK, BLAS, ARPACK and SuperLU. The LAPACK and BLAS libraries are
-used for dense matrices, while the ARPACK and SuperLU libraries are
-used for sparse matrices. Armadillo can work without these libraries,
-but its functionality will be reduced. In particular, basic functionality
-will be available (eg. matrix addition and multiplication), but things
-like eigen decomposition or matrix inversion will not be.
+LAPACK, BLAS (preferably OpenBLAS), ARPACK and SuperLU.  Armadillo can work
+without these libraries, but its functionality will be reduced.  In particular,
+basic functionality will be available (eg. matrix addition and multiplication),
+but things like eigen decomposition or matrix inversion will not be.
 Matrix multiplication (mainly for big matrices) may not be as fast.
+
+LAPACK and BLAS / OpenBLAS are used for dense matrices.
+ARPACK and SuperLU are used for sparse matrices.
+If you don't need sparse matrices, don't worry about ARPACK or SuperLU.
 
 As Armadillo is a template library, we recommended that optimisation
 is enabled during compilation of programs that use Armadillo.
