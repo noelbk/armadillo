@@ -111,15 +111,14 @@ advanced C++ features.  As such, C++ compilers which do not fully implement
 the C++ standard may not work correctly.
 
 The functionality of Armadillo is partly dependent on other libraries:
-LAPACK, BLAS (preferably OpenBLAS), ARPACK and SuperLU.  Armadillo can work
-without these libraries, but its functionality will be reduced.  In particular,
-basic functionality will be available (eg. matrix addition and multiplication),
-but things like eigen decomposition or matrix inversion will not be.
-Matrix multiplication (mainly for big matrices) may not be as fast.
+LAPACK, BLAS (preferably OpenBLAS), ARPACK and SuperLU.
+LAPACK and BLAS are used for dense matrices,
+while ARPACK and SuperLU are used for sparse matrices.
 
-LAPACK and BLAS / OpenBLAS are used for dense matrices.
-ARPACK and SuperLU are used for sparse matrices.
-If you don't need sparse matrices, don't worry about ARPACK or SuperLU.
+Armadillo can work without the above libraries, but its functionality will be reduced.
+Basic functionality will be available (eg. matrix addition and multiplication),
+but operations like eigen decomposition or matrix inversion will not be.
+Matrix multiplication (mainly for big matrices) may not be as fast.
 
 As Armadillo is a template library, we recommended that optimisation
 is enabled during compilation of programs that use Armadillo.
