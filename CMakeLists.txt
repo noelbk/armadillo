@@ -134,6 +134,10 @@ endif()
 
 option(DETECT_HDF5 "Detect HDF5 and include HDF5 support, if found" ON)
 
+option(ALLOW_OPENBLAS_MACOS "Allow detection of OpenBLAS on macOS" OFF)
+## Example use on the command line:
+## cmake -D ALLOW_OPENBLAS_MACOS=true .
+
 
 if(WIN32)
   message(STATUS "")
@@ -157,6 +161,7 @@ message(STATUS "CMAKE_CXX_COMPILER_VERSION = ${CMAKE_CXX_COMPILER_VERSION}")
 message(STATUS "CMAKE_COMPILER_IS_GNUCXX   = ${CMAKE_COMPILER_IS_GNUCXX}"  )
 message(STATUS "BUILD_SHARED_LIBS          = ${BUILD_SHARED_LIBS}"         )
 message(STATUS "DETECT_HDF5                = ${DETECT_HDF5}"               )
+message(STATUS "ALLOW_OPENBLAS_MACOS       = ${ALLOW_OPENBLAS_MACOS}"      )
 
 
 ##
@@ -166,14 +171,33 @@ message(STATUS "DETECT_HDF5                = ${DETECT_HDF5}"               )
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake_aux/Modules/")
 
 if(APPLE)
+  message(STATUS "Detected macOS")
   
   set(ARMA_OS macos)
   
-  set(ARMA_USE_LAPACK true)
-  set(ARMA_USE_BLAS   true)
+  set(ARMA_USE_LAPACK     true)
+  set(ARMA_USE_BLAS       true)
+  set(ARMA_USE_ACCELERATE true)
   
-  set(ARMA_LIBS ${ARMA_LIBS} "-framework Accelerate")  # or "-framework accelerate" ?
-  message(STATUS "Detected macOS. Added '-framework Accelerate' to compiler flags")
+  if(ALLOW_OPENBLAS_MACOS)
+    include(ARMA_FindOpenBLAS)
+    message(STATUS "OpenBLAS_FOUND = ${OpenBLAS_FOUND}")
+    message(STATUS "")
+    message(STATUS "*** If use of OpenBLAS is causing problems,")
+    message(STATUS "*** rerun cmake with OpenBLAS detection disabled:")
+    message(STATUS "*** cmake -D ALLOW_OPENBLAS_MACOS=false .")
+    message(STATUS "")
+    
+    if(OpenBLAS_FOUND)
+      set(ARMA_LIBS ${ARMA_LIBS} ${OpenBLAS_LIBRARIES})
+      set(ARMA_USE_ACCELERATE false)
+    endif()
+  endif()
+  
+  if(ARMA_USE_ACCELERATE)
+    set(ARMA_LIBS ${ARMA_LIBS} "-framework Accelerate")  # or "-framework accelerate" ?
+    message(STATUS "Added '-framework Accelerate' to compiler flags")
+  endif()
   
   if(DEFINED CMAKE_CXX_COMPILER_ID)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
