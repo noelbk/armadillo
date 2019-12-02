@@ -1534,6 +1534,14 @@ sp_auxlib::rudimentary_sym_check(const SpMat< std::complex<T> >& X)
       
       ++n_check;
       }
+    else
+      {
+      const eT A = (*it);
+      
+      if(std::abs(A.imag()) > tol)  { return false; }
+      
+      ++n_check;
+      }
     
     ++it;
     }
