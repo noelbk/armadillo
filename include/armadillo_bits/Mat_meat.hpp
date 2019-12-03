@@ -8663,8 +8663,7 @@ Mat<eT>::begin_row(const uword row_num)
   {
   arma_extra_debug_sigprint();
   
-  arma_debug_check( (row_num >= n_rows  ), "Mat::begin_row(): index out of bounds" );
-  arma_debug_check( (n_elem  == uword(0)), "Mat::begin_row(): matrix is empty"     );
+  arma_debug_check( (row_num >= n_rows), "Mat::begin_row(): index out of bounds" );
   
   return typename Mat<eT>::row_iterator(*this, row_num, uword(0));
   }
@@ -8678,8 +8677,7 @@ Mat<eT>::begin_row(const uword row_num) const
   {
   arma_extra_debug_sigprint();
   
-  arma_debug_check( (row_num >= n_rows  ), "Mat::begin_row(): index out of bounds" );
-  arma_debug_check( (n_elem  == uword(0)), "Mat::begin_row(): matrix is empty"     );
+  arma_debug_check( (row_num >= n_rows), "Mat::begin_row(): index out of bounds" );
   
   return typename Mat<eT>::const_row_iterator(*this, row_num, uword(0));
   }
@@ -8693,8 +8691,7 @@ Mat<eT>::end_row(const uword row_num)
   {
   arma_extra_debug_sigprint();
   
-  arma_debug_check( (row_num >= n_rows  ), "Mat::end_row(): index out of bounds" );
-  arma_debug_check( (n_elem  == uword(0)), "Mat::end_row(): matrix is empty"     );
+  arma_debug_check( (row_num >= n_rows), "Mat::end_row(): index out of bounds" );
   
   return typename Mat<eT>::row_iterator(*this, (row_num + uword(1)), 0);
   }
@@ -8708,8 +8705,7 @@ Mat<eT>::end_row(const uword row_num) const
   {
   arma_extra_debug_sigprint();
   
-  arma_debug_check( (row_num >= n_rows  ), "Mat::end_row(): index out of bounds" );
-  arma_debug_check( (n_elem  == uword(0)), "Mat::end_row(): matrix is empty"     );
+  arma_debug_check( (row_num >= n_rows), "Mat::end_row(): index out of bounds" );
   
   return typename Mat<eT>::const_row_iterator(*this, (row_num + uword(1)), 0);
   }
