@@ -138,6 +138,10 @@ option(ALLOW_OPENBLAS_MACOS "Allow detection of OpenBLAS on macOS" OFF)
 ## Example use on the command line:
 ## cmake -D ALLOW_OPENBLAS_MACOS=true .
 
+option(ALLOW_BLAS_LAPACK_MACOS "Allow detection of BLAS and LAPACK on macOS" OFF)
+## Example use on the command line:
+## cmake -D ALLOW_BLAS_LAPACK_MACOS=true .
+
 
 if(WIN32)
   message(STATUS "")
@@ -162,6 +166,7 @@ message(STATUS "CMAKE_COMPILER_IS_GNUCXX   = ${CMAKE_COMPILER_IS_GNUCXX}"  )
 message(STATUS "BUILD_SHARED_LIBS          = ${BUILD_SHARED_LIBS}"         )
 message(STATUS "DETECT_HDF5                = ${DETECT_HDF5}"               )
 message(STATUS "ALLOW_OPENBLAS_MACOS       = ${ALLOW_OPENBLAS_MACOS}"      )
+message(STATUS "ALLOW_BLAS_LAPACK_MACOS    = ${ALLOW_BLAS_LAPACK_MACOS}"   )
 
 
 ##
@@ -184,12 +189,30 @@ if(APPLE)
     message(STATUS "OpenBLAS_FOUND = ${OpenBLAS_FOUND}")
     message(STATUS "")
     message(STATUS "*** If use of OpenBLAS is causing problems,")
-    message(STATUS "*** rerun cmake with OpenBLAS detection disabled:")
+    message(STATUS "*** rerun cmake with detection of OpenBLAS disabled:")
     message(STATUS "*** cmake -D ALLOW_OPENBLAS_MACOS=false .")
     message(STATUS "")
     
     if(OpenBLAS_FOUND)
       set(ARMA_LIBS ${ARMA_LIBS} ${OpenBLAS_LIBRARIES})
+      set(ARMA_USE_ACCELERATE false)
+    endif()
+  endif()
+  
+  if(ALLOW_BLAS_LAPACK_MACOS)
+    include(ARMA_FindBLAS)
+    include(ARMA_FindLAPACK)
+    message(STATUS "  BLAS_FOUND = ${BLAS_FOUND}"  )
+    message(STATUS "LAPACK_FOUND = ${LAPACK_FOUND}")
+    message(STATUS "")
+    message(STATUS "*** If use of BLAS and LAPACK is causing problems,")
+    message(STATUS "*** rerun cmake with detection of BLAS and LAPACK disabled:")
+    message(STATUS "*** cmake -D ALLOW_BLAS_LAPACK_MACOS=false .")
+    message(STATUS "")
+    
+    if(BLAS_FOUND AND LAPACK_FOUND)
+      set(ARMA_LIBS ${ARMA_LIBS} ${BLAS_LIBRARIES})
+      set(ARMA_LIBS ${ARMA_LIBS} ${LAPACK_LIBRARIES})
       set(ARMA_USE_ACCELERATE false)
     endif()
   endif()
