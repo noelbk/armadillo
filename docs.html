@@ -13940,6 +13940,12 @@ For the <i>var()</i> and <i>stddev()</i> functions:
 </li>
 <br>
 <li>
+<b>Caveat:</b>
+to obtain statistics for integer matrices/vectors (eg. <a href="#Mat">umat</a>, <a href="#Mat">imat</a>, <a href="#Col">uvec</a>, <a href="#Col">ivec</a>),
+convert to a matrix/vector with floating point values (eg. <a href="#Mat">mat</a>, <a href="#Col">vec</a>) using the <a href="#conv_to">conv_to()</a> function
+</li>
+<br>
+<li>
 Examples:
 <ul>
 <pre>
